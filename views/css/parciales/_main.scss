@@ -1,0 +1,19 @@
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+}
+
+.main__guardians, .main__owners, .main__reviews, .main__us{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    height: 20rem;
+    width: 50%;
+    margin: 3rem;
+    border: 2px solid aqua;
+}
