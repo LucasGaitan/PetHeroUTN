@@ -5,15 +5,16 @@
     flex-direction: column;
     height: auto;
     width: 100%;
-}
-
-.main__guardians, .main__owners, .main__reviews, .main__us{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
-    height: 20rem;
-    width: 50%;
-    margin: 3rem;
-    border: 2px solid aqua;
+    background-color: #b41d78;
+    
+    &__guardians, &__owners, &__reviews, &__us{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+        height: 20rem;
+        width: 50%;
+        margin: 3rem;
+        border: 2px solid aqua;
+    }
 }

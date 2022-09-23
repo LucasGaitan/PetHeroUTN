@@ -2,4 +2,15 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+}
+
+body::-webkit-scrollbar{
+    width: 0.5rem;
+    background-color: #5e1f45;
+}
+
+body::-webkit-scrollbar-thumb{
+    background-color: #dda6c7;
+    border-radius: 50px;
 }
