@@ -18,11 +18,11 @@ require_once("./views/forms/signIn.php");
 
   <link rel="icon" type="image/x-icon" href="./views/assets/favicon.ico">
 
-  <link rel="stylesheet" href="./views/css/main.css">
+  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   
-
+  <link rel="stylesheet" href="./views/css/main.css">
 
 </head>
 
@@ -43,10 +43,8 @@ require_once("./views/forms/signIn.php");
 
       <section class="header__section">
 
-        <p class="header__p"><a class="header__signIn" data-bs-toggle="modal" data-bs-target="#signIn" >Sign In</a>
-          <a class="header__signUp" data-bs-toggle="modal" data-bs-target="#signUp">Sign Up</a>
-
-        </p>
+        <a class="header__signIn" data-bs-toggle="modal" data-bs-target="#signIn" >Sign In</a>
+        <a class="header__signUp" data-bs-toggle="modal" data-bs-target="#signUp">Sign Up</a>
 
       </section>
 

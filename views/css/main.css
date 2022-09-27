@@ -62,6 +62,9 @@ body::-webkit-scrollbar-thumb {
   cursor: pointer;
   transition: 0.3s ease;
 }
+.header__link:hover {
+  color: rgb(0, 0, 0);
+}
 .header__link::after {
   content: "";
   position: absolute;
@@ -87,6 +90,9 @@ body::-webkit-scrollbar-thumb {
   margin-right: 1rem;
   color: rgb(0, 0, 0);
 }
+.header__signIn:hover {
+  color: rgb(0, 0, 0);
+}
 .header__signUp {
   color: #b41d78;
   border: 2px solid #b41d78;
@@ -101,12 +107,12 @@ body::-webkit-scrollbar-thumb {
   transition: 0.2s ease;
 }
 .header__body {
-  height: calc(100vh - 4.5rem);
+  height: calc(100vh - 10rem);
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20rem;
+  gap: 7rem;
 }
 .header__title {
   margin-top: 10rem;
@@ -114,6 +120,7 @@ body::-webkit-scrollbar-thumb {
   font-weight: bolder;
 }
 .header__title__button {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -141,16 +148,19 @@ body::-webkit-scrollbar-thumb {
 .header__title__button:hover {
   transform: translate(8px, 8px);
 }
-.header__title__button::before {
+.header__title__button:hover::before {
   transform: translate(-4px, -4px);
 }
-.header__title__button::after {
+.header__title__button:hover::after {
   transform: translate(-8px, -8px);
 }
 .header__title__button--text {
   text-decoration: none;
   font-weight: bolder;
-  color: rgb(255, 255, 255);
+  color: #fff;
+}
+.header__title__button--text:hover {
+  color: #fff;
 }
 .header__body__content {
   margin-bottom: 20rem;

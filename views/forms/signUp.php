@@ -3,7 +3,7 @@ require_once("./views/forms/signIn.php");
 ?>
 
 <div class="modal fade" id="signUp" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-dialog modal-md modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalToggleLabel">Sign Up</h5>
@@ -51,20 +51,19 @@ require_once("./views/forms/signIn.php");
     </div>
   </div>
 
-
-
   <div class="d-grid gap-2">
-    <button class="btn btn-primary " type="submit">Submit form</button>
+    <button class="btn" style="background-color:#b41d78; color:#fff" type="submit">Submit form</button>
   </div>
+  
 </form>
       </div>
-      <div class="modal-footer">
-          <div class="d-grid gap-2 col-6 mx-auto">
-            
-            <button class="btn btn-primary mt-3 mb-3" data-bs-target="#signIn" data-bs-toggle="modal" data-bs-dismiss="modal">Sign In</button>
-          </div>
-
-      </div>
+      <div class="modal-footer justify-content-center">
+            <div class="row justify-content-center">
+               <p class="col-md-12 text-center">Alredy have an account?</p>
+               <button class="btn col-md-6 " style="background-color:#b41d78; color: #fff;" data-bs-target="#signIn"
+                  data-bs-toggle="modal" data-bs-dismiss="modal">Sign In</button>
+            </div>
+         </div>
     </div>
   </div>
 </div>
