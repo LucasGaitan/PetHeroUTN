@@ -5,12 +5,9 @@ namespace Models;
 abstract class User{
     private $firstName;
     private $lastName;
-    private $birthDate;
     private $username;
     private $password;
-    private $city;
-    private $address;
-    private $addressNumber;
+
 
     function __construct()
     {
@@ -43,28 +40,6 @@ abstract class User{
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-
-        return $this;
-    }
-
-
-
-    /**
-     * Get the value of birthDate
-     */ 
-    public function getBirthDate()
-    {
-        return $this->birthDate;
-    }
-
-    /**
-     * Set the value of birthDate
-     *
-     * @return  self
-     */ 
-    public function setBirthDate($birthDate)
-    {
-        $this->birthDate = $birthDate;
 
         return $this;
     }
@@ -109,63 +84,5 @@ abstract class User{
         return $this;
     }
 
-    /**
-     * Get the value of city
-     */ 
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * Set the value of city
-     *
-     * @return  self
-     */ 
-    public function setCity($city)
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of address
-     */ 
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
-     * Set the value of address
-     *
-     * @return  self
-     */ 
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of addressNumber
-     */ 
-    public function getAddressNumber()
-    {
-        return $this->addressNumber;
-    }
-
-    /**
-     * Set the value of addressNumber
-     *
-     * @return  self
-     */ 
-    public function setAddressNumber($addressNumber)
-    {
-        $this->addressNumber = $addressNumber;
-
-        return $this;
-    }
+   
 }
