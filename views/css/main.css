@@ -220,32 +220,23 @@ body::-webkit-scrollbar-thumb {
   background-color: #b41d78;
 }
 
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
-
 .container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 20rem;
-  margin: 20px 0 80px;
+  width: 100%;
   overflow: hidden;
 }
 
 .card {
-  width: 20rem;
-  margin: 2rem;
+  width: 18rem;
+  margin: 10rem;
   background-color: transparent;
+  border: 0px solid;
 }
 .card:hover .card__caption {
   top: 50%;
   transform: translateY(-50%);
-}
-.card:hover .card__image {
-  transform: translateY(-10px);
 }
 .card:hover .card__thumb::after {
   top: 0;
@@ -256,7 +247,9 @@ body::-webkit-scrollbar-thumb {
 .card__thumb {
   position: relative;
   max-height: 400px;
+  border-radius: 15px;
   overflow: hidden;
+  box-shadow: 1px 1px 10px black;
 }
 @media (min-width: 1024px) {
   .card__thumb {
@@ -334,6 +327,7 @@ body::-webkit-scrollbar-thumb {
   text-transform: uppercase;
   text-decoration: none;
   transition: 0.3s;
+  border-radius: 15px;
 }
 .card__button:hover {
   color: black;

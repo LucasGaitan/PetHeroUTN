@@ -3,10 +3,10 @@
 <div class="container">
 	<div class="card">
 		<figure class="card__thumb">
-			<img src="https://source.unsplash.com/75S9fpDJVdo/300x510" alt="Picture by Kyle Cottrell" class="card__image">
+			<img src="./views/assets/pugOwner.jpg" alt="Picture by Kyle Cottrell" class="card__image">
 			<figcaption class="card__caption">
-				<h2 class="card__title">NASA Has Found Hundreds Of Potential New Planets</h2>
-				<p class="card__snippet">NASA released a list of 219 new “planet candidates” discovered by the Kepler space telescope, 10 of which are similar to Earth’s size and may be habitable by other life forms.</p>
+				<h2 class="card__title">Owners<br><br></h2>
+				<p class="card__snippet">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam vero voluptatem eius sunt fuga, eligendi explicabo aspernatur impedit est ipsam autem nesciunt ut vitae sint natus dolores pariatur maxime iste?</p>
 				<a href="" class="card__button">Read more</a>
 			</figcaption>
 		</figure>
@@ -14,21 +14,10 @@
 
 	<div class="card">
 		<figure class="card__thumb">
-			<img src="https://source.unsplash.com/71u2fOofI-U/300x510" alt="Picture by Nathan Dumlao" class="card__image">
+			<img src="./views/assets/pugHero.jpg" alt="Picture by Nathan Dumlao" class="card__image">
 			<figcaption class="card__caption">
-				<h2 class="card__title">This Is Your Body And Brain On Coffee</h2>
-				<p class="card__snippet">Drinking more caffeine during the coronavirus lockdown? Here's how it can affect you over time and advice on making it better for you.</p>
-				<a href="" class="card__button">Read more</a>
-			</figcaption>
-		</figure>
-	</div>
-
-	<div class="card">
-		<figure class="card__thumb">
-			<img src="https://source.unsplash.com/qXMpNtNp1uE/300x510" alt="Picture by Daniel Lincoln" class="card__image">
-			<figcaption class="card__caption">
-				<h2 class="card__title">Why You Should Bring Your Dog To Work</h2>
-				<p class="card__snippet">On Friday, offices around the country celebrated the 15th annual Take Your Dog to Work Day. Though the event's primary goal is to raise awareness for pet adoption, the unanticipated impact may be a slightly more relaxing work environment for any office choosing to participate.</p>
+				<h2 class="card__title">Guardians<br><br></h2>
+				<p class="card__snippet">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae dolorem dignissimos rem. Quam eum velit tempora earum voluptate, soluta nisi temporibus expedita quo, quibusdam numquam tenetur autem id! Laudantium, amet!</p>
 				<a href="" class="card__button">Read more</a>
 			</figcaption>
 		</figure>
