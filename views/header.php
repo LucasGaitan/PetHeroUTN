@@ -24,6 +24,8 @@ require_once(VIEWS_PATH."forms/signIn.php");
 
   <link rel="stylesheet" href="<?php echo CSS_PATH?>/main.css">
 
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -52,7 +54,7 @@ require_once(VIEWS_PATH."forms/signIn.php");
 
     <section class="header__body">
 
-      <section class="header__body__content">
+      <section class="header__body__content" data-aos="zoom-in" data-aos-delay="500">
 
         <h1 class="header__title">Welcome to <br>Pet Hero!</h1>
 
