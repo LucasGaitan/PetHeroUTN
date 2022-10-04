@@ -21,6 +21,8 @@ require_once("./views/forms/signIn.php");
   
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   
   <link rel="stylesheet" href="./views/css/main.css">
 
@@ -52,7 +54,7 @@ require_once("./views/forms/signIn.php");
 
     <section class="header__body">
 
-      <section class="header__body__content">
+      <section class="header__body__content" data-aos="zoom-in" data-aos-delay="500">
 
         <h1 class="header__title">Welcome to <br>Pet Hero!</h1>
 
