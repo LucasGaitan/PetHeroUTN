@@ -3,18 +3,19 @@
 
 <section class="footer__logo">
 
-    <img src="./views/assets/doge.png" alt="" class="footer__icon">
+    <a href="#"><img class="footer__icon" src="./views/assets/dogHero.png" alt=""></a>
 
 </section>
 
 <section class="footer__text">
 
     <ul class="footer__list">
-        <li class="footer__info">asdasd</li>
-        <li class="footer__info">123123</li>
-        <li class="footer__info">asdasd</li>
-        <li class="footer__info">123123</li>
+        <li class="footer__redes"><img src="./views/assets/instagram.png"></img></li>
+        <li class="footer__redes"><img src="./views/assets/facebook.png"></img></li>
+        <li class="footer__redes--twitter"><img src="./views/assets/twitter.png"></img></li>
     </ul>
+
+    <p>PetHero Laboratorio IV 2022</p>
 
 </section>        
 

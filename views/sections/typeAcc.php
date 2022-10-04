@@ -28,21 +28,22 @@
 
     <main class="secMain">
 
-        <h1 class="secMain__title">choose your role</h1>
-
         <section class="secMain__container">
 
             <section class="secMain__owner">
 
                 <img src="../assets/Owner.png" alt="" class="secMain__owner__image">
                 <a href="#" class="secMain__owner__link">Be a Owner!</a>
-                
+
             </section>
 
             <section class="secMain__guardian">
 
                 <img src="../assets/guardian.png" alt="" class="secMain__guardian__image">
                 <a href="#" class="secMain__guardian__link">Be a Guardian!</a>
+                <div class="secMain__guardian__div">
+                    <p class="secMain__guardian__div--p">Make<br>Your<br>Choice</p>
+                </div>
 
             </section>
 
