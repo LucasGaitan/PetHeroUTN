@@ -1,6 +1,6 @@
 <?php
-require_once("./views/forms/signUp.php");
-require_once("./views/forms/signIn.php");
+require_once(VIEWS_PATH."forms/signUp.php");
+require_once(VIEWS_PATH."forms/signIn.php");
 ?>
 <!DOCTYPE html>
 
@@ -16,13 +16,13 @@ require_once("./views/forms/signIn.php");
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap" rel="stylesheet">
 
-  <link rel="icon" type="image/x-icon" href="./views/assets/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="<?php echo ASSETS_PATH?>/favicon.ico">
 
-  
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  
-  <link rel="stylesheet" href="./views/css/main.css">
+
+  <link rel="stylesheet" href="<?php echo CSS_PATH?>/main.css">
 
 </head>
 
@@ -32,7 +32,7 @@ require_once("./views/forms/signIn.php");
 
     <nav class="header__nav">
 
-      <a href="#"><img class="header__icon" src="./views/assets/dogHero.png" alt=""></a>
+      <a href="#"><img class="header__icon" src="<?php echo ASSETS_PATH?>/dogHero.png" alt=""></a>
 
       <ul class="header__list">
         <li class="header__item"><a class="header__link" href="#guardians">Guardians</a></li>
@@ -65,7 +65,7 @@ require_once("./views/forms/signIn.php");
 
       <section class="header__body__img">
 
-        <img src="./views/assets/mainImage.png" alt="">
+        <img src="<?php echo ASSETS_PATH?>/mainImage.png" alt="">
 
       </section>
 

@@ -16,7 +16,7 @@ class Guardian extends User{
     {
         parent::__construct();
         $this->postulation = array();
-        $this->dogTypeExpected = array();
+        //$this->dogTypeExpected = array();
     }
 
     /**

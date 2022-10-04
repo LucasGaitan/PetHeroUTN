@@ -10,11 +10,11 @@ require_once("./views/forms/signUp.php");
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
          <div class="modal-body">
-            <form class="row g-2 justify-content-center">
+            <form action="<?php echo FRONT_ROOT?>User/signIn" class="row g-2 justify-content-center">
                <div class="col-md-10">
                   <label for="validationServerUsername" class="form-label">Username</label>
                   <div class="input-group has-validation">
-                     <input type="text" class="form-control" id="validationServerUsername"
+                     <input type="text" name="username"  class="form-control" id="validationServerUsername"
                         aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required>
                      <div id="validationServerUsernameFeedback" class="invalid-feedback">
                         Please choose a username.
@@ -23,7 +23,7 @@ require_once("./views/forms/signUp.php");
                </div>
                <div class="col-md-10">
                   <label for="validationServer03" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="validationServer03"
+                  <input type="password" name="password" class="form-control" id="validationServer03"
                      aria-describedby="validationServer03Feedback" required>
                   <div id="validationServer03Feedback" class="invalid-feedback">
                      Please provide a valid password.

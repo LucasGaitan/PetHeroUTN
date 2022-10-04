@@ -1,3 +1,6 @@
+<?php
+require_once(VIEWS_PATH."header.php");
+?>
 <main class="main">
 
 <div class="container">
@@ -25,3 +28,6 @@
 </div>
 
 </main>
+<?php
+require_once(VIEWS_PATH."footer.php");
+?>

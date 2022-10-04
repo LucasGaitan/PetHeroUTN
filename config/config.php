@@ -6,6 +6,7 @@ define("FRONT_ROOT", "/PetHeroUTN/");
 define("VIEWS_PATH", "views/");
 define("CSS_PATH", FRONT_ROOT.VIEWS_PATH . "css/");
 define("JS_PATH", FRONT_ROOT.VIEWS_PATH . "js/");
+define("ASSETS_PATH", FRONT_ROOT.VIEWS_PATH . "assets/");
 ?>
 
 

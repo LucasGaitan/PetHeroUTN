@@ -3,7 +3,6 @@
 namespace Models;
 
 use Models\User as User;
-use parent;
 
 class Owner extends User
 {
