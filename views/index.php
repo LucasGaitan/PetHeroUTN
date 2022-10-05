@@ -141,6 +141,7 @@ require_once(VIEWS_PATH."header.php");
         </button>
     </div>
 
+
 </main>
 <?php
 require_once(VIEWS_PATH."footer.php");

@@ -18,5 +18,15 @@
         "postulation": [],
         "reputation": null,
         "salaryExpected": "321"
+    },
+    {
+        "firstName": "lucre",
+        "lastName": "bazan",
+        "username": "lucre",
+        "password": "123",
+        "dogTypeExpected": "small",
+        "postulation": [],
+        "reputation": null,
+        "salaryExpected": "123"
     }
 ]

@@ -27,6 +27,11 @@ class UserController
         require_once(VIEWS_PATH . "/sections/typeAcc.php");
     }
 
+    public function ShowListTableUsers()
+    {
+        require_once(VIEWS_PATH . "/sections/testTableUsers.php");
+    }
+
     public function signUp($firstName, $lastName, $username, $password, $password2)
     {
         if($password === $password2)
@@ -65,23 +70,32 @@ class UserController
 
     public function signIn($username, $password)
     {
+        session_destroy();
+        session_start();
         $listGuardian = $this->guardianDAO->GetAll();
         $listOwner = $this->ownerDAO->GetAll();
-
-
-
-        /*for ($i = 0; $i<count($listGuardian);$i++ )
+        $flag = false;
+        foreach ($listGuardian as $value)
         {
-            if ($listGuardian['username'] = $username)
+            if ($value->getUsername() === $username && $value->getPassword() === $password)
             {
-                echo $listGuardian['username'];
+                $loggedUser = $value;
+                $_SESSION['loggedUser'] = $loggedUser;
+                $flag = true;
+                break;
             }
-        }*/
-        echo "<pre>";
-        var_dump($listGuardian);
-        echo "</pre>";
-        echo "<pre>";
-        var_dump($listOwner);
-        echo "</pre>";
+        }
+        if (!$flag)
+        {
+            foreach ($listOwner as $value)
+            {
+                if ($value->getUsername() === $username && $value->getPassword() === $password)
+                {
+                    $loggedUser = $value;
+                    $_SESSION['loggedUser'] = $loggedUser;
+                    break;
+                }
+            }
+        }
     }
 }
