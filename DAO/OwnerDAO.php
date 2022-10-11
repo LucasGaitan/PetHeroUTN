@@ -27,7 +27,8 @@
         private function SaveData()
         {
             $arrayToEncode = array();
-
+            $dogs = array();
+            $dogsToJSON = array();
             foreach($this->ownerList as $owner)
             {
 
@@ -35,7 +36,20 @@
                 $valuesArray["lastName"] = $owner->getLastName();
                 $valuesArray["username"] = $owner->getUsername();
                 $valuesArray["password"] = $owner->getPassword();
-                $valuesArray["dogs"] = $owner->getDogs();
+                $dogs = $owner->getDogs();
+                if (!empty($dogs)){
+                    var_dump($dogs);
+                    foreach ($dogs as $dog)
+                    {
+
+                        /*$valuesArray["dogName"] = $dog->getName();
+                        $dogsToJSON[] = $valuesArray["dogName"];*/
+                        //$dogsToJSON[] = json_encode($dogs, JSON_PRETTY_PRINT);
+                    }
+                    $valuesArray["dogs"] = $dogsToJSON;
+                }
+
+
 
                 array_push($arrayToEncode, $valuesArray);
             }

@@ -36,9 +36,6 @@ $list = array_merge($listOwner, $listGuardian);*/
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-
     <!-- Optional theme -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
 
@@ -49,8 +46,6 @@ $list = array_merge($listOwner, $listGuardian);*/
 </head>
 
 <body>
-
-<button><a data-bs-toggle="modal" data-bs-target="#dogForm" >Dog Form</a></button>
 
 <table  class="table table-bordered table-hover" id="userTable">
     <thead>
@@ -82,7 +77,7 @@ $list = array_merge($listOwner, $listGuardian);*/
     </tbody>
 </table>
 
-
+<button><a data-bs-toggle="modal" data-bs-target="#dogForm" >Dog Form</a></button>
 
 <script type="text/javascript" src="https://cdn.datatables.net/1.10-dev/js/jquery.dataTables.js%22%3E"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/f3e99a6c02/integration/bootstrap/3/dataTables.bootstrap.js%22%3E"></script>
@@ -90,7 +85,6 @@ $list = array_merge($listOwner, $listGuardian);*/
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 </body>
 

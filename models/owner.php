@@ -22,12 +22,16 @@ class Owner extends User
         return $this->dogs;
     }
 
-    /**
-     * @param array $dogs
-     */
-    public function setDogs(array $dogs)
+    public function setDogs($dog)
     {
-        $this->dogs = $dogs;
+        if(empty($this->dogs[0]))
+        {
+            $this->dogs[0] = $dog;
+        }
+        else
+        {
+            $this->dogs[] = $dog;
+        }
     }
 
 

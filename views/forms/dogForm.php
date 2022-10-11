@@ -9,7 +9,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="<?php echo FRONT_ROOT ?>User/dogForm" class="row g-2 justify-content-center" method="post">
+                <form action="<?php echo FRONT_ROOT ?>Dog/dogForm" class="row g-2 justify-content-center" method="post">
                         <div class="col-md-6">
                             <label for="validationServer01" class="form-label">Name</label>
                             <input type="text" name="dogName" class="form-control" id="validationServer01" value="" required>
@@ -33,7 +33,7 @@
                             </select>
                         </div>
                     <div class="d-grid gap-2 col-10">
-                        <button class="btn" style="background-color:#b41d78; color:#fff" type="submit">Login</button>
+                        <button class="btn" style="background-color:#b41d78; color:#fff" type="submit">Add</button>
                     </div>
                 </form>
             </div>
