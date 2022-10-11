@@ -1,5 +1,5 @@
 <?php
-require_once("./views/forms/signIn.php");
+require_once(VIEWS_PATH."/forms/signIn.php");
 ?>
 
 <div class="modal fade" id="signUp" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">

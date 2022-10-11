@@ -1,5 +1,5 @@
 <?php
-require_once("./views/forms/signUp.php");
+require_once(VIEWS_PATH."/forms/signUp.php");
 ?>
 
 <div class="modal fade" id="signIn" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
@@ -10,7 +10,7 @@ require_once("./views/forms/signUp.php");
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
          <div class="modal-body">
-            <form action="<?php echo FRONT_ROOT?>User/signIn" class="row g-2 justify-content-center">
+            <form action="<?php echo FRONT_ROOT?>User/signIn" class="row g-2 justify-content-center" method="post">
                <div class="col-md-10">
                   <label for="validationServerUsername" class="form-label">Username</label>
                   <div class="input-group has-validation">

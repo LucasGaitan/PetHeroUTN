@@ -22,14 +22,20 @@ class UserController
         $this->user = array();
     }
 
-    public function ShowTypeAccount()
+    public function showTypeAccount()
     {
         require_once(VIEWS_PATH . "/sections/typeAcc.php");
     }
 
-    public function ShowListTableUsers()
+
+    public function showOwnerView()
     {
-        require_once(VIEWS_PATH . "/sections/testTableUsers.php");
+        require_once(VIEWS_PATH . "/sections/ownerView.php");
+    }
+
+    public function showGuardianView()
+    {
+        require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 
     public function signUp($firstName, $lastName, $username, $password, $password2)
@@ -39,7 +45,7 @@ class UserController
             $this->user = ["firstName"=>$firstName, "lastName"=>$lastName, "username"=>$username, "password"=>$password];
             $_SESSION['user'] = $this->user;
         }
-        $this->ShowTypeAccount();
+        $this->showTypeAccount();
     }
 
     public function guardianForm($dogTypeExpected, $salaryExpected)
@@ -95,6 +101,16 @@ class UserController
                     $_SESSION['loggedUser'] = $loggedUser;
                     break;
                 }
+            }
+        }
+
+        if(isset($_SESSION))
+        {
+            if($flag){
+                $this->showGuardianView();
+            }
+            else{
+                $this->showOwnerView();
             }
         }
     }

@@ -6,7 +6,6 @@ abstract class Animal{
     private $name;
     private $age;
     private $size;
-    private $breed;
 
     function __construct()
     {
@@ -69,26 +68,6 @@ abstract class Animal{
     public function setSize($size)
     {
         $this->size = $size;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of breed
-     */ 
-    public function getBreed()
-    {
-        return $this->breed;
-    }
-
-    /**
-     * Set the value of breed
-     *
-     * @return  self
-     */ 
-    public function setBreed($breed)
-    {
-        $this->breed = $breed;
 
         return $this;
     }

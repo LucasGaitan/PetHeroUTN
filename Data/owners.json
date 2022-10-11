@@ -12,5 +12,19 @@
         "username": "santi",
         "password": "123",
         "dogs": []
+    },
+    {
+        "firstName": "seba",
+        "lastName": "ribeiro",
+        "username": "seba",
+        "password": "123",
+        "dogs": []
+    },
+    {
+        "firstName": "prueba",
+        "lastName": "1",
+        "username": "prueb",
+        "password": "123",
+        "dogs": []
     }
 ]
