@@ -11,7 +11,7 @@ class Owner extends User
     function __construct()
     {
         parent::__construct();
-        $this->dogs = array();
+        $this->dogs = [];
     }
 
     /**
@@ -32,6 +32,11 @@ class Owner extends User
         {
             $this->dogs[] = $dog;
         }
+    }
+
+    public function setAllDogs($dogArray)
+    {
+        $this->dogs = $dogArray;
     }
 
 

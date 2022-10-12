@@ -3,6 +3,7 @@
 
     use DAO\IOwnerDAO as IOwnerDAO;
     use Models\Owner as Owner;
+    use Models\Dog;
 
     class OwnerDAO implements IOwnerDAO
     {
@@ -11,45 +12,60 @@
         public function Add(Owner $owner)
         {
             $this->RetrieveData();
-
             array_push($this->ownerList, $owner);
-
             $this->SaveData();
         }
 
         public function GetAll(): array
         {
             $this->RetrieveData();
-
             return $this->ownerList;
         }
 
         private function SaveData()
         {
             $arrayToEncode = array();
-            $dogs = array();
             $dogsToJSON = array();
+
             foreach($this->ownerList as $owner)
             {
-
                 $valuesArray["firstName"] = $owner->getFirstName();
                 $valuesArray["lastName"] = $owner->getLastName();
                 $valuesArray["username"] = $owner->getUsername();
                 $valuesArray["password"] = $owner->getPassword();
-                $dogs = $owner->getDogs();
-                if (!empty($dogs)){
-                    var_dump($dogs);
-                    foreach ($dogs as $dog)
+
+                $dogList = $owner->getDogs();
+//                $valuesArray["dogs"] = $owner->getDogs();
+
+                if (!empty($dogList[0]))
+                {
+
+                    var_dump($dogList);
+                    echo '<br>';
+                    var_dump(count($dogList));
+
+                    $i = 0;
+
+                    foreach ($dogList as $dog)
                     {
 
-                        /*$valuesArray["dogName"] = $dog->getName();
-                        $dogsToJSON[] = $valuesArray["dogName"];*/
-                        //$dogsToJSON[] = json_encode($dogs, JSON_PRETTY_PRINT);
+                        $valuesDog["dogName"] = $dog->getName();
+                        $valuesDog["age"] = $dog->getAge();
+                        $valuesDog["size"] = $dog->getSize();
+
+//                        $valuesDog["dog" . ($i+1)]["dogName"] = $dog->getName();
+//                        $valuesDog["dog" . ($i+1)]["age"] = $dog->getAge();
+//                        $valuesDog["dog" . ($i+1)]["size"] = $dog->getSize();
+
+                        $valuesArray["dogs"] = $valuesDog;
+
+                        $i++;
                     }
-                    $valuesArray["dogs"] = $dogsToJSON;
                 }
-
-
+                else
+                {
+                    $valuesArray["dogs"] = [];
+                }
 
                 array_push($arrayToEncode, $valuesArray);
             }
@@ -76,7 +92,7 @@
                     $owner->setLastName($valuesArray["lastName"]);
                     $owner->setUsername($valuesArray["username"]);
                     $owner->setPassword($valuesArray["password"]);
-                    $owner->setDogs($valuesArray["dogs"]);
+                    $owner->setAllDogs($valuesArray["dogs"]);
 
                     array_push($this->ownerList, $owner);
                 }
