@@ -4,24 +4,63 @@
         "lastName": "Morales",
         "username": "eze",
         "password": "123",
-        "dogs": []
+        "dogs": [
+            {
+                "name": "solimano",
+                "age": "12",
+                "size": "small"
+            },
+            {
+                "name": "seba ribeiro",
+                "age": "12",
+                "size": "small"
+            },
+            {
+                "name": "Kongo",
+                "age": "18",
+                "size": "small"
+            },
+            {
+                "name": "Seymour",
+                "age": "5000",
+                "size": "small"
+            }
+        ]
     },
     {
-        "firstName": "Ezequiel",
-        "lastName": "Morales",
-        "username": "eze",
+        "firstName": "Santiago ",
+        "lastName": "Dadan",
+        "username": "santi",
         "password": "123",
-        "dogs": []
+        "dogs": [
+            {
+                "name": "Kongo",
+                "age": "18",
+                "size": "small"
+            },
+            {
+                "name": "benoffi",
+                "age": "12",
+                "size": "small"
+            }
+        ]
     },
     {
-        "firstName": "Ezequiel",
-        "lastName": "Morales",
-        "username": "eze",
+        "firstName": "Lucas",
+        "lastName": "Gaitan",
+        "username": "lucas",
         "password": "123",
-        "dogs": {
-            "dogName": "Garfield",
-            "age": "27",
-            "size": "small"
-        }
+        "dogs": [
+            {
+                "name": "lola",
+                "age": "12",
+                "size": "small"
+            },
+            {
+                "name": "Ayudante de santa",
+                "age": "15",
+                "size": "medium"
+            }
+        ]
     }
 ]

@@ -3,6 +3,7 @@
 namespace Models;
 
 use Models\User as User;
+use Models\Dog as Dog;
 
 class Owner extends User
 {
@@ -34,9 +35,19 @@ class Owner extends User
         }
     }
 
-    public function setAllDogs($dogArray)
+    public function setAllDogs(array $dogArray)
     {
-        $this->dogs = $dogArray;
+        $this->dogs = [];
+
+        foreach ($dogArray as $aux)
+        {
+            $dog = new Dog();
+            $dog->setName($aux["name"]);
+            $dog->setAge($aux["age"]);
+            $dog->setSize($aux["size"]);
+
+            $this->dogs[] = $dog;
+        }
     }
 
 

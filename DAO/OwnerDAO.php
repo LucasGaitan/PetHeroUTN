@@ -12,9 +12,28 @@
         public function Add(Owner $owner)
         {
             $this->RetrieveData();
-            array_push($this->ownerList, $owner);
+            $i = 0;
+            $flag = false;
+
+            do
+            {
+                if ($this->ownerList[$i]->getUsername() === $owner->getUsername())
+                {
+                    $flag = true;
+                    $this->ownerList[$i] = $owner;
+                }
+                $i++;
+            }while ($i < count($this->ownerList) && !$flag);
+
+            if (!$flag)
+            {
+                array_push($this->ownerList, $owner);
+            }
+
             $this->SaveData();
         }
+
+
 
         public function GetAll(): array
         {
@@ -25,49 +44,30 @@
         private function SaveData()
         {
             $arrayToEncode = array();
-            $dogsToJSON = array();
 
             foreach($this->ownerList as $owner)
             {
+
                 $valuesArray["firstName"] = $owner->getFirstName();
                 $valuesArray["lastName"] = $owner->getLastName();
                 $valuesArray["username"] = $owner->getUsername();
                 $valuesArray["password"] = $owner->getPassword();
+                $valuesArray["dogs"] = array();
+                $dogs = $owner->getDogs();
 
-                $dogList = $owner->getDogs();
-//                $valuesArray["dogs"] = $owner->getDogs();
-
-                if (!empty($dogList[0]))
+                if (!empty($dogs[0]))
                 {
-
-                    var_dump($dogList);
-                    echo '<br>';
-                    var_dump(count($dogList));
-
-                    $i = 0;
-
-                    foreach ($dogList as $dog)
+                    foreach ($dogs as $dog)
                     {
-
-                        $valuesDog["dogName"] = $dog->getName();
-                        $valuesDog["age"] = $dog->getAge();
-                        $valuesDog["size"] = $dog->getSize();
-
-//                        $valuesDog["dog" . ($i+1)]["dogName"] = $dog->getName();
-//                        $valuesDog["dog" . ($i+1)]["age"] = $dog->getAge();
-//                        $valuesDog["dog" . ($i+1)]["size"] = $dog->getSize();
-
-                        $valuesArray["dogs"] = $valuesDog;
-
-                        $i++;
+                        $valuesArray["dogs"][] = array("name"=>$dog->getName(), "age"=>$dog->getAge(), "size"=>$dog->getSize());
                     }
                 }
                 else
                 {
-                    $valuesArray["dogs"] = [];
+                    $valuesArray["dogs"]= [];
                 }
 
-                array_push($arrayToEncode, $valuesArray);
+                $arrayToEncode[] = $valuesArray;
             }
 
             $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);

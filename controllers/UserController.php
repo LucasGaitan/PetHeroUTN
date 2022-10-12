@@ -99,6 +99,7 @@ class UserController
                 {
                     $loggedUser = $value;
                     $_SESSION['loggedUser'] = $loggedUser;
+
                     break;
                 }
             }

@@ -1,15 +1,5 @@
 [
     {
-        "firstName": "Agustin",
-        "lastName": "Gaitan",
-        "username": "Agus",
-        "password": "123",
-        "dogTypeExpected": "medium",
-        "postulation": [],
-        "reputation": null,
-        "salaryExpected": "500"
-    },
-    {
         "firstName": "lucre",
         "lastName": "bazan",
         "username": "lucre",

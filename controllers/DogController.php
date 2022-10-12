@@ -24,7 +24,6 @@ class DogController
         $this->dog->setSize($size);
 
         $_SESSION['loggedUser']->setDogs($this->dog);
-
         $this->ownerDAO->Add($_SESSION['loggedUser']);
     }
 }
