@@ -1,18 +1,9 @@
 <?php
 require_once(VIEWS_PATH."forms/dogForm.php");
+require_once(VIEWS_PATH."sections/guardianList.php");
 
 use DAO\GuardianDAO as GuardianDAO;
 use DAO\OwnerDAO as OwnerDAO;
-
-$guardianDAO = new GuardianDAO();
-
-$listGuardian = $guardianDAO->getAll();
-
-/*$ownerDAO = new OwnerDAO();
-
-$listOwner = $ownerDAO->getAll();
-
-$list = array_merge($listOwner, $listGuardian);*/
 
 ?>
 
@@ -46,36 +37,6 @@ $list = array_merge($listOwner, $listGuardian);*/
 </head>
 
 <body>
-
-<table  class="table table-bordered table-hover" id="userTable">
-    <thead>
-    <tr>
-        <th>
-            Username
-        </th>
-        <th>
-            First Name
-        </th>
-        <th>
-            Last Name
-        </th>
-    </tr>
-    </thead>
-
-    <tbody>
-        <?php
-        foreach ($listGuardian as $value)
-        { ?>
-        <tr>
-            <td><?php echo $value->getUsername()?> </td>
-            <td><?php echo $value->getFirstName()?> </td>
-            <td><?php echo $value->getLastName()?> </td>
-        </tr>
-            <?php
-        }
-        ?>
-    </tbody>
-</table>
 
 <button><a data-bs-toggle="modal" data-bs-target="#dogForm" >Dog Form</a></button>
 
