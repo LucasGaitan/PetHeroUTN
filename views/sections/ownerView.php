@@ -1,10 +1,5 @@
 <?php
 require_once(VIEWS_PATH."forms/dogForm.php");
-require_once(VIEWS_PATH."sections/guardianList.php");
-
-use DAO\GuardianDAO as GuardianDAO;
-use DAO\OwnerDAO as OwnerDAO;
-
 ?>
 
 <!DOCTYPE html>
@@ -38,15 +33,48 @@ use DAO\OwnerDAO as OwnerDAO;
 
 <body>
 
-<button><a data-bs-toggle="modal" data-bs-target="#dogForm" >Dog Form</a></button>
+    <?php 
+        include 'headerSec.php';
+    ?>
 
-<script type="text/javascript" src="https://cdn.datatables.net/1.10-dev/js/jquery.dataTables.js%22%3E"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/plug-ins/f3e99a6c02/integration/bootstrap/3/dataTables.bootstrap.js%22%3E"></script>
-<script src="https://kit.fontawesome.com/9682b774cb.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    <section class="section__ownerNav">
+
+        <nav class="ownerNav">
+    
+            <section class="ownerNav__button">
+                <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/hogar.png" alt="">
+                <a class="ownerNav__link">Home</a>
+            </section>
+    
+            <section class="ownerNav__button">
+                <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/portapapeles.png" alt="">
+                <a class="ownerNav__link">View Dogs</a>
+            </section>
+            
+            <section class="ownerNav__button">
+                <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/dogo-argentino.png" alt="">
+                <a class="ownerNav__link" data-bs-target="#dogForm">Add Dog</a>
+            </section>
+    
+            <section class="ownerNav__button">
+                <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/superhero.png" alt="">
+                <a class="ownerNav__link">View Guardians</a>
+            </section>
+    
+        </nav>
+
+    </section>
+
+
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10-dev/js/jquery.dataTables.js%22%3E"></script>
+    <script type="text/javascript"
+        src="https://cdn.datatables.net/plug-ins/f3e99a6c02/integration/bootstrap/3/dataTables.bootstrap.js%22%3E"></script>
+    <script src="https://kit.fontawesome.com/9682b774cb.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
 </body>
 
 

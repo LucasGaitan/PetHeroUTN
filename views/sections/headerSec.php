@@ -1,7 +1,9 @@
-<header>
+<header class="headerSec">
 
-    <nav>
+    <a href="#"><img class="headerSec__icon" src="<?php echo ASSETS_PATH?>/dogHero.png" alt=""></a>
 
-    </nav>
+    <h1 class="headerSec__title">Nombre del Owner</h1>
+
+    <a href="#" class="headerSec__logout">Log out</a>
     
 </header>

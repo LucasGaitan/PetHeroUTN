@@ -1,0 +1,43 @@
+@import "./variables";
+
+.headerSec{
+    height: 5rem;
+    width: 100vw;
+    padding: 2rem;
+    background-color: $mainColor;
+    box-shadow: 1px 1px 10px black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__icon{
+        height: 5rem;
+        width: 5rem;   
+    }
+
+    &__title{
+        font-size: 2rem;
+        font-weight: bold;
+        color: $colorBlanco;
+    }
+
+    &__logout{
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: bolder;
+        cursor: pointer;
+
+        color: $colorBlanco;
+        border: 2px solid $colorBlanco;
+        border-radius: 50px;
+        padding: 0.3rem 1rem 0.3rem 1rem;
+        transition: 0.2s ease;
+
+        &:hover{
+            background-color: $colorBlanco;
+            color: $mainColor;
+            transform: scale(1.1);
+            transition: 0.2s ease;
+        }
+    }
+}
