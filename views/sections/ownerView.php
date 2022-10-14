@@ -1,7 +1,7 @@
 <?php
 require_once(VIEWS_PATH."forms/dogForm.php");
 require_once(VIEWS_PATH."sections/guardianList.php");
-
+require_once(VIEWS_PATH."sections/dogList.php");
 use DAO\GuardianDAO as GuardianDAO;
 use DAO\OwnerDAO as OwnerDAO;
 

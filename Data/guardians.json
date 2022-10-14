@@ -1,12 +1,29 @@
 [
     {
-        "firstName": "lucre",
-        "lastName": "bazan",
+        "firstName": "Lucrecia",
+        "lastName": "Bazan",
         "username": "lucre",
         "password": "123",
-        "dogTypeExpected": "small",
+        "dogTypeExpected": "medium",
+        "postulation": [
+            {
+                "startDate": "2022-10-27",
+                "endDate": "2022-10-30",
+                "hoursPerDay": "4",
+                "description": "paseo"
+            }
+        ],
+        "reputation": null,
+        "salaryExpected": "10000"
+    },
+    {
+        "firstName": "Lucas",
+        "lastName": "Gaitan",
+        "username": "lucas",
+        "password": "123",
+        "dogTypeExpected": "medium",
         "postulation": [],
         "reputation": null,
-        "salaryExpected": "123"
+        "salaryExpected": "50"
     }
 ]
