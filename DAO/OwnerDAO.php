@@ -15,15 +15,19 @@
             $i = 0;
             $flag = false;
 
-            do
+            if(!empty($this->ownerList[0]))
             {
-                if ($this->ownerList[$i]->getUsername() === $owner->getUsername())
+                do
                 {
-                    $flag = true;
-                    $this->ownerList[$i] = $owner;
-                }
-                $i++;
-            }while ($i < count($this->ownerList) && !$flag);
+                    if ($this->ownerList[$i]->getUsername() === $owner->getUsername())
+                    {
+                        $flag = true;
+                        $this->ownerList[$i] = $owner;
+                    }
+                    $i++;
+                }while ($i < count($this->ownerList) && !$flag);
+            }
+
 
             if (!$flag)
             {

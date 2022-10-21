@@ -1,65 +1,19 @@
 [
     {
-        "firstName": "Ezequiel",
-        "lastName": "Morales",
-        "username": "eze",
+        "firstName": "Rodrigo",
+        "lastName": "Soto",
+        "username": "rodri",
         "password": "123",
         "dogs": [
             {
-                "name": "solimano",
-                "age": "12",
-                "size": "small"
-            },
-            {
-                "name": "seba ribeiro",
-                "age": "12",
+                "name": "Olivia",
+                "age": "2",
                 "size": "small"
             },
             {
                 "name": "Kongo",
                 "age": "18",
                 "size": "small"
-            },
-            {
-                "name": "Seymour",
-                "age": "5000",
-                "size": "small"
-            }
-        ]
-    },
-    {
-        "firstName": "Santiago ",
-        "lastName": "Dadan",
-        "username": "santi",
-        "password": "123",
-        "dogs": [
-            {
-                "name": "Kongo",
-                "age": "18",
-                "size": "small"
-            },
-            {
-                "name": "benoffi",
-                "age": "12",
-                "size": "small"
-            }
-        ]
-    },
-    {
-        "firstName": "Lucas",
-        "lastName": "Gaitan",
-        "username": "lucas",
-        "password": "123",
-        "dogs": [
-            {
-                "name": "lola",
-                "age": "12",
-                "size": "small"
-            },
-            {
-                "name": "Ayudante de santa",
-                "age": "15",
-                "size": "medium"
             }
         ]
     }

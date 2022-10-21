@@ -79,23 +79,37 @@ class Guardian extends User{
         return $this;
     }
 
-    /**
-     * Get the value of postulation
-     */ 
     public function getPostulation()
     {
         return $this->postulation;
     }
 
-    /**
-     * Set the value of postulation
-     *
-     * @return  self
-     */ 
+
     public function setPostulation($postulation)
     {
-        $this->postulation = $postulation;
+        if(empty($this->postulation[0]))
+        {
+            $this->postulation[0] = $postulation;
+        }
+        else
+        {
+            $this->postulation[] = $postulation;
+        }
+    }
 
-        return $this;
+    public function setAllPostulations(array $postulationArray)
+    {
+        $this->postulation = [];
+
+        foreach ($postulationArray as $aux)
+        {
+            $postulation = new Postulation();
+            $postulation->setStartDate($aux["startDate"]);
+            $postulation->setEndDate($aux["endDate"]);
+            $postulation->setHoursPerDay($aux["hoursPerDay"]);
+            $postulation->setDescription($aux["description"]);
+
+            $this->postulation[] = $postulation;
+        }
     }
 }

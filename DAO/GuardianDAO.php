@@ -12,7 +12,25 @@
         {
             $this->RetrieveData();
 
-            array_push($this->guardianList, $guardian);
+            $i = 0;
+            $flag = false;
+
+            if (!empty($this->guardianList[0]))
+            {
+                do
+                {
+                    if ($this->guardianList[$i]->getUsername() === $guardian->getUsername())
+                    {
+                        $flag = true;
+                        $this->guardianList[$i] = $guardian;
+                    }
+                    $i++;
+                }while ($i < count($this->guardianList) && !$flag);
+            }
+            if (!$flag)
+            {
+                array_push($this->guardianList, $guardian);
+            }
 
             $this->SaveData();
         }
@@ -36,12 +54,28 @@
                 $valuesArray["username"] = $guardian->getUsername();
                 $valuesArray["password"] = $guardian->getPassword();
                 $valuesArray["dogTypeExpected"] = $guardian->getDogTypeExpected();
-                $valuesArray["postulation"] = $guardian->getPostulation();
+                $valuesArray["postulation"] = array();
+
+                $postulations = $guardian->getPostulation();
+
+                if (!empty($postulations[0]))
+                {
+                    foreach ($postulations as $post){
+                        $valuesArray["postulation"][] = array("startDate"=>$post->getStartDate(), "endDate"=>$post->getEndDate()
+                        , "hoursPerDay"=> $post->getHoursPerDay(), "description"=>$post->getDescription());
+
+                    }
+                }
+                else
+                {
+                    $valuesArray["postulation"]= [];
+                }
+
                 $valuesArray["reputation"] = $guardian->getReputation();
                 $valuesArray["salaryExpected"] = $guardian->getSalaryExpected();
                 
 
-                array_push($arrayToEncode, $valuesArray);
+                $arrayToEncode[] = $valuesArray;
             }
 
             $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
@@ -67,7 +101,7 @@
                     $guardian->setUsername($valuesArray["username"]);
                     $guardian->setPassword($valuesArray["password"]);
                     $guardian->setDogTypeExpected($valuesArray["dogTypeExpected"]);
-                    $guardian->setPostulation($valuesArray["postulation"]);
+                    $guardian->setAllPostulations($valuesArray["postulation"]);
                     $guardian->setReputation($valuesArray["reputation"]);
                     $guardian->setSalaryExpected($valuesArray["salaryExpected"]);
 
