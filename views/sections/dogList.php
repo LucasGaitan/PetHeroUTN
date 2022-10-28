@@ -6,7 +6,7 @@ $ownerDAO = new OwnerDAO();
 $listOwner = $ownerDAO->getAll();
 foreach ($listOwner as $value)
 {
-    if ($value->getUsername() === $_SESSION['loggedUser']->getUsername()){
+    if ($value->getUsername() == $_SESSION['loggedUser']->getUsername()){
         $dogArray = $value->getDogs();
     }
 }

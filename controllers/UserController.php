@@ -105,14 +105,20 @@ class UserController
             }
         }
 
+        echo '<pre>';
+var_dump( $_SESSION['loggedUser']);
+echo '</pre>';
         if(isset($_SESSION))
         {
             if($flag){
                 $this->showGuardianView();
             }
             else{
+                
                 $this->showOwnerView();
             }
         }
     }
+
+    
 }

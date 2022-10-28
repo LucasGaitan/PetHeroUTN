@@ -756,12 +756,18 @@ body::-webkit-scrollbar-thumb {
   100% {
     opacity: 0%;
   }
+  0% {
+    opacity: 0%;
+  }
 }
 @keyframes fadeout {
   0% {
     opacity: 100%;
   }
   100% {
+    opacity: 0%;
+  }
+  0% {
     opacity: 0%;
   }
 }
@@ -772,6 +778,9 @@ body::-webkit-scrollbar-thumb {
   100% {
     opacity: 100%;
   }
+  0% {
+    opacity: 0%;
+  }
 }
 @keyframes fadein {
   0% {
@@ -779,5 +788,8 @@ body::-webkit-scrollbar-thumb {
   }
   100% {
     opacity: 100%;
+  }
+  0% {
+    opacity: 0%;
   }
 }/*# sourceMappingURL=main.css.map */

@@ -43,28 +43,52 @@ require_once(VIEWS_PATH."forms/dogForm.php");
     
             <section class="ownerNav__button">
                 <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/hogar.png" alt="">
-                <a class="ownerNav__link">Home</a>
+                <a class="ownerNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=0">Home</a>
             </section>
     
             <section class="ownerNav__button">
                 <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/portapapeles.png" alt="">
-                <a class="ownerNav__link">View Dogs</a>
+                <a class="ownerNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=1">View Dogs</a>
             </section>
             
             <section class="ownerNav__button">
                 <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/dogo-argentino.png" alt="">
-                <a class="ownerNav__link" data-bs-target="#dogForm">Add Dog</a>
+                <a class="ownerNav__link" data-bs-toggle="modal" data-bs-target="#dogForm">Add Dog</a>
             </section>
     
             <section class="ownerNav__button">
                 <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/superhero.png" alt="">
-                <a class="ownerNav__link">View Guardians</a>
+                <a class="ownerNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=2">View Guardians</a>
             </section>
     
         </nav>
 
     </section>
 
+    <?php
+
+    
+    if(isset($val)){
+
+       switch($val){
+
+        case 0:
+            require_once(VIEWS_PATH . "sections/homeOwner.php");
+            break;
+            
+        case 1:
+            require_once(VIEWS_PATH . "sections/dogList.php");
+            break;
+        
+        case 2:
+            require_once(VIEWS_PATH . "sections/guardianList.php");
+            break;
+
+       }
+
+    };
+
+    ?>
 
     <script type="text/javascript" src="https://cdn.datatables.net/1.10-dev/js/jquery.dataTables.js%22%3E"></script>
     <script type="text/javascript"

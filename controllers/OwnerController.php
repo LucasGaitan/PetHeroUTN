@@ -15,6 +15,16 @@ class OwnerController
     }
 
     public function showDogList(){
+        
         require_once(VIEWS_PATH . "/sections/dogList.php");
+    }
+
+    public function showActionMenu($value){
+
+        $val = 0;
+
+        $val = $value;
+
+        require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 }
