@@ -1,5 +1,5 @@
 <?php
-    namespace DAO;
+    namespace DAOJson;
 
     use Models\Owner as Owner;
 

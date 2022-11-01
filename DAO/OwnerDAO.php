@@ -1,105 +1,33 @@
 <?php
     namespace DAO;
 
-    use DAO\IOwnerDAO as IOwnerDAO;
+    use DAO\IDAO as IDAO;
     use Models\Owner as Owner;
     use Models\Dog;
 
-    class OwnerDAO implements IOwnerDAO
+    class OwnerDAO implements IDAO
     {
-        private $ownerList = array();
+        private $tableName;
+        private $connection;
 
-        public function Add(Owner $owner)
+        function __construct()
         {
-            $this->RetrieveData();
-            $i = 0;
-            $flag = false;
-
-            if(!empty($this->ownerList[0]))
-            {
-                do
-                {
-                    if ($this->ownerList[$i]->getUsername() === $owner->getUsername())
-                    {
-                        $flag = true;
-                        $this->ownerList[$i] = $owner;
-                    }
-                    $i++;
-                }while ($i < count($this->ownerList) && !$flag);
-            }
-
-
-            if (!$flag)
-            {
-                array_push($this->ownerList, $owner);
-            }
-
-            $this->SaveData();
+            $this->tableName = 'owners';
         }
 
-
-
-        public function GetAll(): array
+        public function Add($id)
         {
-            $this->RetrieveData();
-            return $this->ownerList;
-        }
+            $query = "INSERT INTO " . $this->tableName . "(id_user) VALUES (:id)";
 
-        private function SaveData()
-        {
-            $arrayToEncode = array();
-
-            foreach($this->ownerList as $owner)
+            try
             {
-
-                $valuesArray["firstName"] = $owner->getFirstName();
-                $valuesArray["lastName"] = $owner->getLastName();
-                $valuesArray["username"] = $owner->getUsername();
-                $valuesArray["password"] = $owner->getPassword();
-                $valuesArray["dogs"] = array();
-                $dogs = $owner->getDogs();
-
-                if (!empty($dogs[0]))
-                {
-                    foreach ($dogs as $dog)
-                    {
-                        $valuesArray["dogs"][] = array("name"=>$dog->getName(), "age"=>$dog->getAge(), "size"=>$dog->getSize());
-                    }
-                }
-                else
-                {
-                    $valuesArray["dogs"]= [];
-                }
-
-                $arrayToEncode[] = $valuesArray;
+                $this->connection = Connection::GetInstance();
+                $parameters['id'] = $id;
+                $this->connection->ExecuteNonQuery($query, $parameters);
             }
-
-            $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-
-            file_put_contents('Data/owners.json', $jsonContent);
-        }
-
-        private function RetrieveData()
-        {
-            $this->ownerList = array();
-
-            if(file_exists('Data/owners.json'))
+            catch(Exception $e)
             {
-                $jsonContent = file_get_contents('Data/owners.json');
-
-                $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-                foreach($arrayToDecode as $valuesArray)
-                {
-                    $owner = new owner();
-                    $owner->setFirstName($valuesArray["firstName"]);
-                    $owner->setLastName($valuesArray["lastName"]);
-                    $owner->setUsername($valuesArray["username"]);
-                    $owner->setPassword($valuesArray["password"]);
-                    $owner->setAllDogs($valuesArray["dogs"]);
-
-                    array_push($this->ownerList, $owner);
-                }
+                throw $e;
             }
         }
     }

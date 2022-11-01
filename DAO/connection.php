@@ -27,7 +27,6 @@ class Connection {
 
     public static function GetInstance()
     {
-
         if(self::$instance == null)
             self::$instance = new Connection();
 
