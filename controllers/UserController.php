@@ -46,7 +46,6 @@ class UserController
             $this->user = ["username"=>$username, "email"=>$email];
 
             $this->userDAO->Add($firstName, $lastName, $username, $password, $email);
-            session_destroy();
             session_start();
             $_SESSION['user'] = $this->user;
             $this->showTypeAccount();
@@ -59,32 +58,30 @@ class UserController
 
     public function guardianForm($dogTypeExpected, $salaryExpected)
     {
+        session_start();
         $this->user = $_SESSION['user'];
-        $this->user["dogTypeExpected"] = $dogTypeExpected;
-        $this->user["salaryExpected"] = $salaryExpected;
+        $id_user = $this->userDAO->findIdByUsername($this->user->getUsername());
         $guardian = new Guardian();
-        $guardian->setFirstName($this->user['firstName']);
-        $guardian->setLastName($this->user['lastName']);
-        $guardian->setUsername($this->user['username']);
-        $guardian->setPassword($this->user['password']);
-        $guardian->setDogTypeExpected($this->user['dogTypeExpected']);
-        $guardian->setSalaryExpected($this->user['salaryExpected']);
+        $guardian->setId($id_user);
+        $guardian->setId_animal_size_expected($dogTypeExpected);
+        $guardian->setSalaryExpected($salaryExpected);
         $this->guardianDAO->Add($guardian);
     }
 
     public function ownerForm()
     {
         session_start();
-
-        var_dump($_SESSION);
         $this->user = $_SESSION['user'];
-        $id_user = $this->userDAO->findIdByUsername($this->user['username']);
+        var_dump($this->user->getUsername());
+        $id_user = $this->userDAO->findIdByUsername($this->user->getUsername());
         $this->ownerDAO->Add($id_user);
     }
 
     public function signIn($username, $password)
     {
         $user = $this->userDAO->findUserByUsername($username);
+        session_start();
+        $_SESSION['user'] = $user;
 
         try {
             if(isset($user))

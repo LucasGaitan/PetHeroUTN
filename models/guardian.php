@@ -5,8 +5,8 @@ namespace Models;
 use Models\User as User;
 
 class Guardian extends User{
-
-    private $dogTypeExpected;
+    private $idGuardian;
+    private $id_animal_size_expected;
     private $salaryExpected;
     private $reputation;
     private $postulation;
@@ -22,9 +22,9 @@ class Guardian extends User{
     /**
      * Get the value of dogTypeExpected
      */ 
-    public function getDogTypeExpected()
+    public function getId_animal_size_expected()
     {
-        return $this->dogTypeExpected;
+        return $this->id_animal_size_expected;
     }
 
     /**
@@ -32,9 +32,9 @@ class Guardian extends User{
      *
      * @return  self
      */ 
-    public function setDogTypeExpected($dogTypeExpected)
+    public function setId_animal_size_expected($id_animal_size_expected)
     {
-        $this->dogTypeExpected = $dogTypeExpected;
+        $this->id_animal_size_expected = $id_animal_size_expected;
 
         return $this;
     }
