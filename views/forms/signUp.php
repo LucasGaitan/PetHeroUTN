@@ -25,6 +25,18 @@ require_once(VIEWS_PATH."/forms/signIn.php");
                             Looks good!
                         </div>
                     </div>
+
+                    <div class="col-md-12">
+                        <label for="validationServerEmail" class="form-label">Email</label>
+                        <div class="input-group has-validation">
+                            <input type="email" name="email" class="form-control" id="validationServerEmail"
+                                   aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required>
+                            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-md-12">
                         <label for="validationServerUsername" class="form-label">Username</label>
                         <div class="input-group has-validation">

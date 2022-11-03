@@ -1,10 +1,11 @@
 <?php
 
-
 namespace Controllers;
 
 use DAO\GuardianDAO;
 use DAO\OwnerDAO;
+use DAO\UserDAO;
+use Exception;
 use Models\Guardian;
 use Models\Owner;
 
@@ -12,13 +13,14 @@ class UserController
 {
     private $guardianDAO;
     private $ownerDAO;
+    private $userDAO;
     private $user;
-
 
     public function __construct()
     {
         $this->guardianDAO = new guardianDAO();
         $this->ownerDAO = new ownerDAO();
+        $this->userDAO = new userDAO();
         $this->user = array();
     }
 
@@ -26,7 +28,6 @@ class UserController
     {
         require_once(VIEWS_PATH . "/sections/typeAcc.php");
     }
-
 
     public function showOwnerView()
     {
@@ -38,87 +39,133 @@ class UserController
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 
-    public function signUp($firstName, $lastName, $username, $password, $password2)
+    public function signUp($firstName, $lastName, $username, $password, $password2, $email)
     {
         if($password === $password2)
         {
-            $this->user = ["firstName"=>$firstName, "lastName"=>$lastName, "username"=>$username, "password"=>$password];
+            $this->user = ["username"=>$username, "email"=>$email];
+
+            $this->userDAO->Add($firstName, $lastName, $username, $password, $email);
+            session_start();
             $_SESSION['user'] = $this->user;
+            $this->showTypeAccount();
         }
-        $this->showTypeAccount();
+        else
+        {
+            #SE ENTIENDE
+        }
     }
 
     public function guardianForm($dogTypeExpected, $salaryExpected)
     {
+        session_start();
         $this->user = $_SESSION['user'];
-        $this->user["dogTypeExpected"] = $dogTypeExpected;
-        $this->user["salaryExpected"] = $salaryExpected;
+        $id_user = $this->userDAO->findIdByUsername($this->user->getUsername());
         $guardian = new Guardian();
-        $guardian->setFirstName($this->user['firstName']);
-        $guardian->setLastName($this->user['lastName']);
-        $guardian->setUsername($this->user['username']);
-        $guardian->setPassword($this->user['password']);
-        $guardian->setDogTypeExpected($this->user['dogTypeExpected']);
-        $guardian->setSalaryExpected($this->user['salaryExpected']);
+        $guardian->setId($id_user);
+        $guardian->setId_animal_size_expected($dogTypeExpected);
+        $guardian->setSalaryExpected($salaryExpected);
         $this->guardianDAO->Add($guardian);
-
     }
+
     public function ownerForm()
     {
+        session_start();
         $this->user = $_SESSION['user'];
-        $owner = new Owner();
-        $owner->setFirstName($this->user['firstName']);
-        $owner->setLastName($this->user['lastName']);
-        $owner->setUsername($this->user['username']);
-        $owner->setPassword($this->user['password']);
-        $this->ownerDAO->Add($owner);
+        $id_user = $this->userDAO->findIdByUsername($this->user->getUsername());
+        $this->ownerDAO->Add($id_user);
+        $this->showOwnerView
+
+        ();
     }
+//
+//    public function views($redirectionView)
+//    {
+//        if($redirectionView == 1)
+//            $this->showOwnerView();
+//        else
+//            $this->showGuardianView();
+//    }
 
     public function signIn($username, $password)
     {
-        session_destroy();
+        $user = $this->userDAO->findUserByUsername($username);
         session_start();
-        $listGuardian = $this->guardianDAO->GetAll();
-        $listOwner = $this->ownerDAO->GetAll();
-        $flag = false;
-        foreach ($listGuardian as $value)
-        {
-            if ($value->getUsername() === $username && $value->getPassword() === $password)
-            {
-                $loggedUser = $value;
-                $_SESSION['loggedUser'] = $loggedUser;
-                $flag = true;
-                break;
-            }
-        }
-        if (!$flag)
-        {
-            foreach ($listOwner as $value)
-            {
-                if ($value->getUsername() === $username && $value->getPassword() === $password)
-                {
-                    $loggedUser = $value;
-                    $_SESSION['loggedUser'] = $loggedUser;
+        $_SESSION['user'] = $user;
 
-                    break;
+        try {
+            if(isset($user) && $user->getPassword() === $password)
+            {
+                $id = $user->getId();
+                #Si es owner o guardian
+                $redirectionView = $this->userDAO->findMatchRole($id);
+                switch($redirectionView)
+                {
+                    case 1:
+//                        header('location:' . VIEWS_PATH . 'sections/ownerView.php');
+                        $this->showOwnerView();
+//                         $this->views($redirectionView);
+                        break;
+
+                    case 2:
+//                        header('location:' . VIEWS_PATH . 'sections/guardianView.php');
+                        $this->showGuardianView();
+//                            $this->views($redirectionView);
+                        break;
+
+                    case 3:
+                        $this->showTypeAccount();
+                        break;
                 }
             }
-        }
-
-        echo '<pre>';
-var_dump( $_SESSION['loggedUser']);
-echo '</pre>';
-        if(isset($_SESSION))
+            else
+            {
+                #Mensaje de fallo de inicio de sesion
+                echo 'Incorrect username or password, please try again.';
+            }
+        }catch(Exception $e)
         {
-            if($flag){
-                $this->showGuardianView();
-            }
-            else{
-                
-                $this->showOwnerView();
-            }
+            echo $e;
         }
-    }
 
-    
+//        session_start();
+//        $listGuardian = $this->guardianDAO->GetAll();
+//        $listOwner = $this->ownerDAO->GetAll();
+//        $flag = false;
+//        foreach ($listGuardian as $value)
+//        {
+//            if ($value->getUsername() === $username && $value->getPassword() === $password)
+//            {
+//                $loggedUser = $value;
+//                $_SESSION['loggedUser'] = $loggedUser;
+//                $flag = true;
+//                break;
+//            }
+//        }
+//        if (!$flag)
+//        {
+//            foreach ($listOwner as $value)
+//            {
+//                if ($value->getUsername() === $username && $value->getPassword() === $password)
+//                {
+//                    $loggedUser = $value;
+//                    $_SESSION['loggedUser'] = $loggedUser;
+//
+//                    break;
+//                }
+//            }
+//        }
+//
+//        if(isset($_SESSION))
+//        {
+//            if($flag){
+//                $this->showGuardianView();
+//            }
+//            else{
+//                $this->showOwnerView();
+//            }
+//        }
+
+
+    }
 }

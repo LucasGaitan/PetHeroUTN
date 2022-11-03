@@ -1,6 +1,6 @@
 <?php
 
-namespace DAO;
+namespace DAOJson;
 
 use Models\Guardian as Guardian;
 

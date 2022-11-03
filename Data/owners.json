@@ -16,5 +16,12 @@
                 "size": "small"
             }
         ]
+    },
+    {
+        "firstName": null,
+        "lastName": null,
+        "username": null,
+        "password": null,
+        "dogs": []
     }
 ]

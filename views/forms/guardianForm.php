@@ -13,9 +13,9 @@
                     <div class="col-md-6">
                         <select class="form-select" aria-label="Default select example" name="dogTypeExpected">
                             <option selected>Select a dog type expected</option>
-                            <option value="small">Small</option>
-                            <option value="medium">Medium</option>
-                            <option value="big">Big</option>
+                            <option value="1">Small</option>
+                            <option value="2">Medium</option>
+                            <option value="3">Big</option>
                         </select>
                     </div>
                     <div class="col-md-6">

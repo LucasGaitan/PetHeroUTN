@@ -1,112 +1,81 @@
 <?php
     namespace DAO;
 
-    use DAO\IGuardianDAO as IGuardianDAO;
+    use DAO\IDAO as IDAO;
     use Models\Guardian as Guardian;
 
-    class GuardianDAO implements IGuardianDAO
+    class GuardianDAO implements IDAO
     {
-        private $guardianList = array();
+        private $tableName;
+        private $connection;
 
-        public function Add(Guardian $guardian)
+        function __construct()
         {
-            $this->RetrieveData();
-
-            $i = 0;
-            $flag = false;
-
-            if (!empty($this->guardianList[0]))
-            {
-                do
-                {
-                    if ($this->guardianList[$i]->getUsername() === $guardian->getUsername())
-                    {
-                        $flag = true;
-                        $this->guardianList[$i] = $guardian;
-                    }
-                    $i++;
-                }while ($i < count($this->guardianList) && !$flag);
-            }
-            if (!$flag)
-            {
-                array_push($this->guardianList, $guardian);
-            }
-
-            $this->SaveData();
+            $this->tableName = 'guardians';
         }
 
-        public function GetAll(): array
+        public function Add($guardian)
         {
-            $this->RetrieveData();
+            $query = "INSERT INTO " . $this->tableName . "(salaryExpected, reputation, startDate, endDate, id_animal_size_expected, id_user) 
+            VALUES (:salaryExpected, null, null, null, :id_animal_size_expected, :id)";
 
-            return $this->guardianList;
+            try
+            {
+                $this->connection = Connection::GetInstance();
+                $parameters['id'] = $guardian->getId();
+                $parameters['salaryExpected'] = $guardian->getSalaryExpected();
+                $parameters['id_animal_size_expected'] = $guardian->getId_animal_size_expected();
+                $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $e)
+            {
+                throw $e;
+            }
         }
 
-        private function SaveData()
+        private function mapGuardians($guardians)
         {
-            $arrayToEncode = array();
-
-            foreach($this->guardianList as $guardian)
+            $resp = array_map(function($p)
             {
+                $guardian = new Guardian();
+                $guardian->setId($p["id_user"]);
+                $guardian->setIdGuardian($p["id_guardian"]);
+                $guardian->setUsername($p["username"]);
+                $guardian->setFirstName($p["firstName"]);
+                $guardian->setLastName($p["lastName"]);
+                $guardian->setSalaryExpected($p["salaryExpected"]);
+                $guardian->setReputation($p["reputation"]);
+                $guardian->setStarDate($p["startDate"]);
+                $guardian->setEndDate($p["endDate"]);
+                $guardian->setEmail($p["email"]);
+                $guardian->setId_animal_size_expected($p['id_animal_size_expected']);
 
-                $valuesArray["firstName"] = $guardian->getFirstName();
-                $valuesArray["lastName"] = $guardian->getLastName();
-                $valuesArray["username"] = $guardian->getUsername();
-                $valuesArray["password"] = $guardian->getPassword();
-                $valuesArray["dogTypeExpected"] = $guardian->getDogTypeExpected();
-                $valuesArray["postulation"] = array();
+                return $guardian;
+            }, $guardians);
 
-                $postulations = $guardian->getPostulation();
-
-                if (!empty($postulations[0]))
-                {
-                    foreach ($postulations as $post){
-                        $valuesArray["postulation"][] = array("startDate"=>$post->getStartDate(), "endDate"=>$post->getEndDate()
-                        , "hoursPerDay"=> $post->getHoursPerDay(), "description"=>$post->getDescription());
-
-                    }
-                }
-                else
-                {
-                    $valuesArray["postulation"]= [];
-                }
-
-                $valuesArray["reputation"] = $guardian->getReputation();
-                $valuesArray["salaryExpected"] = $guardian->getSalaryExpected();
-                
-
-                $arrayToEncode[] = $valuesArray;
-            }
-
-            $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-
-            file_put_contents('Data/guardians.json', $jsonContent);
+            return $resp;
         }
 
-        private function RetrieveData()
+        public function getAll()
         {
-            $this->guardianList = array();
+            $query = "SELECT * FROM guardians G INNER JOIN users U ON U.id_user = G.id_user";
+            $listGuardians = array();
 
-            if(file_exists('Data/guardians.json'))
+            try
             {
-                $jsonContent = file_get_contents('Data/guardians.json');
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query);
 
-                $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-                foreach($arrayToDecode as $valuesArray)
+                if(!empty($result))
                 {
-                    $guardian = new Guardian();
-                    $guardian->setFirstName($valuesArray["firstName"]);
-                    $guardian->setLastName($valuesArray["lastName"]);
-                    $guardian->setUsername($valuesArray["username"]);
-                    $guardian->setPassword($valuesArray["password"]);
-                    $guardian->setDogTypeExpected($valuesArray["dogTypeExpected"]);
-                    $guardian->setAllPostulations($valuesArray["postulation"]);
-                    $guardian->setReputation($valuesArray["reputation"]);
-                    $guardian->setSalaryExpected($valuesArray["salaryExpected"]);
-
-                    array_push($this->guardianList, $guardian);
+                    $listGuardians = $this->mapGuardians($result);
                 }
             }
+            catch(Exception $e)
+            {
+                throw $e;
+            }
+
+            return $listGuardians;
         }
     }

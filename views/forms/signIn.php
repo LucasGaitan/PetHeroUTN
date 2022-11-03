@@ -1,5 +1,6 @@
 <?php
 require_once(VIEWS_PATH."/forms/signUp.php");
+require_once(VIEWS_PATH."/alerts/failureStartSession.php");
 ?>
 
 <div class="modal fade" id="signIn" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
