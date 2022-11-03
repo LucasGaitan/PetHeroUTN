@@ -7,7 +7,9 @@ abstract class Animal{
     private $id_animal;
     private $name;
     private $age;
+    private $photo;
     private $size;
+
 
     function __construct()
     {

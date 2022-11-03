@@ -104,7 +104,7 @@ class UserController
                     case 1:
 //                        header('location:' . VIEWS_PATH . 'sections/ownerView.php');
                         $this->showOwnerView();
-//                            $this->views($redirectionView);
+//                         $this->views($redirectionView);
                         break;
 
                     case 2:

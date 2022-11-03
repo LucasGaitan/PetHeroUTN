@@ -1,5 +1,5 @@
 <?php
-require_once(VIEWS_PATH."forms/dogForm.php");
+require_once(VIEWS_PATH."forms/animalForm.php");
 require_once(VIEWS_PATH."sections/guardianList.php");
 //require_once(VIEWS_PATH."sections/dogList.php");
 ?>
@@ -31,7 +31,7 @@ require_once(VIEWS_PATH."sections/guardianList.php");
 </head>
 <body>
 
-    <button><a data-bs-toggle="modal" data-bs-target="#dogForm" >Dog Form</a></button>
+    <button><a data-bs-toggle="modal" data-bs-target="#dogForm" >Animal Form</a></button>
 
     <script type="text/javascript" src="https://cdn.datatables.net/1.10-dev/js/jquery.dataTables.js%22%3E"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/f3e99a6c02/integration/bootstrap/3/dataTables.bootstrap.js%22%3E"></script>
