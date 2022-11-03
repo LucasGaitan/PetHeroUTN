@@ -32,4 +32,50 @@
                 throw $e;
             }
         }
+
+        private function mapGuardians($guardians)
+        {
+            $resp = array_map(function($p)
+            {
+                $guardian = new Guardian();
+                $guardian->setId($p["id_user"]);
+                $guardian->setIdGuardian($p["id_guardian"]);
+                $guardian->setUsername($p["username"]);
+                $guardian->setFirstName($p["firstName"]);
+                $guardian->setLastName($p["lastName"]);
+                $guardian->setSalaryExpected($p["salaryExpected"]);
+                $guardian->setReputation($p["reputation"]);
+                $guardian->setStarDate($p["startDate"]);
+                $guardian->setEndDate($p["endDate"]);
+                $guardian->setEmail($p["email"]);
+                $guardian->setId_animal_size_expected($p['id_animal_size_expected']);
+
+                return $guardian;
+            }, $guardians);
+
+            return $resp;
+        }
+
+        public function getAll()
+        {
+            $query = "SELECT * FROM guardians G INNER JOIN users U ON U.id_user = G.id_user";
+            $listGuardians = array();
+
+            try
+            {
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query);
+
+                if(!empty($result))
+                {
+                    $listGuardians = $this->mapGuardians($result);
+                }
+            }
+            catch(Exception $e)
+            {
+                throw $e;
+            }
+
+            return $listGuardians;
+        }
     }

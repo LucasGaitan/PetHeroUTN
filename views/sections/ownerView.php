@@ -1,9 +1,7 @@
 <?php
 require_once(VIEWS_PATH."forms/dogForm.php");
 require_once(VIEWS_PATH."sections/guardianList.php");
-require_once(VIEWS_PATH."sections/dogList.php");
-use DAO\GuardianDAO as GuardianDAO;
-use DAO\OwnerDAO as OwnerDAO;
+//require_once(VIEWS_PATH."sections/dogList.php");
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +9,6 @@ use DAO\OwnerDAO as OwnerDAO;
 <html lang="en" xmlns:html="http://www.w3.org/1999/html">
 
 <head>
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +19,6 @@ use DAO\OwnerDAO as OwnerDAO;
 
     <link rel="icon" type="image/x-icon" href="<?php echo ASSETS_PATH?>/favicon.ico">
 
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -32,20 +28,18 @@ use DAO\OwnerDAO as OwnerDAO;
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/plug-ins/f3e99a6c02/integration/bootstrap/3/dataTables.bootstrap.css%22%3E">
 
     <link rel="stylesheet" href="<?php echo CSS_PATH?>/main.css">
-
 </head>
-
 <body>
 
-<button><a data-bs-toggle="modal" data-bs-target="#dogForm" >Dog Form</a></button>
+    <button><a data-bs-toggle="modal" data-bs-target="#dogForm" >Dog Form</a></button>
 
-<script type="text/javascript" src="https://cdn.datatables.net/1.10-dev/js/jquery.dataTables.js%22%3E"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/plug-ins/f3e99a6c02/integration/bootstrap/3/dataTables.bootstrap.js%22%3E"></script>
-<script src="https://kit.fontawesome.com/9682b774cb.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10-dev/js/jquery.dataTables.js%22%3E"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/f3e99a6c02/integration/bootstrap/3/dataTables.bootstrap.js%22%3E"></script>
+    <script src="https://kit.fontawesome.com/9682b774cb.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 </body>
 
 

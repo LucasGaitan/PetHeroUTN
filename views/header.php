@@ -1,6 +1,6 @@
 <?php
-require_once(VIEWS_PATH."forms/signUp.php");
-require_once(VIEWS_PATH."forms/signIn.php");
+    require_once(VIEWS_PATH."forms/signUp.php");
+    require_once(VIEWS_PATH."forms/signIn.php");
 ?>
 <!DOCTYPE html>
 

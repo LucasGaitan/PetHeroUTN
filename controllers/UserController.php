@@ -72,10 +72,20 @@ class UserController
     {
         session_start();
         $this->user = $_SESSION['user'];
-        var_dump($this->user->getUsername());
         $id_user = $this->userDAO->findIdByUsername($this->user->getUsername());
         $this->ownerDAO->Add($id_user);
+        $this->showOwnerView
+
+        ();
     }
+//
+//    public function views($redirectionView)
+//    {
+//        if($redirectionView == 1)
+//            $this->showOwnerView();
+//        else
+//            $this->showGuardianView();
+//    }
 
     public function signIn($username, $password)
     {
@@ -84,20 +94,23 @@ class UserController
         $_SESSION['user'] = $user;
 
         try {
-            if(isset($user))
+            if(isset($user) && $user->getPassword() === $password)
             {
                 $id = $user->getId();
                 #Si es owner o guardian
-                switch($this->userDAO->findMatchRole($id))
+                $redirectionView = $this->userDAO->findMatchRole($id);
+                switch($redirectionView)
                 {
                     case 1:
 //                        header('location:' . VIEWS_PATH . 'sections/ownerView.php');
                         $this->showOwnerView();
+//                            $this->views($redirectionView);
                         break;
 
                     case 2:
 //                        header('location:' . VIEWS_PATH . 'sections/guardianView.php');
                         $this->showGuardianView();
+//                            $this->views($redirectionView);
                         break;
 
                     case 3:
@@ -107,13 +120,13 @@ class UserController
             }
             else
             {
-                #No existe
+                #Mensaje de fallo de inicio de sesion
+                echo 'Incorrect username or password, please try again.';
             }
         }catch(Exception $e)
         {
             echo $e;
         }
-
 
 //        session_start();
 //        $listGuardian = $this->guardianDAO->GetAll();
