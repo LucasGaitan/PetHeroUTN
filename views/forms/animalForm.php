@@ -1,9 +1,10 @@
 <?php
+
 use DAO\AnimalDAO as AnimalDAO;
 
 $animalDAO = new AnimalDAO();
 try {
-    $animalTypes = $animalDAO->getAllTypes();
+    $animalBreeds = $animalDAO->getTypesBreeds();
     $animalSizes = $animalDAO->getAllSizes();
 } catch (Exception $e) {
     $message = $e->getMessage();
@@ -21,21 +22,18 @@ try {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="<?php echo FRONT_ROOT ?>Animal/animalForm" class="row g-2 justify-content-center" method="post">
-
+                <form>
                     <div class="col-md-6">
-                        <select class="form-select" aria-label="Animal Type" name="type">
-                            <option selected>Select animal type</option>
-                            <?php
-                            foreach ($animalTypes as $value)
-                            {
-                                ?>
-                                <option value="<?php echo $value["id_animal_type"]?>"><?php echo $value["type"]?></option>
-                                <?php
-                            }
-                            ?>
-                        </select>
+                        <label for="validationServer03" class="form-label">Photo</label>
+                        <input accept="image/png,image/jpeg" type="file" name="photo" class="form-control "
+                               id="validationServer02" value="" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
                     </div>
+                </form>
+                <form action="<?php echo FRONT_ROOT ?>Animal/animalForm" class="row g-2 justify-content-center"
+                      method="post">
                     <div class="col-md-6">
                         <label for="validationServer01" class="form-label">Name</label>
                         <input type="text" name="animalName" class="form-control" id="validationServer01" value=""
@@ -52,15 +50,29 @@ try {
                         </div>
                     </div>
                     <div class="col-md-6">
+                        <select class="form-select" aria-label="Animal Type" name="breed">
+                            <option selected>Select animal type/breed</option>
+                            <?php
+                            foreach ($animalBreeds as $value) {
+                                ?>
+                                <option value="<?php echo $value["id_animal_breed"] ?>"><?php echo $value["animalBreeds"] ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
                         <label for="validationServer03" class="form-label">Photo</label>
-                        <input accept="image/png,image/jpeg" type="file" name="photo" class="form-control " id="validationServer02" value="" required>
+                        <input accept="image/png,image/jpeg" type="file" name="photo" class="form-control "
+                               id="validationServer02" value="" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="validationServer04" class="form-label">Vaccination Plan</label>
-                        <input accept="image/png,image/jpeg" type="file" name="vaccinationPlan" class="form-control " id="validationServer02" value=""
+                        <input accept="image/png,image/jpeg" type="file" name="vaccinationPlan" class="form-control "
+                               id="validationServer02" value=""
                                required>
                         <div class="valid-feedback">
                             Looks good!
@@ -86,24 +98,9 @@ try {
                         <select class="form-select" aria-label="Animal Size" name="size">
                             <option selected>Select animal size</option>
                             <?php
-                            foreach ($animalSizes as $value)
-                            {
+                            foreach ($animalSizes as $value) {
                                 ?>
-                                <option value="<?php echo $value["id_animal_size"]?>"><?php echo $value["size"]?></option>
-                                <?php
-                            }
-                            ?>
-                        </select>
-                    </div>
-
-                    <div class="col-md-6">
-                        <select class="form-select" aria-label="Animal Breed" name="breed">
-                            <option selected>Select animal Breed</option>
-                            <?php
-                            foreach ($animalSizes as $value)
-                            {
-                                ?>
-                                <option value="<?php echo $value["id_animal_size"]?>"><?php echo $value["size"]?></option>
+                                <option value="<?php echo $value["id_animal_size"] ?>"><?php echo $value["size"] ?></option>
                                 <?php
                             }
                             ?>

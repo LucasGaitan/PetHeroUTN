@@ -4,16 +4,119 @@ namespace Models;
 
 abstract class Animal{
 
-    private $id_animal;
+
     private $name;
     private $age;
+    private $id_animalBreed;
     private $photo;
-    private $size;
+    private $vaccinationPlan;
+    private $video;
+    private $observations;
+    private $id_animalSize;
 
 
     function __construct()
     {
         
+    }
+
+
+    private $id_animal;
+
+    /**
+     * @return mixed
+     */
+    public function getIdAnimal()
+    {
+        return $this->id_animal;
+    }
+
+    /**
+     * @param mixed $id_animal
+     */
+    public function setIdAnimal($id_animal)
+    {
+        $this->id_animal = $id_animal;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdAnimalBreed()
+    {
+        return $this->id_animalBreed;
+    }
+
+    /**
+     * @param mixed $id_animalBreed
+     */
+    public function setIdAnimalBreed($id_animalBreed)
+    {
+        $this->id_animalBreed = $id_animalBreed;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param mixed $photo
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVaccinationPlan()
+    {
+        return $this->vaccinationPlan;
+    }
+
+    /**
+     * @param mixed $vaccinationPlan
+     */
+    public function setVaccinationPlan($vaccinationPlan)
+    {
+        $this->vaccinationPlan = $vaccinationPlan;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVideo()
+    {
+        return $this->video;
+    }
+
+    /**
+     * @param mixed $video
+     */
+    public function setVideo($video)
+    {
+        $this->video = $video;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getObservations()
+    {
+        return $this->observations;
+    }
+
+    /**
+     * @param mixed $observations
+     */
+    public function setObservations($observations)
+    {
+        $this->observations = $observations;
     }
 
     /**
@@ -59,9 +162,9 @@ abstract class Animal{
     /**
      * Get the value of size
      */ 
-    public function getSize()
+    public function getIdAnimalSize()
     {
-        return $this->size;
+        return $this->id_animalSize;
     }
 
     /**
@@ -69,9 +172,9 @@ abstract class Animal{
      *
      * @return  self
      */ 
-    public function setSize($size)
+    public function setIdAnimalSize($id_animalSize)
     {
-        $this->size = $size;
+        $this->id_animalSize = $id_animalSize;
 
         return $this;
     }
