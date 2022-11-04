@@ -10,7 +10,7 @@ require_once(VIEWS_PATH."/forms/signIn.php");
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form  action="<?php echo FRONT_ROOT?>User/signUp" method="POST" class="row g-3" >
+                <form  action="<?php echo FRONT_ROOT?>Auth/signUp" method="POST" class="row g-3" >
                     <div class="col-md-6">
                         <label for="validationServer01" class="form-label">First name</label>
                         <input type="text" name="firstName" class="form-control" id="validationServer01" value="" required>

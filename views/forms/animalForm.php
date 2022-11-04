@@ -13,7 +13,7 @@ try {
 
 ?>
 
-<div class="modal fade" id="dogForm" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+<div class="modal fade" id="animalForm" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">

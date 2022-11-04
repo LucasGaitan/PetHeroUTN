@@ -11,7 +11,7 @@ require_once(VIEWS_PATH."/alerts/failureStartSession.php");
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
          <div class="modal-body">
-            <form action="<?php echo FRONT_ROOT?>User/signIn" class="row g-2 justify-content-center" method="post">
+            <form action="<?php echo FRONT_ROOT?>Auth/signIn" class="row g-2 justify-content-center" method="post">
                <div class="col-md-10">
                   <label for="validationServerUsername" class="form-label">Username</label>
                   <div class="input-group has-validation">

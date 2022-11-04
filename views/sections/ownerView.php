@@ -1,5 +1,5 @@
 <?php
-require_once(VIEWS_PATH."forms/dogForm.php");
+require_once(VIEWS_PATH."forms/animalForm.php");
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +53,7 @@ require_once(VIEWS_PATH."forms/dogForm.php");
             
             <section class="ownerNav__button">
                 <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/dogo-argentino.png" alt="">
-                <a class="ownerNav__link" data-bs-toggle="modal" data-bs-target="#dogForm">Add Dog</a>
+                <a class="ownerNav__link" data-bs-toggle="modal" data-bs-target="#animalForm">Add Dog</a>
             </section>
     
             <section class="ownerNav__button">

@@ -95,12 +95,4 @@ class AnimalDAO implements IDAO
         }, $animalSize);
     }
 
-    private function mapAnimalSizes($animalSize): array
-    {
-        return array_map(function($p)
-        {
-            $animalSizes = ["id_animal_size"=>$p["id_animal_size"], "size"=>$p["size"]];
-            return $animalSizes;
-        }, $animalSize);
-    }
 }
