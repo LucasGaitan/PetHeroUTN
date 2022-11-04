@@ -17,13 +17,21 @@ class AnimalDAO implements IDAO
         $this->tableName = 'animals';
     }
 
-    public function Add($id)
+    public function Add($animal)
     {
-        $query = "INSERT INTO " . $this->tableName . "(id_user) VALUES (:id)";
-
+        $query = "INSERT INTO " . $this->tableName . "(name, age, photo, vaccinationPlan, video, observations, id_animal_size, id_animal_breed, id_owner)
+         VALUES (:name, :age, :photo, :vaccinationPlan, :video, :observations, :id_animal_size, :id_animal_breed, :id_owner)";
         try {
             $this->connection = Connection::GetInstance();
-            $parameters['id'] = $id;
+            $parameters['name'] = $animal->getName();
+            $parameters['age'] = $animal->getAge();
+            $parameters['photo'] = $animal->getPhoto();
+            $parameters['vaccinationPlan'] = $animal->getVaccinationPlan();
+            $parameters['video'] = $animal->getVideo();
+            $parameters['observations'] = $animal->getObservations();
+            $parameters['id_animal_size'] = $animal->getIdAnimalSize();
+            $parameters['id_animal_breed'] = $animal->getIdAnimalBreed();
+            $parameters['id_owner'] = $animal->getIdOwner();
             $this->connection->ExecuteNonQuery($query, $parameters);
         } catch (Exception $e) {
             throw $e;
@@ -59,7 +67,6 @@ inner join animal_types t on b.id_animal_type = t.id_animal_type";
         try {
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
-            var_dump($result);
             if (!empty($result)) {
                 $listAnimalTypes = $this->mapAnimalTypesBreeds($result);
             }

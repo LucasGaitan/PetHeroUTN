@@ -4,7 +4,7 @@ namespace Models;
 
 abstract class Animal{
 
-
+    private $id_animal;
     private $name;
     private $age;
     private $id_animalBreed;
@@ -13,7 +13,23 @@ abstract class Animal{
     private $video;
     private $observations;
     private $id_animalSize;
+    private $id_owner;
 
+    /**
+     * @return mixed
+     */
+    public function getIdOwner()
+    {
+        return $this->id_owner;
+    }
+
+    /**
+     * @param mixed $id_owner
+     */
+    public function setIdOwner($id_owner)
+    {
+        $this->id_owner = $id_owner;
+    }
 
     function __construct()
     {
@@ -21,7 +37,7 @@ abstract class Animal{
     }
 
 
-    private $id_animal;
+
 
     /**
      * @return mixed

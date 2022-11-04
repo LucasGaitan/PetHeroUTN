@@ -47,7 +47,7 @@ class UserController
         $this->user = $_SESSION['user'];
         $id_user = $this->userDAO->findIdByUsername($this->user->getUsername());
         $this->ownerDAO->Add($id_user);
-        $this->showOwnerView;
+        $this->showOwnerView();
     }
 
 
