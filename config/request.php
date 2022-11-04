@@ -16,7 +16,7 @@
             $urlArray = array_filter($urlArray);
 
             if(empty($urlArray))
-                $this->controller = "Home";            
+                $this->controller = "Auth";
             else
                 $this->controller = ucwords(array_shift($urlArray));
 
