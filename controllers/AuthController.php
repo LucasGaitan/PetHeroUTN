@@ -56,9 +56,9 @@ class AuthController
                 switch($redirectionView)
                 {
                     case 1:
-//                        header('location:' . VIEWS_PATH . 'sections/ownerView.php');
+                    //    return header('location:' . VIEWS_PATH . 'sections/ownerView.php');
                         $this->showOwnerView();
-//                         $this->views($redirectionView);
+// //                         $this->views($redirectionView);
                         break;
 
                     case 2:
@@ -123,6 +123,12 @@ class AuthController
 
     }
 
+    public function logOut(){
+            
+        session_destroy();
+        $this->showLandPage();
+    }
+
     public function showTypeAccount()
     {
         require_once(VIEWS_PATH . "/sections/typeAcc.php");
@@ -136,5 +142,9 @@ class AuthController
     public function showGuardianView()
     {
         require_once(VIEWS_PATH . "/sections/guardianView.php");
+    }
+
+    public function showLandPage(){
+        return header("location: " . FRONT_ROOT . "index.php");
     }
 }

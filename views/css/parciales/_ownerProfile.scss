@@ -1,0 +1,129 @@
+@import "./variables";
+
+.profile{
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    &__header{
+        position: relative;
+        width: 102%;
+        height: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding-bottom: 3rem;
+        border-bottom: 1px solid black;
+
+        &__imgcont{
+            height: 10rem;
+        }
+
+        &__img{
+            height: 100%;
+        }
+
+        &__content{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            &__title{
+                font-weight: bolder;
+            }
+
+            &__subtitle{
+                color: $mainColor;
+                font-weight: bolder;
+                font-size: 1rem;
+            }
+        }
+
+        &__config{
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            transform: scale(0.5);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+    
+            &:hover{
+                transform: scale(0.6);
+            }
+        }
+    }
+
+    &__body{
+        display: flex;
+        height: 70%;
+        width: 100%;
+        overflow: hidden;
+
+        &__pets{
+            width: 100%;
+            height: 100%;
+
+            &__title{
+                margin: 1rem;
+                font-weight: bolder;
+                font-size: 1.3rem;
+            }
+
+            &__content{
+                width: 100%;
+                height: 100%;
+                padding: 3rem;
+                overflow: scroll;
+
+                &::-webkit-scrollbar{
+                    display: none;
+                }
+            }
+        }
+
+        &__reservations{
+            width: 100%;
+            height: 100%;
+
+            &__title{
+                margin: 1rem;
+                font-weight: bolder;
+                font-size: 1.3rem;
+            }
+
+            &__content{
+                width: 100%;
+                height: 100%;
+                padding: 3rem;
+                overflow: scroll;
+
+                &::-webkit-scrollbar{
+                    display: none;
+                }
+            }
+
+        }
+
+    }
+
+    &__corner{
+        position: absolute;
+        width: 5rem;
+        height: 5rem;
+        
+        &--1{
+            top: -3%;
+            left: -3%;
+            border-top: solid 2px $mainColor;
+            border-left: solid 2px $mainColor;
+        }
+
+        &--2{
+            bottom: -4%;
+            right: -4%;
+            border-bottom: solid 2px $mainColor;
+            border-right: solid 2px $mainColor;
+        }
+    }
+
+}

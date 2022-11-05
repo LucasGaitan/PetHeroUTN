@@ -1,110 +1,33 @@
-.section__ownerNav{
-    height: calc(100vh - 5rem);
-    width: 15rem;
-    background-color: transparent;
-}
+.ownerView{
+    display: flex;
 
-.ownerNav{
-    height: 100%;
-    width: 5rem;
-    background-color: $mainColor;
-    box-shadow: 7px 0 3px -3px rgba(0, 0, 0, 0.473);
-    padding-top: 15%;
-    overflow: hidden;
-    transition: 0.5s ease;
-    
-    &:hover{
-        animation: expand 0.3s ease;
-        width: 15rem;
-        transition: 0.5s ease;
+    &__content{
+        width: calc(100vw - 20rem);
+        height: 100vh;
+        max-height: 100vh;
+        max-width: calc(100vw - 20rem);
+        overflow: scroll;
+        padding: 4rem;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
 
-    &:hover &__link{
-        animation: fadein 0.5s ease forwards;
-        display: block;
-    }
-
-    &:hover &__icon{
-        animation: fadeout 0.5s ease forwards;
-        display: none;
-    }
-
-    &__button{
+    &__aside{
         display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        width: 100%;
-        height: 3rem;
-        margin-top: 1rem;
-    }
+        flex-direction: column;
+        align-items: flex-end;
+        height: calc(100vh - 5rem);
+        width: 5rem;
+        
 
-    &__link{
-        width: 100%;
-        height: 100%;
-        position: relative;
-        display: none;
-        text-decoration: none;
-        color: $colorBlanco;
-        font-weight: bolder;
-        font-size: 1.15rem;
-        z-index: 1;
-        transition: color 0.2s ease;
-        cursor: pointer;
-
-        &:hover{
-            color: $mainColor;
-        }
-
-        &::before{
-            content: "";
-            position: absolute;
-            left: 0;
-            top: -0.8rem;
-            right: 0;
-            bottom: 0.8rem;
-            background-color: $colorBlanco;
-            z-index: -1;
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
-        }
-
-        &:hover::before, &:focus::before{
-            transform: scaleX(1);
+        &__rigth{
+            width: 5rem;
+            height: 100%;
+            background-color: $mainColor;
+            box-shadow: -7px 0 3px -3px rgba(0, 0, 0, 0.473);
         }
     }
-
-    &__icon{
-        height: 2rem;
-        width: 2rem;
-    }
 }
 
-@keyframes expand {
-
-    0%{width: 5rem;}
-
-    100%{width: 15rem;}
-    
-}
-
-@keyframes fadeout {
-
-    0%{opacity: 100%;}
-
-    100%{opacity: 0%;}
-
-    0%{opacity: 0%;}
-    
-}
-
-@keyframes fadein {
-
-    0%{opacity: 0%;}
-
-    100%{opacity: 100%;}
-
-    0%{opacity: 0%;}
-    
-}

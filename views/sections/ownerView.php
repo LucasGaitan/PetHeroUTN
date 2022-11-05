@@ -1,5 +1,5 @@
 <?php
-require_once(VIEWS_PATH."forms/animalForm.php");
+    require_once(VIEWS_PATH."forms/animalForm.php");
 ?>
 
 <!DOCTYPE html>
@@ -33,62 +33,79 @@ require_once(VIEWS_PATH."forms/animalForm.php");
 
 <body>
 
-    <?php 
-        include 'headerSec.php';
-    ?>
+    <main class="ownerView">
 
-    <section class="section__ownerNav">
-
-        <nav class="ownerNav">
+        <section class="section__ownerNav">
     
-            <section class="ownerNav__button">
-                <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/hogar.png" alt="">
-                <a class="ownerNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=0">Home</a>
-            </section>
-    
-            <section class="ownerNav__button">
-                <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/portapapeles.png" alt="">
-                <a class="ownerNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=1">View Dogs</a>
-            </section>
-            
-            <section class="ownerNav__button">
-                <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/dogo-argentino.png" alt="">
-                <a class="ownerNav__link" data-bs-toggle="modal" data-bs-target="#animalForm">Add Dog</a>
-            </section>
-    
-            <section class="ownerNav__button">
-                <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/superhero.png" alt="">
-                <a class="ownerNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=2">View Guardians</a>
-            </section>
-    
-        </nav>
-
-    </section>
-
-    <?php
-
-    
-    if(isset($val)){
-
-       switch($val){
-
-        case 0:
-            require_once(VIEWS_PATH . "sections/homeOwner.php");
-            break;
-            
-        case 1:
-            require_once(VIEWS_PATH . "sections/dogList.php");
-            break;
+            <nav class="ownerNav">
         
-        case 2:
-            require_once(VIEWS_PATH . "sections/guardianList.php");
-            break;
+                <section class="ownerNav__button ownerNav__button--home">
+                    <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/casa.png" alt="">
+                    <a class="ownerNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=0">Home</a>
+                </section>
 
-       }
+                <section class="ownerNav__button">
+                    <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/profile.png" alt="">
+                    <a class="ownerNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=1">Profile</a>
+                </section>
+        
+                <section class="ownerNav__button">
+                    <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/perro.png" alt="">
+                    <a class="ownerNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=2">View Pets</a>
+                </section>
+                
+                <section class="ownerNav__button">
+                    <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/mascotas.png" alt="">
+                    <a class="ownerNav__link" data-bs-toggle="modal" data-bs-target="#animalForm">Add Pet</a>
+                </section>
+        
+                <section class="ownerNav__button">
+                    <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/guardianWhite.png" alt="">
+                    <a class="ownerNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=3">View Guardians</a>
+                </section>
+        
+                <section class="ownerNav__button ownerNav__button--close">
+                    <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/close.png" alt="">
+                    <a class="ownerNav__link" href="<?php echo FRONT_ROOT?>Auth/logOut">Log Out</a>
+                </section>
 
-    };
+            </nav>
 
-    ?>
+        </section>
+
+        <section class="ownerView__content">
+
+            <?php
+                if(isset($val)){
+
+                    switch($val){
+
+                    case 0:
+                        break;
+
+                    case 1:
+                        require_once(VIEWS_PATH . "sections/ownerProfile.php");
+                        break;
+
+                    case 2:
+                        require_once(VIEWS_PATH . "sections/dogList.php");
+                        break;
+        
+                    case 3:
+                        require_once(VIEWS_PATH . "sections/guardianList.php");
+                        break;
+                    
+                    }
+                }else{
+                    require_once(VIEWS_PATH . "sections/ownerProfile.php");
+                }
+            ?>
+
+        </section>
+
+        <aside class="ownerView__aside"></aside>
+
+    </main>
 
     <script type="text/javascript" src="https://cdn.datatables.net/1.10-dev/js/jquery.dataTables.js%22%3E"></script>
     <script type="text/javascript"
