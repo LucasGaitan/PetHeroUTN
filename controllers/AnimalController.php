@@ -34,7 +34,7 @@ class AnimalController
                 $dog->setVideo($video);
                 $dog->setObservations($observations);
                 $dog->setIdAnimalSize($size);
-                $dog->setIdOwner($_SESSION["user"]->getId());
+                $dog->setIdOwner($_SESSION["user"]->getIdOwner());
 
                 try {
                     $this->animalDAO->Add($dog);
@@ -52,7 +52,7 @@ class AnimalController
                 $cat->setVideo($video);
                 $cat->setObservations($observations);
                 $cat->setIdAnimalSize($size);
-                $cat->setIdOwner($_SESSION["user"]->getId());
+                $cat->setIdOwner($_SESSION["user"]->getIdOwner());
 
                 try {
                     $this->animalDAO->Add($cat);

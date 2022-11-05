@@ -76,6 +76,7 @@
         <section class="template__content">
 
             <?php
+
                 if(isset($val)){
 
                     switch($val){
@@ -88,7 +89,7 @@
                         break;
 
                     case 2:
-                        require_once(VIEWS_PATH . "sections/dogList.php");
+                        require_once(VIEWS_PATH . "sections/animalList.php");
                         break;
         
                     case 3:

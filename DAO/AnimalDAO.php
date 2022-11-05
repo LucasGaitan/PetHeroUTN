@@ -17,6 +17,10 @@ class AnimalDAO implements IDAO
         $this->tableName = 'animals';
     }
 
+    /**
+     * ADD
+     */
+
     public function Add($animal)
     {
         $query = "INSERT INTO " . $this->tableName . "(name, age, photo, vaccinationPlan, video, observations, id_animal_size, id_animal_breed, id_owner)
@@ -38,6 +42,12 @@ class AnimalDAO implements IDAO
         }
     }
 
+
+    /**
+     * GETS
+     */
+
+
     public function getAllTypes(): array
     {
         $query = "SELECT * FROM animal_types";
@@ -55,6 +65,24 @@ class AnimalDAO implements IDAO
         }
 
         return $listAnimalTypes;
+    }
+
+    public function getTypeById($id)
+    {
+        $query = "SELECT t.type FROM animal_breeds b
+                    inner join animal_types t on t.id_animal_type = b.id_animal_type
+                    WHERE b.id_animal_breed = (:id)";
+
+        try {
+            $this->connection = Connection::GetInstance();
+            $parameters["id"] = $id;
+            $result = $this->connection->Execute($query, $parameters);
+            $result = $result[0]["type"];
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return $result;
     }
 
     public function getTypesBreeds()
@@ -77,6 +105,24 @@ inner join animal_types t on b.id_animal_type = t.id_animal_type";
         return $listAnimalTypes;
     }
 
+    public function getBreedById($id)
+    {
+        $query = "SELECT b.breed FROM animal_breeds b
+                    WHERE b.id_animal_breed = (:id)";
+
+        try {
+            $this->connection = Connection::GetInstance();
+            $parameters["id"] = $id;
+            $result = $this->connection->Execute($query, $parameters);
+
+            $result = $result[0]["breed"];
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return $result;
+    }
+
     public function getAllSizes(): array
     {
         $query = "SELECT * FROM animal_sizes";
@@ -96,12 +142,29 @@ inner join animal_types t on b.id_animal_type = t.id_animal_type";
         return $listAnimalSizes;
     }
 
+    public function getSizeById($id)
+    {
+        $query = "SELECT a.size FROM animal_sizes a
+                    WHERE a.id_animal_size = (:id)";
+
+        try {
+            $this->connection = Connection::GetInstance();
+            $parameters["id"] = $id;
+            $result = $this->connection->Execute($query, $parameters);
+
+            $result = $result[0]["size"];
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return $result;
+    }
+
     public function getTypeFromBreed($id)
     {
         $query = "SELECT t.id_animal_type from animal_breeds b
 inner join animal_types t on b.id_animal_type = t.id_animal_type
 where id_animal_breed = (:id);";
-        $listAnimalTypes = array();
 
         try {
             $this->connection = Connection::GetInstance();
@@ -115,6 +178,10 @@ where id_animal_breed = (:id);";
         return $result;
     }
 
+
+    /**
+     * MAPS
+     */
 
     private function mapAnimalTypes($animalType): array
     {

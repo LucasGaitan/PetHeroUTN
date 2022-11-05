@@ -16,13 +16,13 @@ class OwnerController
 
     public function showDogList(){
         
-        require_once(VIEWS_PATH . "/sections/dogList.php");
+        require_once(VIEWS_PATH . "/sections/animalList.php");
     }
 
     public function showActionMenu($value){
 
         session_start();
-        
+
         $val = 0;
 
         $val = $value;

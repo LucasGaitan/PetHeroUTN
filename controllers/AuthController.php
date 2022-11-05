@@ -6,6 +6,7 @@ use DAO\GuardianDAO;
 use DAO\OwnerDAO;
 use DAO\UserDAO;
 use Exception;
+use Models\Owner;
 
 class AuthController
 {
@@ -57,6 +58,13 @@ class AuthController
                 {
                     case 1:
                     //    return header('location:' . VIEWS_PATH . 'sections/ownerView.php');
+                        $owner = new Owner();
+                        $owner->setIdOwner($this->ownerDAO->findOwnerIdByUserId($_SESSION['user']->getId()));
+                        $owner->setFirstName($_SESSION['user']->getFirstName());
+                        $owner->setLastName($_SESSION['user']->getLastName());
+                        $owner->setUserName($_SESSION['user']->getUsername());
+                        $owner->setEmail($_SESSION['user']->getFirstName());
+                        $_SESSION['user'] = $owner;
                         $this->showOwnerView();
 // //                         $this->views($redirectionView);
                         break;
