@@ -33,47 +33,47 @@
 
 <body>
 
-    <main class="ownerView">
+    <main class="template">
 
-        <section class="section__ownerNav">
+        <section class="section__templateNav">
     
-            <nav class="ownerNav">
+            <nav class="templateNav">
         
-                <section class="ownerNav__button ownerNav__button--home">
-                    <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/casa.png" alt="">
-                    <a class="ownerNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=0">Home</a>
+                <section class="templateNav__button templateNav__button--home">
+                    <img class="templateNav__icon" src="<?php echo ASSETS_PATH?>/casa.png" alt="">
+                    <a class="templateNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=0">Home</a>
                 </section>
 
-                <section class="ownerNav__button">
-                    <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/profile.png" alt="">
-                    <a class="ownerNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=1">Profile</a>
+                <section class="templateNav__button">
+                    <img class="templateNav__icon" src="<?php echo ASSETS_PATH?>/profile.png" alt="">
+                    <a class="templateNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=1">Profile</a>
                 </section>
         
-                <section class="ownerNav__button">
-                    <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/perro.png" alt="">
-                    <a class="ownerNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=2">View Pets</a>
+                <section class="templateNav__button">
+                    <img class="templateNav__icon" src="<?php echo ASSETS_PATH?>/perro.png" alt="">
+                    <a class="templateNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=2">View Pets</a>
                 </section>
                 
-                <section class="ownerNav__button">
-                    <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/mascotas.png" alt="">
-                    <a class="ownerNav__link" data-bs-toggle="modal" data-bs-target="#animalForm">Add Pet</a>
+                <section class="templateNav__button">
+                    <img class="templateNav__icon" src="<?php echo ASSETS_PATH?>/mascotas.png" alt="">
+                    <a class="templateNav__link" data-bs-toggle="modal" data-bs-target="#animalForm">Add Pet</a>
                 </section>
         
-                <section class="ownerNav__button">
-                    <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/guardianWhite.png" alt="">
-                    <a class="ownerNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=3">View Guardians</a>
+                <section class="templateNav__button">
+                    <img class="templateNav__icon" src="<?php echo ASSETS_PATH?>/guardianWhite.png" alt="">
+                    <a class="templateNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=3">View Guardians</a>
                 </section>
         
-                <section class="ownerNav__button ownerNav__button--close">
-                    <img class="ownerNav__icon" src="<?php echo ASSETS_PATH?>/close.png" alt="">
-                    <a class="ownerNav__link" href="<?php echo FRONT_ROOT?>Auth/logOut">Log Out</a>
+                <section class="templateNav__button templateNav__button--close">
+                    <img class="templateNav__icon" src="<?php echo ASSETS_PATH?>/close.png" alt="">
+                    <a class="templateNav__link" href="<?php echo FRONT_ROOT?>Auth/logOut">Log Out</a>
                 </section>
 
             </nav>
 
         </section>
 
-        <section class="ownerView__content">
+        <section class="template__content">
 
             <?php
                 if(isset($val)){
@@ -103,7 +103,7 @@
 
         </section>
 
-        <aside class="ownerView__aside"></aside>
+        <aside class="template__aside"></aside>
 
     </main>
 
@@ -115,7 +115,6 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-
 </body>
 
 

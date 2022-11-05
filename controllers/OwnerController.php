@@ -21,6 +21,8 @@ class OwnerController
 
     public function showActionMenu($value){
 
+        session_start();
+        
         $val = 0;
 
         $val = $value;

@@ -25,4 +25,15 @@ class GuardianController
         $_SESSION['loggedUser']->setPostulation($this->postulation);
         $this->guardianDAO->Add($_SESSION['loggedUser']);
     }
+
+    public function showActionMenu($value){
+
+        session_start();
+        
+        $val = 0;
+
+        $val = $value;
+
+        require_once(VIEWS_PATH . "/sections/guardianView.php");
+    }
 }
