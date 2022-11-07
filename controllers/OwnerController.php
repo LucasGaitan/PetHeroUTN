@@ -14,10 +14,10 @@ class OwnerController
         $this->ownerDAO = new OwnerDAO();
     }
 
-    public function showDogList(){
-        
-        require_once(VIEWS_PATH . "/sections/animalList.php");
-    }
+//    public function showDogList(){
+//
+//        require_once(VIEWS_PATH . "/sections/animalList.php");
+//    }
 
     public function showActionMenu($value){
 

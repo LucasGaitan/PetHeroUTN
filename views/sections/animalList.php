@@ -1,4 +1,5 @@
 <?php
+
 use DAO\OwnerDAO as OwnerDAO;
 use DAO\AnimalDAO as AnimalDAO;
 
@@ -10,7 +11,7 @@ $petArray = $ownerDAO->getPets($_SESSION["user"]->getIdOwner());
 
 ?>
 
-<table  class="table table-bordered table-hover" id="dogTable">
+<table class="table table-bordered table-hover" id="animalTable">
     <thead>
     <tr>
         <th>
@@ -36,17 +37,18 @@ $petArray = $ownerDAO->getPets($_SESSION["user"]->getIdOwner());
 
     <tbody>
     <?php
-    foreach ($petArray as $value)
-    { ?>
-        <tr>
-            <td><?php echo $value->getName()?> </td>
-            <td><?php echo $value->getAge()?> </td>
-            <td><?php echo $animalDAO->getTypeById($value->getIdAnimalBreed())?> </td>
-            <td><?php echo $animalDAO->getBreedById($value->getIdAnimalBreed())?> </td>
-            <td><?php echo $animalDAO->getSizeById($value->getIdAnimalSize())?> </td>
-            <td><?php echo $value->getObservations()?> </td>
-        </tr>
-        <?php
+    if (isset($petArray)) {
+        foreach ($petArray as $value) { ?>
+            <tr>
+                <td><?php echo $value->getName() ?> </td>
+                <td><?php echo $value->getAge() ?> </td>
+                <td><?php echo $animalDAO->getTypeById($value->getIdAnimalBreed()) ?> </td>
+                <td><?php echo $animalDAO->getBreedById($value->getIdAnimalBreed()) ?> </td>
+                <td><?php echo $animalDAO->getSizeById($value->getIdAnimalSize()) ?> </td>
+                <td><?php echo $value->getObservations() ?> </td>
+            </tr>
+            <?php
+        }
     }
     ?>
     </tbody>

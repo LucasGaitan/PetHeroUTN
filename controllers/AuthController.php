@@ -7,6 +7,7 @@ use DAO\OwnerDAO;
 use DAO\UserDAO;
 use Exception;
 use Models\Owner;
+use Models\userTemplate;
 
 class AuthController
 {
@@ -18,7 +19,7 @@ class AuthController
         $this->guardianDAO = new guardianDAO();
         $this->ownerDAO = new ownerDAO();
         $this->userDAO = new userDAO();
-        $this->user = array();
+        $this->user = new userTemplate();
     }
 
     public function index($message =""){
@@ -29,12 +30,13 @@ class AuthController
     {
         if($password === $password2)
         {
-            $this->user = ["username"=>$username, "email"=>$email];
+            $this->user->setUsername($username);
+            $this->user->setPassword($password);
 
             $this->userDAO->Add($firstName, $lastName, $username, $password, $email);
             session_start();
             $_SESSION['user'] = $this->user;
-            $this->showTypeAccount();
+            header("location: " . FRONT_ROOT . "Auth/showTypeAccount");
         }
         else
         {
@@ -65,18 +67,20 @@ class AuthController
                         $owner->setUserName($_SESSION['user']->getUsername());
                         $owner->setEmail($_SESSION['user']->getFirstName());
                         $_SESSION['user'] = $owner;
-                        $this->showOwnerView();
+                        header("location: " . FRONT_ROOT . "Auth/showOwnerView");
 // //                         $this->views($redirectionView);
                         break;
 
                     case 2:
 //                        header('location:' . VIEWS_PATH . 'sections/guardianView.php');
-                        $this->showGuardianView();
+                        header("location: " . FRONT_ROOT . "Auth/showGuardianView");
+                        //$this->showGuardianView();
 //                            $this->views($redirectionView);
                         break;
 
                     case 3:
-                        $this->showTypeAccount();
+                        header("location: " . FRONT_ROOT . "Auth/showTypeAccount");
+                        //$this->showTypeAccount();
                         break;
                 }
             }
@@ -139,20 +143,23 @@ class AuthController
 
     public function showTypeAccount()
     {
+        session_start();
         require_once(VIEWS_PATH . "/sections/typeAcc.php");
     }
 
     public function showOwnerView()
     {
+        session_start();
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 
     public function showGuardianView()
     {
+        session_start();
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 
     public function showLandPage(){
-        return header("location: " . FRONT_ROOT . "index.php");
+        header("location: " . FRONT_ROOT . "index.php");
     }
 }

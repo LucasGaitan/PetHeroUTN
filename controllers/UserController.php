@@ -24,11 +24,6 @@ class UserController
         $this->user = array();
     }
 
-    public function showOwnerView()
-    {
-        require_once(VIEWS_PATH . "/sections/ownerView.php");
-    }
-
     public function guardianForm($dogTypeExpected, $salaryExpected)
     {
         session_start();
@@ -39,15 +34,19 @@ class UserController
         $guardian->setId_animal_size_expected($dogTypeExpected);
         $guardian->setSalaryExpected($salaryExpected);
         $this->guardianDAO->Add($guardian);
+        header("location: " . FRONT_ROOT . "Auth/showGuardianView");
+
     }
 
     public function ownerForm()
     {
         session_start();
+        var_dump($_SESSION);
         $this->user = $_SESSION['user'];
         $id_user = $this->userDAO->findIdByUsername($this->user->getUsername());
         $this->ownerDAO->Add($id_user);
-        $this->showOwnerView();
+
+        header("location: " . FRONT_ROOT . "Auth/showOwnerView");
     }
 
 

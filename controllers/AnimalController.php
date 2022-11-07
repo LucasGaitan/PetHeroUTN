@@ -38,6 +38,7 @@ class AnimalController
 
                 try {
                     $this->animalDAO->Add($dog);
+                    header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=2");
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
@@ -56,6 +57,7 @@ class AnimalController
 
                 try {
                     $this->animalDAO->Add($cat);
+                    header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=2");
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
