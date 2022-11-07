@@ -1,5 +1,6 @@
 <?php
     require_once(VIEWS_PATH."forms/animalForm.php");
+
 ?>
 
 <!DOCTYPE html>

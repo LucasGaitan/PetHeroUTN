@@ -1,6 +1,5 @@
 <?php
-require_once(VIEWS_PATH . "forms/postulationForm.php");
-
+require_once(VIEWS_PATH . "forms/reservationForm.php");
 
 ?>
 

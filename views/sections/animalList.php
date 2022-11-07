@@ -4,7 +4,6 @@ use DAO\OwnerDAO as OwnerDAO;
 use DAO\AnimalDAO as AnimalDAO;
 
 $ownerDAO = new OwnerDAO();
-
 $animalDAO = new AnimalDAO();
 
 $petArray = $ownerDAO->getPets($_SESSION["user"]->getIdOwner());
@@ -12,6 +11,7 @@ $petArray = $ownerDAO->getPets($_SESSION["user"]->getIdOwner());
 ?>
 
 <table class="table table-bordered table-hover" id="animalTable">
+
     <thead>
     <tr>
         <th>
@@ -37,6 +37,7 @@ $petArray = $ownerDAO->getPets($_SESSION["user"]->getIdOwner());
 
     <tbody>
     <?php
+
     if (isset($petArray)) {
         foreach ($petArray as $value) { ?>
             <tr>
@@ -46,6 +47,7 @@ $petArray = $ownerDAO->getPets($_SESSION["user"]->getIdOwner());
                 <td><?php echo $animalDAO->getBreedById($value->getIdAnimalBreed()) ?> </td>
                 <td><?php echo $animalDAO->getSizeById($value->getIdAnimalSize()) ?> </td>
                 <td><?php echo $value->getObservations() ?> </td>
+
             </tr>
             <?php
         }

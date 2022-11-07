@@ -78,4 +78,33 @@
 
             return $listGuardians;
         }
+
+        public function getGuardiansFilterByDates($startDate, $endDate)
+        {
+            $query = "SELECT * FROM guardians G INNER JOIN users U ON U.id_user = G.id_user 
+                    WHERE G.startDate <= (:startDate) AND G.endDate >= (:endDate)";
+
+            $listGuardians = array();
+
+            try
+            {
+                $this->connection = Connection::GetInstance();
+
+                $parameters['startDate'] = $startDate;
+                $parameters['endDate'] = $endDate;
+
+                $result = $this->connection->Execute($query, $parameters);
+
+                if(!empty($result))
+                {
+                    $listGuardians = $this->mapGuardians($result);
+                }
+            }
+            catch(Exception $e)
+            {
+                throw $e;
+            }
+
+            return $listGuardians;
+        }
     }

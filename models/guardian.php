@@ -83,22 +83,22 @@ class Guardian extends User{
         return $this;
     }
 
-    public function getPostulation()
-    {
-        return $this->postulation;
-    }
-
-    public function setPostulation($postulation)
-    {
-        if(empty($this->postulation[0]))
-        {
-            $this->postulation[0] = $postulation;
-        }
-        else
-        {
-            $this->postulation[] = $postulation;
-        }
-    }
+//    public function getPostulation()
+//    {
+//        return $this->postulation;
+//    }
+//
+//    public function setPostulation($postulation)
+//    {
+//        if(empty($this->postulation[0]))
+//        {
+//            $this->postulation[0] = $postulation;
+//        }
+//        else
+//        {
+//            $this->postulation[] = $postulation;
+//        }
+//    }
 
 //    public function setAllPostulations(array $postulationArray)
 //    {
