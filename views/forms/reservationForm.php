@@ -13,6 +13,9 @@ $myPets = $ownerDAO->getPets($_SESSION["user"]->getIdOwner());
             </div>
             <div class="modal-body">
                 <form action="<?php echo FRONT_ROOT ?>Reservation/ReservationForm" class="row g-2 justify-content-center" method="post">
+                    <div>
+                        <p class="d-flex justify-content-center fw-bf fs-5 border-bottom pb-3">Guardian Selected <?php echo $userGuardian ?></p>
+                    </div>
                     <div class="col-md-6">
                         <label for="validationServer01" class="form-label">Start date</label>
                         <input type="date" name="startDate" class="form-control" id="validationServer01" value="" required>
@@ -39,12 +42,8 @@ $myPets = $ownerDAO->getPets($_SESSION["user"]->getIdOwner());
                             ?>
                         </select>
                     </div>
-                    <div>
-                        <label for="idGuardianSelected">Guardian Selected</label>
-                        <input type="text" id="idGuardianSelected" name="idGuardianSelected" value="<?php echo $idGuardian ?>" readonly>
-                    </div>
                     <div class="d-grid gap-2 col-10">
-                        <button class="btn" style="background-color:#b41d78; color:#fff" type="submit">Make your reservation !</button>
+                        <button class="btn" style="background-color:#b41d78; color:#fff" type="submit">Make reservation</button>
                     </div>
                 </form>
             </div>

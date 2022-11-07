@@ -8,7 +8,7 @@ define("CSS_PATH", FRONT_ROOT.VIEWS_PATH . "css/");
 define("JS_PATH", FRONT_ROOT.VIEWS_PATH . "js/");
 define("ASSETS_PATH", FRONT_ROOT.VIEWS_PATH . "assets/");
 define("UPLOADS_PATH", "files/animalPhoto/");
-define("DB_HOST", "localhost:3307");
+define("DB_HOST", "localhost");
 define("DB_NAME", "petHero");
 define("DB_USER", "root");
 define("DB_PASS", "root");

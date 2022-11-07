@@ -51,13 +51,13 @@
                 </section>
         
                 <section class="templateNav__button">
-                    <img class="templateNav__icon" src="<?php echo ASSETS_PATH?>/perro.png" alt="">
-                    <a class="templateNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=2">View Pets</a>
-                </section>
-                
-                <section class="templateNav__button">
                     <img class="templateNav__icon" src="<?php echo ASSETS_PATH?>/mascotas.png" alt="">
                     <a class="templateNav__link" data-bs-toggle="modal" data-bs-target="#animalForm">Add Pet</a>
+                </section>
+
+                <section class="templateNav__button">
+                    <img class="templateNav__icon" src="<?php echo ASSETS_PATH?>/perro.png" alt="">
+                    <a class="templateNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=2">View Pets</a>
                 </section>
         
                 <section class="templateNav__button">
@@ -91,12 +91,11 @@
 
                     case 2:
                         require_once(VIEWS_PATH . "sections/animalList.php");
-                        break;
+                        break;  
         
                     case 3:
                         require_once(VIEWS_PATH . "sections/guardianList.php");
-                        break;
-                    
+                        break;                                                                  
                     }
                 }else{
                     require_once(VIEWS_PATH . "sections/ownerProfile.php");
