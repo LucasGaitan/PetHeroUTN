@@ -29,8 +29,8 @@ class AnimalController
                 $dog->setName($animalName);
                 $dog->setAge($age);
                 $dog->setIdAnimalBreed($breed);
-                $dog->setPhoto($photo);
-                $dog->setVaccinationPlan($vaccinationPlan);
+                $dog->setPhoto($_FILES["photo"]['name']);
+                $dog->setVaccinationPlan($_FILES["vaccinationPlan"]['name']);
                 $dog->setVideo($video);
                 $dog->setObservations($observations);
                 $dog->setIdAnimalSize($size);

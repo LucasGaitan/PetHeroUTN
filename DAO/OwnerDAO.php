@@ -33,7 +33,7 @@ class OwnerDAO implements IDAO
 
     public function getPets($id)
     {
-        $query = "select a.*, t.id_animal_type, t.type, b.breed from animals a
+        $query = "select a.*, t.id_animal_type from animals a
         inner  join animal_breeds b on a.id_animal_breed = b.id_animal_breed
         inner join animal_types t on b.id_animal_type = t.id_animal_type
         where id_owner = (:id)";
