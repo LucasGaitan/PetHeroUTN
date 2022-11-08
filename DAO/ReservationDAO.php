@@ -35,9 +35,26 @@ class ReservationDAO implements IDAO
         }
     }
 
+    public function updateState($idReservation)
+    {
+
+        $query = "update reservations r
+set r.state = 1
+where r.id_reservation = (:id)";
+
+        try {
+            $this->connection = Connection::GetInstance();
+            $parameters['id'] = $idReservation;
+            $this->connection->ExecuteNonQuery($query, $parameters);
+
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
     public function getReservationsByGuardianId($id_guardian)
     {
-        $query = "SELECT concat(u.firstName, ' ', u.lastName) as owner, t.type, ab.breed, s.size, r.startDate, r.endDate, r.concluded, r.state from reservations r
+        $query = "SELECT r.id_reservation, concat(u.firstName, ' ', u.lastName) as owner, t.type, ab.breed, s.size, r.startDate, r.endDate, r.concluded, r.state from reservations r
 inner join guardians g on r.id_guardian = g.id_guardian
 inner join reservations_X_animals rXa on r.id_reservation = rXa.id_reservation
 inner join animals a on rXa.id_animal = a.id_animal
@@ -56,23 +73,24 @@ where g.id_guardian = (:id_guardian)";
         } catch (Exception $e) {
             throw $e;
         }
-        if(!empty($result))
+        if (!empty($result))
             return $this->mapReservationsQuery($result);
         else
             return null;
     }
 
-    public function mapReservationsQuery ($result)
+    public function mapReservationsQuery($result)
     {
         return array_map(function ($p) {
-            return ["ownerName" => $p["owner"],
+            return ["id_reservation" => $p["id_reservation"],
+                "ownerName" => $p["owner"],
                 "animalType" => $p["type"],
-                "animalBreed"=>$p["breed"],
-                "animalSize"=>$p["size"],
-                "startDate"=>$p["startDate"],
-                "endDate"=>$p["endDate"],
-                "reservationConcluded"=>$p["concluded"],
-                "reservationState"=>$p["state"]
+                "animalBreed" => $p["breed"],
+                "animalSize" => $p["size"],
+                "startDate" => $p["startDate"],
+                "endDate" => $p["endDate"],
+                "reservationConcluded" => $p["concluded"],
+                "reservationState" => $p["state"]
             ];
         }, $result);
     }

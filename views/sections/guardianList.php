@@ -29,18 +29,6 @@ $listGuardian = $guardianController->getAllGuardians();
 
 </section>
 
-<!-- <table  class="table table-bordered table-hover" id="userTable">
-    <thead>
-    <tr>
-        <th>Username</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th colspan="2">Available between</th>
-        <th>Salary Expected</th>
-    </tr>
-    </thead>
-
-    <tbody> -->
 <section class="cardsContainer">
     <?php
 
@@ -58,17 +46,6 @@ $listGuardian = $guardianController->getAllGuardians();
                     </div>
                 </a>
             </div>
-
-<!--            <a>-->
-<!--                <tr style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#reservationForm">-->
-<!--                    <td><a href="--><?php //echo FRONT_ROOT?><!--Reservation/guardianSelected?idGuardian=--><?php //echo $value->getIdGuardian() ?><!--&userGuardian=--><?php //echo $value->getUsername() ?><!--">--><?php //echo $value->getUsername()?><!--</a></td>-->
-<!--                    <td>--><?php //echo $value->getFirstName()?><!-- </td>-->
-<!--                    <td>--><?php //echo $value->getLastName()?><!-- </td>-->
-<!--                    <td>--><?php //echo $value->getStartDate()?><!-- </td>-->
-<!--                    <td>--><?php //echo $value->getEndDate()?><!-- </td>-->
-<!--                    <td>--><?php //echo $value->getSalaryExpected()?><!-- </td>-->
-<!--                </tr>-->
-<!--            </a> -->
             <?php
         }
     }
@@ -86,16 +63,6 @@ $listGuardian = $guardianController->getAllGuardians();
                     </div>
                 </a>
             </div>
-<!--             <a>-->
-<!--                <tr >-->
-<!--                    <td><a href="--><?php //echo FRONT_ROOT?><!--Reservation/guardianSelected?idGuardian=--><?php //echo $value->getIdGuardian() ?><!--&userGuardian=--><?php //echo $value->getUsername() ?><!--">--><?php //echo $value->getUsername()?><!--</a></td>-->
-<!--                    <td>--><?php //echo $value->getFirstName()?><!-- </td>-->
-<!--                    <td>--><?php //echo $value->getLastName()?><!-- </td>-->
-<!--                    <td>--><?php //echo $value->getStartDate()?><!-- </td>-->
-<!--                    <td>--><?php //echo $value->getEndDate()?><!-- </td>-->
-<!--                    <td>--><?php //echo $value->getSalaryExpected()?><!-- </td>-->
-<!--                </tr>-->
-<!--            </a> -->
             <?php
         }
     }
@@ -104,8 +71,6 @@ $listGuardian = $guardianController->getAllGuardians();
     <div class="cardsContainer__corner cardsContainer__corner--1"></div>
     <div class="cardsContainer__corner cardsContainer__corner--2"></div>
 </section>
-    <!-- </tbody>
-</table> -->
 <section class="makeReservation">
 <?php
 

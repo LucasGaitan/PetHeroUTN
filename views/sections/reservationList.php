@@ -1,5 +1,5 @@
 <?php
-
+require_once(VIEWS_PATH."forms/confirmReservationForm.php");
 use Controllers\ReservationController;
 
 $reservationController = new ReservationController();
@@ -22,54 +22,98 @@ $reservations = $reservationController->getAllReservationsByGuardianId();
     </div>
 </form>-->
 
-<table  class="table table-bordered table-hover" id="userTable">
-    <thead>
-    <tr>
-        <th>Owner</th>
-        <th>Animal Type</th>
-        <th>Animal Breed</th>
-        <th>Animal Size</th>
-        <th colspan="2">Available between</th>
-        <th>State</th>
-        <th>Concluded</th>
+<!--<table  class="table table-bordered table-hover" id="userTable">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>Owner</th>-->
+<!--        <th>Animal Type</th>-->
+<!--        <th>Animal Breed</th>-->
+<!--        <th>Animal Size</th>-->
+<!--        <th colspan="2">Available between</th>-->
+<!--        <th>State</th>-->
+<!--        <th>Concluded</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!---->
+<!--    <tbody>-->
+<!--    --><?php
+//
+//        foreach ($reservations as $value)
+//        {
+//            ?>
+<!--                <tr >-->
+<!--                   <td>--><?php //echo $value["ownerName"]?><!-- </td>-->
+<!--                    <td>--><?php //echo $value["animalType"]?><!-- </td>-->
+<!--                    <td>--><?php //echo $value["animalBreed"]?><!-- </td>-->
+<!--                    <td>--><?php //echo $value["animalSize"]?><!-- </td>-->
+<!--                    <td>--><?php //echo $value["startDate"]?><!-- </td>-->
+<!--                    <td>--><?php //echo $value["endDate"]?><!-- </td>-->
+<!--                    <td>--><?php //if($value["reservationState"] == 1)
+//                        {
+//                            echo "Confirmed";
+//                        }else{
+//                            echo "Not Confirmed";
+//                        }?><!-- </td>-->
+<!--                    <td>--><?php //if($value["reservationConcluded"] == 1)
+//                        {
+//                            echo "Yes";
+//                        }else{
+//                        echo "No";
+//                        }?><!-- </td>-->
+<!---->
+<!---->
+<!--                </tr>-->
+<!--            --><?php
+//        }
+//    ?>
+<!--    </tbody>-->
+<!--</table>-->
 
+<section class="cardsContainer">
+    <?php
+    foreach ($reservations as $value) {
+        ?>
+        <div class="reservationCard__container">
+            <a href="<?php echo FRONT_ROOT?>Reservation/reservationSelected?idReservation=<?php echo $value["id_reservation"] ?>"
+               class="reservationCard">
+                <div class="reservationCard__content">
+                    <p class="reservationCard__title"><?php echo $value["ownerName"] ?></p>
+                    <p class="reservationCard__title"><?php echo $value["animalType"] ?>/<?php echo $value["animalBreed"] ?>/ <?php echo $value["animalSize"]?></p>
+                    <p class="reservationCard__date"><?php echo $value["startDate"] ?>
+                        / <?php echo $value["startDate"] ?></p>
+                    <p class="reservationCard__salary"><?php if ($value["reservationState"] == 1) {
+                            echo "Confirmed";
+                        } else {
+                            echo "Not Confirmed";
+                        } ?></p>
+                    <p class="reservationCard__salary"><?php if ($value["reservationConcluded"] == 1) {
+                            echo "Yes";
+                        } else {
+                            echo "No";
+                        } ?></p>
+                </div>
+            </a>
+        </div>
+        <?php
+    }
+    ?>
 
-    </tr>
-    </thead>
-
-    <tbody>
+    <div class="cardsContainer__corner cardsContainer__corner--1"></div>
+    <div class="cardsContainer__corner cardsContainer__corner--2"></div>
+</section>
+<section class="confirmReservation">
     <?php
 
-        foreach ($reservations as $value)
-        {
-            ?>
-                <tr >
-                   <td><?php echo $value["ownerName"]?> </td>
-                    <td><?php echo $value["animalType"]?> </td>
-                    <td><?php echo $value["animalBreed"]?> </td>
-                    <td><?php echo $value["animalSize"]?> </td>
-                    <td><?php echo $value["startDate"]?> </td>
-                    <td><?php echo $value["endDate"]?> </td>
-                    <td><?php if($value["reservationState"] == 1)
-                        {
-                            echo "Confirmed";
-                        }else{
-                            echo "Not Confirmed";
-                        }?> </td>
-                    <td><?php if($value["reservationConcluded"] == 1)
-                        {
-                            echo "Yes";
-                        }else{
-                        echo "No";
-                        }?> </td>
-
-
-                </tr>
-            <?php
-        }
+    if (isset($idReservation)) {
+        ?>
+        <p class="confirmReservation__title">You selected: <span
+                    class="confirmReservation__title--name"> <?php echo $idReservation; ?> </span></p>
+        <a class="confirmReservation__buttom" data-bs-toggle="modal" data-bs-target="#confirmReservation">Confirm
+            Reservation</a><?php
+    } else {
+        ?>
+        <p class="confirmReservation__title">You must have to select a Reservation to confirm!</p><?php
+    }
     ?>
-    </tbody>
-</table>
-
-
+</section>
 

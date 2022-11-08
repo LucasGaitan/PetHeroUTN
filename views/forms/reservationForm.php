@@ -44,6 +44,7 @@ $myPets = $ownerController->getPetsByOwnerId();
                             ?>
                         </select>
                     </div>
+                    <input type="hidden" name="idGuardian" value="<?php echo $idGuardian?>" >
                     <div class="d-grid gap-2 col-10">
                         <button class="btn" style="background-color:#b41d78; color:#fff" type="submit">Make reservation</button>
                     </div>

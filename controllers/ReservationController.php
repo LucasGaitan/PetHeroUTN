@@ -15,10 +15,10 @@ class ReservationController
         $this->reservationDAO = new ReservationDAO();
     }
 
-    public function ReservationForm($startDate, $endDate, $id_animal, $idGuardianSelected)
+    public function ReservationForm($startDate, $endDate, $id_animal, $idGuardian)
     {
         $reservation = new reservation();
-        $reservation->setIdGuardian($idGuardianSelected);
+        $reservation->setIdGuardian($idGuardian);
         $reservation->setStartDate($startDate);
         $reservation->setEndDate($endDate);
         $reservation->setState(0);
@@ -33,6 +33,15 @@ class ReservationController
         }
 //        require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
+    public function ConfirmReservation($idReservation)
+    {
+        try {
+            $this->reservationDAO->updateState($idReservation);
+            header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
 
     public function guardianSelected($idGuardian, $userGuardian)
     {
@@ -41,6 +50,15 @@ class ReservationController
 
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
+
+    public function reservationSelected($idReservation)
+    {
+        session_start();
+        $val = 2;
+
+        require_once(VIEWS_PATH . "/sections/guardianView.php");
+    }
+
 
     public function getAllReservationsByGuardianId ()
     {
