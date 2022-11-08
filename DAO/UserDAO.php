@@ -7,7 +7,7 @@ use http\Message;
 use Models\User as User;
 use Models\userTemplate as UserTemplate;
 
-class UserDAO
+class UserDAO implements IDAO
 {
     private $tableName;
     private $connection;
@@ -17,7 +17,7 @@ class UserDAO
         $this->tableName = 'users';
     }
 
-    public function Add($firstName, $lastName, $username, $password, $email)
+    public function Add($user)
     {
         $query = "INSERT INTO " . $this->tableName . "(firstName, lastName, username, password, email) 
         VALUES (:firstName, :lastName, :username, :password, :email)";
@@ -26,11 +26,11 @@ class UserDAO
         {
             $this->connection = Connection::GetInstance();
 
-            $parameters['firstName'] = $firstName;
-            $parameters['lastName'] = $lastName;
-            $parameters['username'] = $username;
-            $parameters['password'] = $password;
-            $parameters['email'] = $email;
+            $parameters['firstName'] = $user->getFirstName();
+            $parameters['lastName'] = $user->getLastName();
+            $parameters['username'] = $user->getUserName();
+            $parameters['password'] = $user->getPassword();
+            $parameters['email'] = $user->getEmail();
 
             $this->connection->ExecuteNonQuery($query, $parameters);
         }

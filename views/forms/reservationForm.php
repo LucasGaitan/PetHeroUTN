@@ -1,7 +1,9 @@
 <?php
-use DAO\OwnerDAO as OwnerDAO;
-$ownerDAO = new OwnerDAO();
-$myPets = $ownerDAO->getPets($_SESSION["user"]->getIdOwner());
+use Controllers\OwnerController as OwnerController;
+
+$ownerController = new OwnerController();
+
+$myPets = $ownerController->getPetsByOwnerId();
 ?>
 
 <div class="modal fade" id="reservationForm" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
@@ -31,7 +33,7 @@ $myPets = $ownerDAO->getPets($_SESSION["user"]->getIdOwner());
                         </div>
                     </div>
                     <div>
-                        <select class="form-select" aria-label="Animal Type" name="pet" required>
+                        <select class="form-select" aria-label="Animal Type" name="id_animal" required>
                             <option selected>Select your animal</option>
                             <?php
                             foreach ($myPets as $value) {

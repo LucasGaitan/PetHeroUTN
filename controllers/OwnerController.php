@@ -4,8 +4,9 @@ namespace Controllers;
 
 use DAO\OwnerDAO;
 use DAO\GuardianDAO;
+use Exception;
 use Models\Owner;
-use Models\Reservation as Reservation;
+use Models\reservation as Reservation;
 
 class OwnerController
 {
@@ -38,6 +39,15 @@ class OwnerController
         $val = 3;
 
         require_once(VIEWS_PATH . "/sections/ownerView.php");
+    }
+
+    public function getPetsByOwnerId ()
+    {
+        try {
+            return $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
 

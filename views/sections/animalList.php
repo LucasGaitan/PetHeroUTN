@@ -1,12 +1,14 @@
 <?php
 
+use Controllers\OwnerController;
 use DAO\OwnerDAO as OwnerDAO;
 use DAO\AnimalDAO as AnimalDAO;
 
 $ownerDAO = new OwnerDAO();
 $animalDAO = new AnimalDAO();
+$ownerController = new OwnerController();
 
-$petArray = $ownerDAO->getPets($_SESSION["user"]->getIdOwner());
+$petArray = $ownerController->getPetsByOwnerId();
 
 ?>
 

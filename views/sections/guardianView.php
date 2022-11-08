@@ -1,5 +1,5 @@
 <?php
-require_once(VIEWS_PATH . "forms/reservationForm.php");
+
 
 ?>
 
@@ -53,7 +53,7 @@ require_once(VIEWS_PATH . "forms/reservationForm.php");
 
                 <section class="templateNav__button">
                     <img class="templateNav__icon" src="<?php echo ASSETS_PATH ?>/guardianWhite.png" alt="">
-                    <a class="templateNav__link" href="<?php echo FRONT_ROOT ?>Guardian/showActionMenu?value=2">Action 1</a>
+                    <a class="templateNav__link" href="<?php echo FRONT_ROOT ?>Guardian/showActionMenu?value=2">View Reservations</a>
                 </section>
 
                 <section class="templateNav__button">
@@ -91,7 +91,7 @@ require_once(VIEWS_PATH . "forms/reservationForm.php");
                                 break;
 
                             case 2:
-                                ?> <p style="font-size: 5rem;">Empy</p> <?php
+                                require_once(VIEWS_PATH . "sections/reservationList.php");
                                 break;
 
                             case 3:

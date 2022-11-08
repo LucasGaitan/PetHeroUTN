@@ -2,12 +2,11 @@
 
 require_once(VIEWS_PATH."forms/reservationForm.php");
 
-use DAO\GuardianDAO as GuardianDAO;
-use DAO\OwnerDAO as OwnerDAO;
+use Controllers\GuardianController;
 
-$guardianDAO = new GuardianDAO();
+$guardianController = new GuardianController();
 
-$listGuardian = $guardianDAO->getAll();
+$listGuardian = $guardianController->getAllGuardians();
 
 ?>
 
@@ -60,16 +59,16 @@ $listGuardian = $guardianDAO->getAll();
                 </a>
             </div>
 
-            <!-- <a>
-                <tr style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#reservationForm">
-                    <td><a href="<?php echo FRONT_ROOT?>Reservation/guardianSelected?idGuardian=<?php echo $value->getIdGuardian() ?>&userGuardian=<?php echo $value->getUsername() ?>"><?php echo $value->getUsername()?></a></td>
-                    <td><?php echo $value->getFirstName()?> </td>
-                    <td><?php echo $value->getLastName()?> </td>
-                    <td><?php echo $value->getStarDate()?> </td>
-                    <td><?php echo $value->getEndDate()?> </td>
-                    <td><?php echo $value->getSalaryExpected()?> </td>
-                </tr>
-            </a> -->
+<!--            <a>-->
+<!--                <tr style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#reservationForm">-->
+<!--                    <td><a href="--><?php //echo FRONT_ROOT?><!--Reservation/guardianSelected?idGuardian=--><?php //echo $value->getIdGuardian() ?><!--&userGuardian=--><?php //echo $value->getUsername() ?><!--">--><?php //echo $value->getUsername()?><!--</a></td>-->
+<!--                    <td>--><?php //echo $value->getFirstName()?><!-- </td>-->
+<!--                    <td>--><?php //echo $value->getLastName()?><!-- </td>-->
+<!--                    <td>--><?php //echo $value->getStartDate()?><!-- </td>-->
+<!--                    <td>--><?php //echo $value->getEndDate()?><!-- </td>-->
+<!--                    <td>--><?php //echo $value->getSalaryExpected()?><!-- </td>-->
+<!--                </tr>-->
+<!--            </a> -->
             <?php
         }
     }
@@ -82,21 +81,21 @@ $listGuardian = $guardianDAO->getAll();
                 <a href="<?php echo FRONT_ROOT?>Reservation/guardianSelected?idGuardian=<?php echo $value->getIdGuardian() ?>&userGuardian=<?php echo $value->getUsername() ?>" class="guardianCard">
                     <div class="guardianCard__content">
                         <p class="guardianCard__title"><?php echo $value->getFirstName()?> <?php echo $value->getLastName()?></p>
-                        <p class="guardianCard__date"><?php echo $value->getStarDate()?> / <?php echo $value->getEndDate()?></p>
+                        <p class="guardianCard__date"><?php echo $value->getStartDate()?> / <?php echo $value->getEndDate()?></p>
                         <p class="guardianCard__salary"><?php echo "$" . $value->getSalaryExpected()?></p>
                     </div>
                 </a>
             </div>
-            <!-- <a>
-                <tr >
-                    <td><a href="<?php echo FRONT_ROOT?>Reservation/guardianSelected?idGuardian=<?php echo $value->getIdGuardian() ?>&userGuardian=<?php echo $value->getUsername() ?>"><?php echo $value->getUsername()?></a></td>
-                    <td><?php echo $value->getFirstName()?> </td>
-                    <td><?php echo $value->getLastName()?> </td>
-                    <td><?php echo $value->getStarDate()?> </td>
-                    <td><?php echo $value->getEndDate()?> </td>
-                    <td><?php echo $value->getSalaryExpected()?> </td>
-                </tr>
-            </a> -->
+<!--             <a>-->
+<!--                <tr >-->
+<!--                    <td><a href="--><?php //echo FRONT_ROOT?><!--Reservation/guardianSelected?idGuardian=--><?php //echo $value->getIdGuardian() ?><!--&userGuardian=--><?php //echo $value->getUsername() ?><!--">--><?php //echo $value->getUsername()?><!--</a></td>-->
+<!--                    <td>--><?php //echo $value->getFirstName()?><!-- </td>-->
+<!--                    <td>--><?php //echo $value->getLastName()?><!-- </td>-->
+<!--                    <td>--><?php //echo $value->getStartDate()?><!-- </td>-->
+<!--                    <td>--><?php //echo $value->getEndDate()?><!-- </td>-->
+<!--                    <td>--><?php //echo $value->getSalaryExpected()?><!-- </td>-->
+<!--                </tr>-->
+<!--            </a> -->
             <?php
         }
     }

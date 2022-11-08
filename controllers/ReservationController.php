@@ -2,7 +2,8 @@
 
 namespace Controllers;
 
-use Models\Reservation as Reservation;
+use Exception;
+use Models\reservation as Reservation;
 use DAO\ReservationDAO as ReservationDAO;
 
 class ReservationController
@@ -14,16 +15,22 @@ class ReservationController
         $this->reservationDAO = new ReservationDAO();
     }
 
-    public function ReservationForm($startDate, $endDate, $pet, $idGuardianSelected)
+    public function ReservationForm($startDate, $endDate, $id_animal, $idGuardianSelected)
     {
-        $reservation = new Reservation();
+        $reservation = new reservation();
         $reservation->setIdGuardian($idGuardianSelected);
         $reservation->setStartDate($startDate);
         $reservation->setEndDate($endDate);
         $reservation->setState(0);
         $reservation->setConcluded(0);
 
-        $this->reservationDAO->createReservation($reservation);
+        $reservation_animals = ["reservation"=>$reservation, "id_animal"=>$id_animal];
+        try {
+            $this->reservationDAO->add($reservation_animals);
+            header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=1");
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
 //        require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 
@@ -35,5 +42,9 @@ class ReservationController
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 
+    public function getAllReservationsByGuardianId ()
+    {
+        return $this->reservationDAO->getReservationsByGuardianId($_SESSION["user"]->getIdGuardian());
+    }
 
 }

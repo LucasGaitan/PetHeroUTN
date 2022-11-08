@@ -36,4 +36,8 @@ class GuardianController
 
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
+
+    public function getAllGuardians(){
+        return $this->guardianDAO->getAll();
+    }
 }

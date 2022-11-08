@@ -10,7 +10,7 @@ class Guardian extends User{
     private $id_animal_size_expected;
     private $salaryExpected;
     private $reputation;
-    private $starDate;
+    private $startDate;
     private $endDate;
 
     function __construct()
@@ -28,14 +28,14 @@ class Guardian extends User{
         $this->idGuardian = $idGuardian;
     }
 
-    public function getStarDate()
+    public function getStartDate()
     {
-        return $this->starDate;
+        return $this->startDate;
     }
 
-    public function setStarDate($starDate)
+    public function setStartDate($starDate)
     {
-        $this->starDate = $starDate;
+        $this->startDate = $starDate;
     }
 
     public function getEndDate()

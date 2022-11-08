@@ -6,6 +6,7 @@ use DAO\GuardianDAO;
 use DAO\OwnerDAO;
 use DAO\UserDAO;
 use Exception;
+use Models\Guardian;
 use Models\Owner;
 use Models\userTemplate;
 
@@ -33,7 +34,17 @@ class AuthController
             $this->user->setUsername($username);
             $this->user->setPassword($password);
 
-            $this->userDAO->Add($firstName, $lastName, $username, $password, $email);
+            $user = new userTemplate();
+            $user->setFirstName($firstName);
+            $user->setLastName($lastName);
+            $user->setUsername($username);
+            $user->setPassword($password);
+            $user->setEmail($email);
+            try {
+                $this->userDAO->Add($user);
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
             session_start();
             $_SESSION['user'] = $this->user;
             header("location: " . FRONT_ROOT . "Auth/showTypeAccount");
@@ -73,6 +84,13 @@ class AuthController
 
                     case 2:
 //                        header('location:' . VIEWS_PATH . 'sections/guardianView.php');
+                        $guardian = new Guardian();
+                        $guardian->setIdGuardian($this->guardianDAO->findGuardianIdByUserId($_SESSION['user']->getId()));
+                        $guardian->setFirstName($_SESSION['user']->getFirstName());
+                        $guardian->setLastName($_SESSION['user']->getLastName());
+                        $guardian->setUserName($_SESSION['user']->getUsername());
+                        $guardian->setEmail($_SESSION['user']->getFirstName());
+                        $_SESSION['user'] = $guardian;
                         header("location: " . FRONT_ROOT . "Auth/showGuardianView");
                         //$this->showGuardianView();
 //                            $this->views($redirectionView);

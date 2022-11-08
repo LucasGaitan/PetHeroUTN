@@ -23,7 +23,7 @@ try {
             </div>
             <div class="modal-body">
                 <form action="<?php echo FRONT_ROOT ?>Animal/animalForm" class="row g-2 justify-content-center"
-                      method="post">
+                      method="post" enctype="multipart/form-data" >
                     <div class="col-6">
                         <label for="validationServer01" class="form-label">Name</label>
                         <input type="text" name="animalName" class="form-control" id="validationServer01" value=""

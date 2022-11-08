@@ -45,7 +45,7 @@
                 $guardian->setLastName($p["lastName"]);
                 $guardian->setSalaryExpected($p["salaryExpected"]);
                 $guardian->setReputation($p["reputation"]);
-                $guardian->setStarDate($p["startDate"]);
+                $guardian->setStartDate($p["startDate"]);
                 $guardian->setEndDate($p["endDate"]);
                 $guardian->setEmail($p["email"]);
                 $guardian->setId_animal_size_expected($p['id_animal_size_expected']);
@@ -106,5 +106,22 @@
             }
 
             return $listGuardians;
+        }
+
+        public function findGuardianIdByUserId($id){
+            $query = "select g.id_guardian from users u
+                  inner join guardians g on u.id_user = g.id_user
+                  where u.id_user = (:id)";
+            try {
+                $this->connection = Connection::GetInstance();
+                $parameters['id'] = $id;
+                $result = $this->connection->Execute($query, $parameters);
+
+                return $result[0]['id_guardian'];
+            }
+            catch(Exception $e)
+            {
+                throw $e;
+            }
         }
     }
