@@ -60,6 +60,8 @@
         overflow: hidden;
 
         &__pets{
+            display: flex;
+            flex-wrap: wrap;
             width: 100%;
             height: 100%;
 
@@ -75,8 +77,52 @@
                 padding: 3rem;
                 overflow: scroll;
 
+                &__fail{
+                    font-size: 2rem;
+                    font-weight: bolder;
+                }
+
+                
                 &::-webkit-scrollbar{
                     display: none;
+                }
+            }
+
+            &__card{
+                width: 10rem;
+                height: 16.5rem;
+                border-radius: 25px;
+                box-shadow: 2px 2px 5px grey;
+                overflow: hidden;
+
+                &__imgCont{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    height: 8rem;
+                }
+
+                &__img{
+                    width: 6.5rem;
+                    height: 6.5rem;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    box-shadow: 2px 2px 4px grey;
+                }
+
+                &__content{
+                    width: 100%;
+                    height: 10rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+
+                    &__name{
+                        font-size: 1.3rem;
+                        font-weight: bolder;
+                    }
                 }
             }
         }

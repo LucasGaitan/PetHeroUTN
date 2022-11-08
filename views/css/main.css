@@ -844,6 +844,8 @@ body::-webkit-scrollbar-thumb {
   overflow: hidden;
 }
 .profile__body__pets {
+  display: flex;
+  flex-wrap: wrap;
   width: 100%;
   height: 100%;
 }
@@ -858,8 +860,46 @@ body::-webkit-scrollbar-thumb {
   padding: 3rem;
   overflow: scroll;
 }
+.profile__body__pets__content__fail {
+  font-size: 2rem;
+  font-weight: bolder;
+}
 .profile__body__pets__content::-webkit-scrollbar {
   display: none;
+}
+.profile__body__pets__card {
+  width: 10rem;
+  height: 16.5rem;
+  border-radius: 25px;
+  box-shadow: 2px 2px 5px grey;
+  overflow: hidden;
+}
+.profile__body__pets__card__imgCont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 8rem;
+}
+.profile__body__pets__card__img {
+  width: 6.5rem;
+  height: 6.5rem;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  box-shadow: 2px 2px 4px grey;
+}
+.profile__body__pets__card__content {
+  width: 100%;
+  height: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.profile__body__pets__card__content__name {
+  font-size: 1.3rem;
+  font-weight: bolder;
 }
 .profile__body__reservations {
   width: 100%;
