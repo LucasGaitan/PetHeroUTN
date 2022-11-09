@@ -40,12 +40,7 @@
     
             <nav class="templateNav">
         
-                <section class="templateNav__button templateNav__button--home">
-                    <img class="templateNav__icon" src="<?php echo ASSETS_PATH?>/casa.png" alt="">
-                    <a class="templateNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=0">Home</a>
-                </section>
-
-                <section class="templateNav__button">
+                <section class="templateNav__button templateNav__button--profile">
                     <img class="templateNav__icon" src="<?php echo ASSETS_PATH?>/profile.png" alt="">
                     <a class="templateNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=1">Profile</a>
                 </section>

@@ -11,49 +11,58 @@ $ownerController = new OwnerController();
 $petArray = $ownerController->getPetsByOwnerId();
 
 ?>
+<section class="container__tabla">
 
-<table class="table table-bordered table-hover" id="animalTable">
+    <h2 class="tabla__title">My Pets</h2>
 
-    <thead>
-    <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            Age
-        </th>
-        <th>
-            Type
-        </th>
-        <th>
-            Breed
-        </th>
-        <th>
-            Size
-        </th>
-        <th>
-            Observations
-        </th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <?php
-
-    if (isset($petArray)) {
-        foreach ($petArray as $value) { ?>
-            <tr>
-                <td><?php echo $value->getName() ?> </td>
-                <td><?php echo $value->getAge() ?> </td>
-                <td><?php echo $animalDAO->getTypeById($value->getIdAnimalBreed()) ?> </td>
-                <td><?php echo $animalDAO->getBreedById($value->getIdAnimalBreed()) ?> </td>
-                <td><?php echo $animalDAO->getSizeById($value->getIdAnimalSize()) ?> </td>
-                <td><?php echo $value->getObservations() ?> </td>
-
-            </tr>
-            <?php
+    <table class="tabla" id="animalTable">
+    
+        <thead class="tabla__head">
+    
+        <tr class="tabla__head__row">
+    
+            <th class="tabla__head__row__h tabla__head__row__h--izq">
+                Name
+            </th>
+            <th class="tabla__head__row__h">
+                Age
+            </th>
+            <th class="tabla__head__row__h">
+                Type
+            </th>
+            <th class="tabla__head__row__h">
+                Breed
+            </th>
+            <th class="tabla__head__row__h">
+                Size
+            </th>
+            <th class="tabla__head__row__h tabla__head__row__h--obv">
+                Observations
+            </th>
+    
+        </tr>
+    
+        </thead>
+    
+        <tbody class="tabla__body">
+        <?php
+    
+        if (isset($petArray)) {
+            foreach ($petArray as $value) { ?>
+                <tr class="tabla__body__row">
+                    <td class="tabla__body__row__d"><?php echo $value->getName() ?> </td>
+                    <td class="tabla__body__row__d"><?php echo $value->getAge() ?> </td>
+                    <td class="tabla__body__row__d"><?php echo $animalDAO->getTypeById($value->getIdAnimalBreed()) ?> </td>
+                    <td class="tabla__body__row__d"><?php echo $animalDAO->getBreedById($value->getIdAnimalBreed()) ?> </td>
+                    <td class="tabla__body__row__d"><?php echo $animalDAO->getSizeById($value->getIdAnimalSize()) ?> </td>
+                    <td class="tabla__body__row__d"><?php echo $value->getObservations() ?> </td>
+    
+                </tr>
+                <?php
+            }
         }
-    }
-    ?>
-    </tbody>
-</table>
+        ?>
+        </tbody>
+    </table>
+</section>
+

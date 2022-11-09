@@ -1,0 +1,64 @@
+@import "./variables";
+
+.container__tabla{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.tabla{
+    width: 80%;
+    max-height: 100%;
+    margin-top: 3rem;
+
+    &__title{
+        width: 80%;
+        font-weight: bolder;
+        text-align: start;
+    }
+
+    &__head{
+        background-color: $mainColor;
+        color: $colorBlanco;
+
+        &__row{
+            width: 20rem;
+
+            &__h{
+                width: 10rem;
+                height: 3rem;
+                margin: 1rem;
+                text-align: center;
+                border-right: solid 2px $colorBlanco;
+
+                &--izq{
+                    border-bottom-left-radius: 7px;
+                    border-top-left-radius: 7px;
+                }
+
+                &--obv{
+                    border: none;
+                    border-bottom-right-radius: 7px;
+                    border-top-right-radius: 7px;
+                }
+            }
+        }
+    }
+
+    &__body{
+        width: 100%;
+
+        &__row{
+            width: 20rem;
+            border-bottom: solid 1px grey;
+
+            &__d{
+                width: 10rem;
+                height: 3rem;
+                max-resolution: 1rem;
+                text-align: center;
+                font-weight: bold;
+            }
+        }
+    }
+}

@@ -663,7 +663,7 @@ body::-webkit-scrollbar-thumb {
   position: absolute;
   bottom: 5%;
 }
-.templateNav__button--home {
+.templateNav__button--profile {
   margin: 0 0 6rem 0;
 }
 .templateNav__link {
@@ -1137,4 +1137,59 @@ body::-webkit-scrollbar-thumb {
   text-decoration: none;
   color: #fff;
   transform: scale(1.1);
+}
+
+.container__tabla {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.tabla {
+  width: 80%;
+  max-height: 100%;
+  margin-top: 3rem;
+}
+.tabla__title {
+  width: 80%;
+  font-weight: bolder;
+  text-align: start;
+}
+.tabla__head {
+  background-color: #b41d78;
+  color: #fff;
+}
+.tabla__head__row {
+  width: 20rem;
+}
+.tabla__head__row__h {
+  width: 10rem;
+  height: 3rem;
+  margin: 1rem;
+  text-align: center;
+  border-right: solid 2px #fff;
+}
+.tabla__head__row__h--izq {
+  border-bottom-left-radius: 7px;
+  border-top-left-radius: 7px;
+}
+.tabla__head__row__h--obv {
+  border: none;
+  border-bottom-right-radius: 7px;
+  border-top-right-radius: 7px;
+}
+.tabla__body {
+  width: 100%;
+}
+.tabla__body__row {
+  width: 20rem;
+  border-bottom: solid 1px grey;
+}
+.tabla__body__row__d {
+  width: 10rem;
+  height: 3rem;
+  max-resolution: 1rem;
+  text-align: center;
+  font-weight: bold;
 }/*# sourceMappingURL=main.css.map */
