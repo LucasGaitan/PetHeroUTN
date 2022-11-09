@@ -6,10 +6,21 @@
     align-items: center;
     width: 100%;
     height: 5rem;
+
+    &__btn{
+        box-shadow: 2px 2px 4px grey;
+        transition: all 0.2s ease;
+        
+        &:hover{
+            transform: scale(1.1);
+        }
+    }
 }
 
 .cardsContainer{
     position: relative;
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
     height: calc(100vh - 20rem);
     padding: 2rem;
@@ -24,6 +35,7 @@
             left: -3%;
             border-top: solid 2px $mainColor;
             border-left: solid 2px $mainColor;
+            border-top-left-radius: 7px;
         }
 
         &--2{
@@ -31,6 +43,7 @@
             right: -4%;
             border-bottom: solid 2px $mainColor;
             border-right: solid 2px $mainColor;
+            border-bottom-right-radius: 7px;
         }
     }
 }
@@ -42,6 +55,7 @@
     text-decoration: none;
     color: black;
     font-weight: bolder;
+    
 
     &__container{
         width: 15rem;
@@ -49,7 +63,7 @@
         border-radius: 25px;
         box-shadow: 2px 2px 5px grey;
         display: flex;
-
+        margin: 1rem;
         transition: all 0.2s ease;
 
         &:hover{
@@ -102,6 +116,7 @@
         color: $colorBlanco;
         background-color: $mainColor;
         border-radius: 5px;
+        box-shadow: 2px 2px 4px grey;
         transition: all 0.2s ease;
         cursor: pointer;
 

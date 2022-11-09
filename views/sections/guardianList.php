@@ -23,7 +23,7 @@ $listGuardian = $guardianController->getAllGuardians();
             <input class="form-control" name="endDate" type="date" id="formFile">
         </div>
         <div class="d-flex justify-content-start align-items-center col-2">
-            <button class="btn" style="background-color:#b41d78; color:#fff" type="submit">Filter</button>
+            <button class="btn filterForm__btn" style="background-color:#b41d78; color:#fff" type="submit">Filter</button>
         </div>
     </form>
 

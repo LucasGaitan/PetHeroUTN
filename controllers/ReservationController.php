@@ -38,6 +38,7 @@ class ReservationController
             }
         }
         else {
+        
             echo "<script> alert('The end date cannot be less than the start date, try again.'); </script>";
             session_start();
             $val = 3;

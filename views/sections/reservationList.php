@@ -85,54 +85,58 @@ $reservations = $reservationController->getAllReservationsByGuardianId();
             foreach ($reservations as $value) {
             ?>
             <div class="reservationCard__container">
-                <a href="<?php echo FRONT_ROOT ?>Reservation/reservationSelected?idReservation=<?php echo $value["id_reservation"] ?>"
-                   class="reservationCard">
+
+                <a href="<?php echo FRONT_ROOT ?>Reservation/reservationSelected?idReservation=<?php echo $value["id_reservation"] ?>" class="reservationCard">
+
                     <div class="reservationCard__content">
+                           
                         <p class="reservationCard__title"><?php echo $value["ownerName"] ?></p>
-                        <p class="reservationCard__title"><?php echo $value["animalType"] ?>
-                            /<?php echo $value["animalBreed"] ?>/ <?php echo $value["animalSize"] ?></p>
-                        <p class="reservationCard__date"><?php echo $value["startDate"] ?>
-                            / <?php echo $value["startDate"] ?></p>
-                        <p class="reservationCard__salary"><?php if ($value["reservationState"] == 1) {
-                                echo "Confirmed";
-                            } else {
-                                echo "Not Confirmed";
-                            } ?></p>
-                        <p class="reservationCard__salary"><?php if ($value["reservationConcluded"] == 1) {
-                                echo "Yes";
-                            } else {
-                                echo "No";
-                            } ?></p>
+                        <p class="reservationCard__animal"><?php echo $value["animalType"] ?> / <?php echo $value["animalBreed"] ?> / <?php echo $value["animalSize"] ?></p>
+                        <p class="reservationCard__date"><?php echo $value["startDate"] ?> / <?php echo $value["startDate"] ?></p>
+
+                        <p class="reservationCard__state"><?php if ($value["reservationState"] == 1) {
+                             echo "Confirmed";
+                        } else {
+                            echo "Not Confirmed";
+                        } ?></p>
+               
                     </div>
                 </a>
+
+                    <div class="reservationCard__button">
+                        <a href="" class="reservationCard__button__link"><img class="reservationCard__button__img" src="<?php echo ASSETS_PATH?>/trash.png" alt=""></a>
+                    </div>
+               
             </div>
             <?php
             }
         }
         else
         {
-            echo '<p class="makeReservation__title">You have no reservations available</p>';
+            ?>
+           <p class="makeReservation__title">You have no reservations available</p>
+           <?php
         }
 
     }else{
         ?>
 
-        <form action="<?php echo FRONT_ROOT ?>Guardian/setWorkDates" class="row g-2 justify-content-center" method="post">
-                    <div class="col-md-6">
+        <form action="<?php echo FRONT_ROOT ?>Guardian/setWorkDates" class="" method="post">
+                    <div class="col-6">
                         <label for="validationServer01" class="form-label">Start date</label>
                         <input type="date" name="startDate" class="form-control" id="validationServer01" value="" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <label for="validationServer02" class="form-label">End date</label>
                         <input type="date" name="endDate" class="form-control " id="validationServer02" value="" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                     </div>
-                    <div class="d-grid gap-2 col-10">
+                    <div class="col-2">
                         <button class="btn" style="background-color:#b41d78; color:#fff" type="submit">Confirm Date</button>
                     </div>
         </form><?php
@@ -150,10 +154,8 @@ $reservations = $reservationController->getAllReservationsByGuardianId();
 
     if (isset($idReservation)) {
         ?>
-        <p class="confirmReservation__title">You selected: <span
-                    class="confirmReservation__title--name"> <?php echo $idReservation; ?> </span></p>
-        <a class="confirmReservation__buttom" data-bs-toggle="modal" data-bs-target="#confirmReservation">Confirm
-            Reservation</a><?php
+        <p class="confirmReservation__title">You selected: <span class="confirmReservation__title--name"> <?php echo $idReservation; ?> </span></p>
+        <a class="confirmReservation__buttom" data-bs-toggle="modal" data-bs-target="#confirmReservation">Confirm Reservation</a><?php
     } else {
         ?>
         <p class="confirmReservation__title">You must have to select a Reservation to confirm!</p><?php
