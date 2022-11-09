@@ -58,7 +58,8 @@
 
         public function getAll()
         {
-            $query = "SELECT * FROM guardians G INNER JOIN users U ON U.id_user = G.id_user";
+            $query = "SELECT * FROM guardians G INNER JOIN users U ON U.id_user = G.id_user 
+                    WHERE G.startDate IS NOT NULL AND G.endDate IS NOT NULL";
             $listGuardians = array();
 
             try

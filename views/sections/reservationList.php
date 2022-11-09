@@ -79,32 +79,41 @@ $reservations = $reservationController->getAllReservationsByGuardianId();
 //    echo '</pre>';
 
     if ($_SESSION['user']->getStartDate() !== null && $_SESSION['user']->getEndDate() !== null) {
-        foreach ($reservations as $value) {
-        ?>
-        <div class="reservationCard__container">
-            <a href="<?php echo FRONT_ROOT ?>Reservation/reservationSelected?idReservation=<?php echo $value["id_reservation"] ?>"
-               class="reservationCard">
-                <div class="reservationCard__content">
-                    <p class="reservationCard__title"><?php echo $value["ownerName"] ?></p>
-                    <p class="reservationCard__title"><?php echo $value["animalType"] ?>
-                        /<?php echo $value["animalBreed"] ?>/ <?php echo $value["animalSize"] ?></p>
-                    <p class="reservationCard__date"><?php echo $value["startDate"] ?>
-                        / <?php echo $value["startDate"] ?></p>
-                    <p class="reservationCard__salary"><?php if ($value["reservationState"] == 1) {
-                            echo "Confirmed";
-                        } else {
-                            echo "Not Confirmed";
-                        } ?></p>
-                    <p class="reservationCard__salary"><?php if ($value["reservationConcluded"] == 1) {
-                            echo "Yes";
-                        } else {
-                            echo "No";
-                        } ?></p>
-                </div>
-            </a>
-        </div>
-        <?php
+
+        if($reservations != null)
+        {
+            foreach ($reservations as $value) {
+            ?>
+            <div class="reservationCard__container">
+                <a href="<?php echo FRONT_ROOT ?>Reservation/reservationSelected?idReservation=<?php echo $value["id_reservation"] ?>"
+                   class="reservationCard">
+                    <div class="reservationCard__content">
+                        <p class="reservationCard__title"><?php echo $value["ownerName"] ?></p>
+                        <p class="reservationCard__title"><?php echo $value["animalType"] ?>
+                            /<?php echo $value["animalBreed"] ?>/ <?php echo $value["animalSize"] ?></p>
+                        <p class="reservationCard__date"><?php echo $value["startDate"] ?>
+                            / <?php echo $value["startDate"] ?></p>
+                        <p class="reservationCard__salary"><?php if ($value["reservationState"] == 1) {
+                                echo "Confirmed";
+                            } else {
+                                echo "Not Confirmed";
+                            } ?></p>
+                        <p class="reservationCard__salary"><?php if ($value["reservationConcluded"] == 1) {
+                                echo "Yes";
+                            } else {
+                                echo "No";
+                            } ?></p>
+                    </div>
+                </a>
+            </div>
+            <?php
+            }
         }
+        else
+        {
+            echo '<p class="makeReservation__title">You have no reservations available</p>';
+        }
+
     }else{
         ?>
 

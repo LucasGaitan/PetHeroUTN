@@ -45,6 +45,8 @@ class GuardianController
     {
         session_start();
         $this->guardianDAO->updateWorkDates($_SESSION["user"]->getIdGuardian(), $startDate, $endDate);
+        $_SESSION["user"]->setStartDate($startDate);
+        $_SESSION["user"]->setEndDate($endDate);
 
         $val = 2;
 
