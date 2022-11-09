@@ -41,12 +41,7 @@
 
             <nav class="templateNav">
 
-                <section class="templateNav__button templateNav__button--home">
-                    <img class="templateNav__icon" src="<?php echo ASSETS_PATH ?>/casa.png" alt="">
-                    <a class="templateNav__link" href="<?php echo FRONT_ROOT ?>Guardian/showActionMenu?value=0">Home</a>
-                </section>
-
-                <section class="templateNav__button">
+                <section class="templateNav__button templateNav__button--profile">
                     <img class="templateNav__icon" src="<?php echo ASSETS_PATH ?>/profile.png" alt="">
                     <a class="templateNav__link" href="<?php echo FRONT_ROOT ?>Guardian/showActionMenu?value=1">Profile</a>
                 </section>
@@ -81,10 +76,6 @@
                     if (isset($val)) {
 
                         switch ($val) {
-
-                            case 0:
-                                ?> <p style="font-size: 5rem;">Empy</p> <?php 
-                                break;
 
                             case 1:
                                 require_once(VIEWS_PATH . "sections/guardianProfile.php");

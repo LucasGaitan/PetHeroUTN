@@ -54,8 +54,8 @@ class AnimalController
                 $cat->setName($animalName);
                 $cat->setAge($age);
                 $cat->setIdAnimalBreed($breed);
-                $cat->setPhoto($photo);
-                $cat->setVaccinationPlan($vaccinationPlan);
+                $cat->setPhoto($_FILES["photo"]['name']);
+                $cat->setVaccinationPlan($_FILES["vaccinationPlan"]['name']);
                 $cat->setVideo($video);
                 $cat->setObservations($observations);
                 $cat->setIdAnimalSize($size);

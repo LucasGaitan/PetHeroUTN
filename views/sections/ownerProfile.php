@@ -43,7 +43,7 @@ $petArray = $ownerController->getPetsByOwnerId();
                 if(count($petArray) > 0){
 
                     foreach($petArray as $value){
-                        ?>
+                    ?>
                         <div class="profile__body__pets__card col-6 m-3">
                             <div class="profile__body__pets__card__imgCont">
                                 <img class="profile__body__pets__card__img" src="<?php echo FRONT_ROOT . UPLOADS_PATH ?>/animalPhoto/<?php echo $value->getPhoto()?>" alt="">
