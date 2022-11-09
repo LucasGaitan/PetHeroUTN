@@ -55,7 +55,7 @@ $listGuardian = $guardianController->getAllGuardians();
         {
             ?>
             <div class="guardianCard__container">
-                <a href="<?php echo FRONT_ROOT?>Reservation/guardianSelected?idGuardian=<?php echo $value->getIdGuardian() ?>&userGuardian=<?php echo $value->getUsername() ?>" class="guardianCard">
+                <a href="<?php echo FRONT_ROOT?>Reservation/guardianSelected?idGuardian=<?php echo $value->getIdGuardian() ?>&userGuardian=<?php echo $value->getUsername() ?>&startDate=<?php echo $value->getStartDate()?>&endDate=<?php echo $value->getEndDate()?>" class="guardianCard">
                     <div class="guardianCard__content">
                         <p class="guardianCard__title"><?php echo $value->getFirstName()?> <?php echo $value->getLastName()?></p>
                         <p class="guardianCard__date"><?php echo $value->getStartDate()?> / <?php echo $value->getEndDate()?></p>

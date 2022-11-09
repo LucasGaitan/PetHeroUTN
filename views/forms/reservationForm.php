@@ -20,21 +20,22 @@ $myPets = $ownerController->getPetsByOwnerId();
                     </div>
                     <div class="col-md-6">
                         <label for="validationServer01" class="form-label">Start date</label>
-                        <input type="date" name="startDate" class="form-control" id="validationServer01" value="" required>
+                        <input type="date" name="startDate" class="form-control" id="validationServer01" value="" max="<?php echo $endDate ?>" min="<?php echo $startDate ?>" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="validationServer02" class="form-label">End date</label>
-                        <input type="date" name="endDate" class="form-control " id="validationServer02" value="" required>
+                        <input type="date" name="endDate" class="form-control " id="validationServer02" value="" max="<?php echo $endDate ?>" min="<?php echo $startDate ?>" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                     </div>
                     <div>
+                        <label for="id_animal" class="form-label">Select your pet</label>
                         <select class="form-select" aria-label="Animal Type" name="id_animal" required>
-                            <option selected>Select your animal</option>
+                            <option value=""></option>
                             <?php
                             foreach ($myPets as $value) {
                                 ?>

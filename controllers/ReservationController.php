@@ -43,7 +43,7 @@ class ReservationController
         }
     }
 
-    public function guardianSelected($idGuardian, $userGuardian)
+    public function guardianSelected($idGuardian, $userGuardian, $startDate, $endDate)
     {
         session_start();
         $val = 3;
