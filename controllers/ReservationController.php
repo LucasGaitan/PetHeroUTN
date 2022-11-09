@@ -17,20 +17,33 @@ class ReservationController
 
     public function ReservationForm($startDate, $endDate, $id_animal, $idGuardian)
     {
-        $reservation = new reservation();
-        $reservation->setIdGuardian($idGuardian);
-        $reservation->setStartDate($startDate);
-        $reservation->setEndDate($endDate);
-        $reservation->setState(0);
-        $reservation->setConcluded(0);
+        $startDate2 = strtotime($startDate);
+        $endDate2 = strtotime($endDate);
 
-        $reservation_animals = ["reservation"=>$reservation, "id_animal"=>$id_animal];
-        try {
-            $this->reservationDAO->add($reservation_animals);
-            header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=1");
-        } catch (Exception $e) {
-            echo $e->getMessage();
+        if($startDate2 < $endDate2)
+        {
+            $reservation = new reservation();
+            $reservation->setIdGuardian($idGuardian);
+            $reservation->setStartDate($startDate);
+            $reservation->setEndDate($endDate);
+            $reservation->setState(0);
+            $reservation->setConcluded(0);
+
+            $reservation_animals = ["reservation"=>$reservation, "id_animal"=>$id_animal];
+            try {
+                $this->reservationDAO->add($reservation_animals);
+                header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=1");
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
         }
+        else {
+            echo "<script> alert('The end date cannot be less than the start date, try again.'); </script>";
+            session_start();
+            $val = 3;
+            require_once(VIEWS_PATH . "/sections/ownerView.php");
+        }
+
 //        require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
     public function ConfirmReservation($idReservation)

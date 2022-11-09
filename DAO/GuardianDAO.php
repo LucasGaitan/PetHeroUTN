@@ -124,4 +124,46 @@
                 throw $e;
             }
         }
+
+        public function bringStartAndEndDates($id_guardian)
+        {
+            $query = "SELECT g.startDate, g.endDate from guardians G WHERE G.id_guardian = (:id_guardian)";
+
+            try
+            {
+                $this->connection = Connection::GetInstance();
+
+                $parameters['id_guardian'] = $id_guardian;
+
+                $result = $this->connection->Execute($query, $parameters);
+
+                if(!empty($result))
+                {
+                    return $result;
+                }
+            }
+            catch(Exception $e)
+            {
+                throw $e;
+            }
+        }
+
+        public function updateWorkDates($id_guardian, $startDate, $endDate)
+        {
+            $query = "update guardians g
+                    set g.startDate = :startDate,
+                        g.endDate = :endDate
+                    where g.id_guardian = :id_guardian";
+
+            try {
+                $this->connection = Connection::GetInstance();
+                $parameters['id_guardian'] = $id_guardian;
+                $parameters['startDate'] = $startDate;
+                $parameters['endDate'] = $endDate;
+                $this->connection->ExecuteNonQuery($query, $parameters);
+
+            } catch (Exception $e) {
+                throw $e;
+            }
+        }
     }

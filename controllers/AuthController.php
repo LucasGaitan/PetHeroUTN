@@ -70,7 +70,6 @@ class AuthController
                 switch($redirectionView)
                 {
                     case 1:
-                    //    return header('location:' . VIEWS_PATH . 'sections/ownerView.php');
                         $owner = new Owner();
                         $owner->setIdOwner($this->ownerDAO->findOwnerIdByUserId($_SESSION['user']->getId()));
                         $owner->setFirstName($_SESSION['user']->getFirstName());
@@ -79,26 +78,26 @@ class AuthController
                         $owner->setEmail($_SESSION['user']->getFirstName());
                         $_SESSION['user'] = $owner;
                         header("location: " . FRONT_ROOT . "Auth/showOwnerView");
-// //                         $this->views($redirectionView);
                         break;
 
                     case 2:
-//                        header('location:' . VIEWS_PATH . 'sections/guardianView.php');
                         $guardian = new Guardian();
                         $guardian->setIdGuardian($this->guardianDAO->findGuardianIdByUserId($_SESSION['user']->getId()));
                         $guardian->setFirstName($_SESSION['user']->getFirstName());
                         $guardian->setLastName($_SESSION['user']->getLastName());
                         $guardian->setUserName($_SESSION['user']->getUsername());
                         $guardian->setEmail($_SESSION['user']->getFirstName());
+
+                        $dates = $this->guardianDAO->bringStartAndEndDates($guardian->getIdGuardian());
+
+                        $guardian->setStartDate($dates[0]['startDate']);
+                        $guardian->setEndDate($dates[0]['endDate']);
                         $_SESSION['user'] = $guardian;
                         header("location: " . FRONT_ROOT . "Auth/showGuardianView");
-                        //$this->showGuardianView();
-//                            $this->views($redirectionView);
                         break;
 
                     case 3:
                         header("location: " . FRONT_ROOT . "Auth/showTypeAccount");
-                        //$this->showTypeAccount();
                         break;
                 }
             }

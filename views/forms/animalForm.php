@@ -34,7 +34,7 @@ try {
                     </div>
                     <div class="col-6">
                         <label for="validationServer02" class="form-label">Age</label>
-                        <input type="number" name="age" class="form-control " id="validationServer02" value="" required>
+                        <input type="number" name="age" class="form-control" min="0" max="25" id="validationServer02" value="" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>

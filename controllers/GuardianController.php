@@ -40,4 +40,14 @@ class GuardianController
     public function getAllGuardians(){
         return $this->guardianDAO->getAll();
     }
+
+    public function setWorkDates($startDate, $endDate)
+    {
+        session_start();
+        $this->guardianDAO->updateWorkDates($_SESSION["user"]->getIdGuardian(), $startDate, $endDate);
+
+        $val = 2;
+
+        require_once(VIEWS_PATH . "/sections/guardianView.php");
+    }
 }

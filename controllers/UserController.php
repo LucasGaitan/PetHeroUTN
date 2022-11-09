@@ -34,6 +34,10 @@ class UserController
         $guardian->setId_animal_size_expected($dogTypeExpected);
         $guardian->setSalaryExpected($salaryExpected);
         $this->guardianDAO->Add($guardian);
+
+        #findmatchrole
+        #obtengo el usuario y lo guardo en sesion
+
         header("location: " . FRONT_ROOT . "Auth/showGuardianView");
 
     }

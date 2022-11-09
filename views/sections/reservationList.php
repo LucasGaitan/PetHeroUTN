@@ -72,7 +72,13 @@ $reservations = $reservationController->getAllReservationsByGuardianId();
 <section class="cardsContainer">
     <?php
 
-    if ($_SESSION['user']->getStartDate() != null && $_SESSION['user']->getEndDate() != null){
+//    var_dump($_SESSION['user']->getStartDate());
+//    var_dump($_SESSION['user']->getEndDate());
+//    echo '<pre>';
+//    var_dump($this->guardianDAO->bringStartAndEndDates($_SESSION['user']->getIdGuardian()));
+//    echo '</pre>';
+
+    if ($_SESSION['user']->getStartDate() !== null && $_SESSION['user']->getEndDate() !== null) {
         foreach ($reservations as $value) {
         ?>
         <div class="reservationCard__container">
