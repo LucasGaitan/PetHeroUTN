@@ -28,6 +28,7 @@ class UserController
     {
         session_start();
         $this->user = $_SESSION['user'];
+
         $id_user = $this->userDAO->findIdByUsername($this->user->getUsername());
         $guardian = new Guardian();
         $guardian->setId($id_user);
@@ -35,20 +36,44 @@ class UserController
         $guardian->setSalaryExpected($salaryExpected);
         $this->guardianDAO->Add($guardian);
 
-        #findmatchrole
-        #obtengo el usuario y lo guardo en sesion
+        $id_guardian = $this->guardianDAO->findGuardianIdByUserId($id_user);
+        $user_temp = $this->userDAO->findUserByUsername($this->user->getUsername());
+
+        $guardian_temp = new Guardian();
+        $guardian_temp->setId($id_user);
+        $guardian_temp->setFirstName($user_temp->getFirstName());
+        $guardian_temp->setLastName($user_temp->getLastName());
+        $guardian_temp->setUsername($user_temp->getUsername());
+        $guardian_temp->setEmail($user_temp->getEmail());
+        $guardian_temp->setIdGuardian($id_guardian);
+        $guardian_temp->setId_animal_size_expected($dogTypeExpected);
+        $guardian_temp->setSalaryExpected($salaryExpected);
+
+        $_SESSION["user"] = $guardian_temp;
 
         header("location: " . FRONT_ROOT . "Auth/showGuardianView");
-
     }
 
     public function ownerForm()
     {
         session_start();
-        var_dump($_SESSION);
         $this->user = $_SESSION['user'];
+
         $id_user = $this->userDAO->findIdByUsername($this->user->getUsername());
         $this->ownerDAO->Add($id_user);
+
+        $id_owner = $this->ownerDAO->findOwnerIdByUserId($id_user);
+        $user_temp = $this->userDAO->findUserByUsername($this->user->getUsername());
+
+        $owner_temp = new Owner();
+        $owner_temp->setId($id_user);
+        $owner_temp->setFirstName($user_temp->getFirstName());
+        $owner_temp->setLastName($user_temp->getLastName());
+        $owner_temp->setUsername($user_temp->getUsername());
+        $owner_temp->setEmail($user_temp->getEmail());
+        $owner_temp->setIdOwner($id_owner);
+
+        $_SESSION["user"] = $owner_temp;
 
         header("location: " . FRONT_ROOT . "Auth/showOwnerView");
     }
