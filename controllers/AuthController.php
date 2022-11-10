@@ -32,7 +32,6 @@ class AuthController
         if($password === $password2)
         {
             $this->user->setUsername($username);
-            $this->user->setPassword($password);
 
             $user = new userTemplate();
             $user->setFirstName($firstName);
@@ -43,6 +42,7 @@ class AuthController
             try {
                 $this->userDAO->Add($user);
             } catch (Exception $e) {
+                #MANDAR ALERT
                 echo $e->getMessage();
             }
             session_start();
@@ -51,7 +51,7 @@ class AuthController
         }
         else
         {
-            #SE ENTIENDE
+            #MANDAR ALERT
         }
     }
 
@@ -104,52 +104,14 @@ class AuthController
             else
             {
                 #Mensaje de fallo de inicio de sesion
+                #MANDAR ALERT
                 echo 'Incorrect username or password, please try again.';
             }
         }catch(Exception $e)
         {
+            #MANDAR ALERT
             echo $e;
         }
-
-//        session_start();
-//        $listGuardian = $this->guardianDAO->GetAll();
-//        $listOwner = $this->ownerDAO->GetAll();
-//        $flag = false;
-//        foreach ($listGuardian as $value)
-//        {
-//            if ($value->getUsername() === $username && $value->getPassword() === $password)
-//            {
-//                $loggedUser = $value;
-//                $_SESSION['loggedUser'] = $loggedUser;
-//                $flag = true;
-//                break;
-//            }
-//        }
-//        if (!$flag)
-//        {
-//            foreach ($listOwner as $value)
-//            {
-//                if ($value->getUsername() === $username && $value->getPassword() === $password)
-//                {
-//                    $loggedUser = $value;
-//                    $_SESSION['loggedUser'] = $loggedUser;
-//
-//                    break;
-//                }
-//            }
-//        }
-//
-//        if(isset($_SESSION))
-//        {
-//            if($flag){
-//                $this->showGuardianView();
-//            }
-//            else{
-//                $this->showOwnerView();
-//            }
-//        }
-
-
     }
 
     public function logOut(){

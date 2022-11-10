@@ -48,8 +48,8 @@ class GuardianController
         $_SESSION["user"]->setStartDate($startDate);
         $_SESSION["user"]->setEndDate($endDate);
 
-        $val = 2;
-
-        require_once(VIEWS_PATH . "/sections/guardianView.php");
+        header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
+        /*$val = 2;
+        require_once(VIEWS_PATH . "/sections/guardianView.php");*/
     }
 }

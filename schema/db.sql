@@ -79,23 +79,23 @@ CREATE TABLE animals(
                         CONSTRAINT fk_animals_animal_sizes FOREIGN KEY (id_animal_size) REFERENCES animal_sizes (id_animal_size)
 );
 
+CREATE TABLE paymentCoupons(
+                               id_coupon int AUTO_INCREMENT,
+                               payment decimal(10,2) NOT NULL,
+                               CONSTRAINT pk_paymentCoupon PRIMARY KEY (id_coupon)
+);
+
 CREATE TABLE reservations(
                              id_reservation INT AUTO_INCREMENT,
                              id_guardian INT NOT NULL,
+                             id_coupon INT,
                              state BOOLEAN NOT NULL,
                              startDate date NOT NULL,
                              endDate date NOT NULL,
                              concluded BOOLEAN NOT NULL,
                              CONSTRAINT pk_reservations PRIMARY KEY (id_reservation),
-                             CONSTRAINT fk_reservations_guardians FOREIGN KEY (id_guardian) REFERENCES guardians (id_guardian)
-);
-
-CREATE TABLE paymentCoupons(
-                               id_coupon int AUTO_INCREMENT,
-                               id_reservation int,
-                               payment decimal(10,2) NOT NULL,
-                               CONSTRAINT pk_paymentCoupon PRIMARY KEY (id_coupon),
-                               CONSTRAINT fk_paymentCoupon_reservations FOREIGN KEY (id_reservation) REFERENCES reservations(id_reservation)
+                             CONSTRAINT fk_reservations_guardians FOREIGN KEY (id_guardian) REFERENCES guardians (id_guardian),
+                             CONSTRAINT fk_reservations_coupon FOREIGN KEY (id_coupon) REFERENCES  paymentCoupons (id_coupon)
 );
 
 CREATE TABLE reservations_X_animals(
@@ -114,3 +114,78 @@ INSERT INTO users(firstName, lastName, username, password, email) VALUES('Santia
 INSERT INTO animal_sizes(id_animal_size, size) VALUES (1, 'Small');
 INSERT INTO animal_sizes(id_animal_size, size) VALUES (2, 'Medium');
 INSERT INTO animal_sizes(id_animal_size, size) VALUES (3, 'Big');
+
+INSERT INTO animal_types(id_animal_type, type) VALUES (1, 'Dog');
+INSERT INTO animal_types(id_animal_type, type) VALUES (2, 'Cat');
+
+INSERT INTO animal_breeds(id_animal_breed, breed, id_animal_type) VALUES (1, 'Beagle', 1);
+INSERT INTO animal_breeds(id_animal_breed, breed, id_animal_type)VALUES (2, 'Cocker', 1);
+INSERT INTO animal_breeds(id_animal_breed, breed, id_animal_type)VALUES (3, 'Egyptian', 2);
+INSERT INTO animal_breeds(id_animal_breed, breed, id_animal_type)VALUES (4, 'Siamese', 2);
+
+
+insert into animals (name, age, photo, vaccinationPlan, video, observations, id_animal_size, id_animal_breed, id_owner);
+
+select a.*, t.id_animal_type, t.type, b.breed, s.size from animals a
+                                                               inner  join animal_breeds b on a.id_animal_breed = b.id_animal_breed
+                                                               inner join animal_types t on b.id_animal_type = t.id_animal_type
+                                                               inner join animal_sizes s on a.id_animal_size = s.id_animal_size
+where id_owner = 1;
+
+select o.id_owner from users u
+                           inner join owners o on u.id_user = o.id_user
+where u.id_user = :id
+
+    insert into  reservations_X_animals (id_reservation, id_animal);
+
+
+CREATE PROCEDURE createReservation (
+    pid_guardian int,
+    pstate boolean,
+    pstartDate date,
+    pendDate date,
+    pconcluded boolean,
+    pid_animal int)
+begin
+    declare last_reservation int default 0;
+
+insert into reservations (id_guardian, id_coupon, state, startDate, endDate, concluded) VALUES (pid_guardian, NULL, pstate, pstartDate, pendDate, pconcluded);
+set last_reservation = last_insert_id();
+insert into reservations_X_animals (id_reservation, id_animal) VALUES (last_reservation, pid_animal);
+end;
+
+
+
+CALL createReservation(1,0,'2022-11-04','2022-11-07',0,1);
+
+
+
+SELECT r.id_reservation,concat(u.firstName, ' ', u.lastName) as owner, t.type, ab.breed, s.size, r.startDate, r.endDate, r.concluded, r.state from reservations r
+inner join guardians g on r.id_guardian = g.id_guardian
+inner join reservations_X_animals rXa on r.id_reservation = rXa.id_reservation
+inner join animals a on rXa.id_animal = a.id_animal
+inner join owners o on a.id_owner = o.id_owner
+inner join users u on o.id_user = u.id_user
+inner join animal_breeds ab on a.id_animal_breed = ab.id_animal_breed
+inner join animal_sizes s on a.id_animal_size = s.id_animal_size
+inner join animal_types t on ab.id_animal_type = t.id_animal_type
+where g.id_guardian = 1;
+
+
+update reservations r
+set r.state = 1
+where r.id_reservation = 1
+
+update guardians g
+set g.startDate = :startDate,
+    g.endDate = :endDate
+where g.id_guardian = :id_guardian;
+
+
+update guardians g
+set g.id_animal_size_expected = :sizeExpected
+where g.id_guardian = :idGuardian;
+
+
+
+

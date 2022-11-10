@@ -19,10 +19,6 @@ class OwnerController
         $this->guardianDAO = new GuardianDAO();
     }
 
-//    public function showDogList(){
-//
-//        require_once(VIEWS_PATH . "/sections/animalList.php");
-//    }
 
     public function showActionMenu($value){
 

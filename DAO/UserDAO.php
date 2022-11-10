@@ -42,9 +42,7 @@ class UserDAO implements IDAO
 
     private function mapUsers($users)
     {
-        $users = is_array($users) ? $users : [];
-
-        $resp = array_map(function($p)
+        return $resp = array_map(function($p)
         {
             $user = new UserTemplate();
             $user->setId($p["id_user"]);
@@ -56,8 +54,6 @@ class UserDAO implements IDAO
 
             return $user;
         }, $users);
-
-        return count($resp) > 1 ? $resp : $resp[0];
     }
 
     public function getAll()
@@ -129,7 +125,7 @@ class UserDAO implements IDAO
         }
         catch (Exception $e)
         {
-            return 3;
+            throw $e;
         }
     }
 

@@ -33,29 +33,6 @@
             }
         }
 
-        private function mapGuardians($guardians)
-        {
-            $resp = array_map(function($p)
-            {
-                $guardian = new Guardian();
-                $guardian->setId($p["id_user"]);
-                $guardian->setIdGuardian($p["id_guardian"]);
-                $guardian->setUsername($p["username"]);
-                $guardian->setFirstName($p["firstName"]);
-                $guardian->setLastName($p["lastName"]);
-                $guardian->setSalaryExpected($p["salaryExpected"]);
-                $guardian->setReputation($p["reputation"]);
-                $guardian->setStartDate($p["startDate"]);
-                $guardian->setEndDate($p["endDate"]);
-                $guardian->setEmail($p["email"]);
-                $guardian->setId_animal_size_expected($p['id_animal_size_expected']);
-
-                return $guardian;
-            }, $guardians);
-
-            return $resp;
-        }
-
         public function getAll()
         {
             $query = "SELECT * FROM guardians G INNER JOIN users U ON U.id_user = G.id_user 
@@ -109,6 +86,9 @@
             return $listGuardians;
         }
 
+
+
+
         public function findGuardianIdByUserId($id){
             $query = "select g.id_guardian from users u
                   inner join guardians g on u.id_user = g.id_user
@@ -147,7 +127,38 @@
             {
                 throw $e;
             }
+            return null;
+
+
         }
+
+
+        private function mapGuardians($guardians)
+        {
+            $resp = array_map(function($p)
+            {
+                $guardian = new Guardian();
+                $guardian->setId($p["id_user"]);
+                $guardian->setIdGuardian($p["id_guardian"]);
+                $guardian->setUsername($p["username"]);
+                $guardian->setFirstName($p["firstName"]);
+                $guardian->setLastName($p["lastName"]);
+                $guardian->setSalaryExpected($p["salaryExpected"]);
+                $guardian->setReputation($p["reputation"]);
+                $guardian->setStartDate($p["startDate"]);
+                $guardian->setEndDate($p["endDate"]);
+                $guardian->setEmail($p["email"]);
+                $guardian->setId_animal_size_expected($p['id_animal_size_expected']);
+
+                return $guardian;
+            }, $guardians);
+
+            return $resp;
+        }
+
+        /**
+         * Update
+         */
 
         public function updateWorkDates($id_guardian, $startDate, $endDate)
         {

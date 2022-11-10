@@ -20,7 +20,7 @@ class ReservationController
         $startDate2 = strtotime($startDate);
         $endDate2 = strtotime($endDate);
 
-        if($startDate2 < $endDate2)
+        if($startDate2 <= $endDate2)
         {
             $reservation = new reservation();
             $reservation->setIdGuardian($idGuardian);
@@ -38,11 +38,9 @@ class ReservationController
             }
         }
         else {
-        
-            echo "<script> alert('The end date cannot be less than the start date, try again.'); </script>";
+            //Mostrar alerta de que no puede tener la fecha de inicio despues de la fecha de final.
             session_start();
-            $val = 3;
-            require_once(VIEWS_PATH . "/sections/ownerView.php");
+            header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=3");
         }
 
 //        require_once(VIEWS_PATH . "/sections/ownerView.php");
@@ -53,6 +51,7 @@ class ReservationController
             $this->reservationDAO->updateState($idReservation);
             header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
         } catch (Exception $e) {
+            #MANDAR ALERT
             echo $e->getMessage();
         }
     }
@@ -76,7 +75,12 @@ class ReservationController
 
     public function getAllReservationsByGuardianId ()
     {
-        return $this->reservationDAO->getReservationsByGuardianId($_SESSION["user"]->getIdGuardian());
+        try {
+            return $this->reservationDAO->getReservationsByGuardianId($_SESSION["user"]->getIdGuardian());
+        } catch (Exception $e) {
+            #MANDAR ALERT
+            echo $e->getMessage();
+        }
     }
 
 }

@@ -92,7 +92,7 @@ class AnimalController
 
                 //Se comprueba si el archivo a cargar es correcto observando su extensión y tamaño
                 if (!((strpos($tipo, "jpeg") || strpos($tipo, "jpg") || strpos($tipo, "png")) && ($tamano < 10000000000000))) {
-                    echo "mal";
+                    //Mostrar alerta
                 } else {
 
                     //Si la imagen es correcta en tamaño y tipo
@@ -103,7 +103,6 @@ class AnimalController
 
                     } else {
                         //Si no se ha podido subir la imagen, mostramos un mensaje de error
-                        echo "mal";
                     }
                 }
             }
