@@ -163,9 +163,6 @@
                 $parameters['endDate'] = $endDate;
                 $this->connection->ExecuteNonQuery($query, $parameters);
 
-                $_SESSION['user']->setStartDate($startDate);
-                $_SESSION['user']->setEndDate($endDate);
-
             } catch (Exception $e) {
                 throw $e;
             }
