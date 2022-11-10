@@ -104,25 +104,14 @@ $reservations = $reservationController->getAllReservationsByGuardianId();
                 </a>
 
                     <div class="reservationCard__button">
+                        <a class="reservationCard__button__link" data-bs-toggle="modal" data-bs-target="#confirmReservation"><img class="reservationCard__button__img" src="<?php echo ASSETS_PATH?>/accept.png" alt=""></a>
                         <a href="" class="reservationCard__button__link"><img class="reservationCard__button__img" src="<?php echo ASSETS_PATH?>/trash.png" alt=""></a>
                     </div>
                
             </div>
             <?php
             }?>
-            <section class="confirmReservation">
             <?php
-
-                if (isset($idReservation)) {
-            ?>
-                <p class="confirmReservation__title">You selected: <span class="confirmReservation__title--name"> <?php echo $idReservation; ?> </span></p>
-                <a class="confirmReservation__buttom" data-bs-toggle="modal" data-bs-target="#confirmReservation">Confirm Reservation</a><?php
-                } else {
-            ?>
-                <p class="confirmReservation__title">You must have to select a Reservation to confirm!</p><?php
-            }
-    ?>
-</section><?php
         }
         else
         {
