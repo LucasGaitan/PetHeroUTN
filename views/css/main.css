@@ -1177,6 +1177,26 @@ body::-webkit-scrollbar-thumb {
   transform: scale(1.1);
 }
 
+.workDates {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.workDates__title {
+  font-weight: bolder;
+  font-size: 2rem;
+}
+.workDates__btn {
+  box-shadow: 2px 2px 4px grey;
+  transition: all 0.2s ease;
+}
+.workDates__btn:hover {
+  transform: scale(1.1);
+}
+
 .container__tabla {
   display: flex;
   justify-content: center;

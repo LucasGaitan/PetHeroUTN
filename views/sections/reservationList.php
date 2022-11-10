@@ -109,7 +109,20 @@ $reservations = $reservationController->getAllReservationsByGuardianId();
                
             </div>
             <?php
+            }?>
+            <section class="confirmReservation">
+            <?php
+
+                if (isset($idReservation)) {
+            ?>
+                <p class="confirmReservation__title">You selected: <span class="confirmReservation__title--name"> <?php echo $idReservation; ?> </span></p>
+                <a class="confirmReservation__buttom" data-bs-toggle="modal" data-bs-target="#confirmReservation">Confirm Reservation</a><?php
+                } else {
+            ?>
+                <p class="confirmReservation__title">You must have to select a Reservation to confirm!</p><?php
             }
+    ?>
+</section><?php
         }
         else
         {
@@ -121,7 +134,8 @@ $reservations = $reservationController->getAllReservationsByGuardianId();
     }else{
         ?>
 
-        <form action="<?php echo FRONT_ROOT ?>Guardian/setWorkDates" class="" method="post">
+        <form action="<?php echo FRONT_ROOT ?>Guardian/setWorkDates" class="workDates" method="post">
+                    <p class="workDates__title">You have to update your Work Dates:</p>
                     <div class="col-6">
                         <label for="validationServer01" class="form-label">Start date</label>
                         <input type="date" name="startDate" class="form-control" id="validationServer01" value="" required>
@@ -136,8 +150,8 @@ $reservations = $reservationController->getAllReservationsByGuardianId();
                             Looks good!
                         </div>
                     </div>
-                    <div class="col-2">
-                        <button class="btn" style="background-color:#b41d78; color:#fff" type="submit">Confirm Date</button>
+                    <div class="col-2 mt-3">
+                        <button class="workDates__btn btn col-12" style="background-color:#b41d78; color:#fff" type="submit">Confirm Dates</button>
                     </div>
         </form><?php
      
@@ -147,19 +161,5 @@ $reservations = $reservationController->getAllReservationsByGuardianId();
     <div class="cardsContainer__corner cardsContainer__corner--1"></div>
     <div class="cardsContainer__corner cardsContainer__corner--2"></div>
 
-</section>
-
-<section class="confirmReservation">
-    <?php
-
-    if (isset($idReservation)) {
-        ?>
-        <p class="confirmReservation__title">You selected: <span class="confirmReservation__title--name"> <?php echo $idReservation; ?> </span></p>
-        <a class="confirmReservation__buttom" data-bs-toggle="modal" data-bs-target="#confirmReservation">Confirm Reservation</a><?php
-    } else {
-        ?>
-        <p class="confirmReservation__title">You must have to select a Reservation to confirm!</p><?php
-    }
-    ?>
 </section>
 

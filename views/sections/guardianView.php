@@ -46,7 +46,7 @@
                 </section>
 
                 <section class="templateNav__button">
-                    <img class="templateNav__icon" src="<?php echo ASSETS_PATH ?>/guardianWhite.png" alt="">
+                    <img class="templateNav__icon" src="<?php echo ASSETS_PATH ?>/ticket.png" alt="">
                     <a class="templateNav__link" href="<?php echo FRONT_ROOT ?>Guardian/showActionMenu?value=2">View Reservations</a>
                 </section>
 
