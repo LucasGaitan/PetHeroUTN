@@ -11,7 +11,7 @@
 .cardsContainer{
     position: relative;
     width: 100%;
-    height: calc(100vh - 20rem);
+    height: calc(100vh - 9rem);
     padding: 2rem;
 
     &__corner{
@@ -75,14 +75,16 @@
 
     &__button{
         display: flex;
-        align-items: flex-start;
-        justify-content: center;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
         width: 15%;
         height: 100%;
 
         &__img{
             width: 1.7rem;
             margin-top: 0.8rem;
+            margin-bottom: 0.8rem;
 
             transition: all 0.2s ease;
 
@@ -94,46 +96,6 @@
 
     &__title, &__animal, &__date, &__state{
         margin: 0.5rem;
-    }
-}
-
-.confirmReservation{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 5rem;
-
-    &__title{
-        font-size: 1.3rem;
-        font-weight: bolder;
-        margin: 1rem;
-
-        &--name{
-            font-size: 1rem;
-        }
-    }
-    
-    &__buttom{
-        margin: 1rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-decoration: none;
-        width: 10rem;
-        height: 2.5rem;
-        color: $colorBlanco;
-        background-color: $mainColor;
-        border-radius: 5px;
-        box-shadow: 2px 2px 4px grey;
-        transition: all 0.2s ease;
-        cursor: pointer;
-
-        &:hover{
-            text-decoration: none;
-            color: $colorBlanco;
-            transform: scale(1.1);
-        }
     }
 }
 
@@ -153,7 +115,7 @@
     &__btn{
         box-shadow: 2px 2px 4px grey;
         transition: all 0.2s ease;
-        
+
         &:hover{
             transform: scale(1.1);
         }
