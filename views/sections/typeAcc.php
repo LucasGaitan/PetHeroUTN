@@ -1,7 +1,3 @@
-<?php
-require_once(VIEWS_PATH."forms/guardianForm.php");
-require_once(VIEWS_PATH."forms/ownerForm.php");
-?>
 <html lang="en">
 
 <head>
@@ -27,6 +23,10 @@ require_once(VIEWS_PATH."forms/ownerForm.php");
 </head>
 
 <body>
+<?php
+require_once(VIEWS_PATH."forms/guardianForm.php");
+require_once(VIEWS_PATH."forms/ownerForm.php");
+?>
 
     <main class="secMain">
 

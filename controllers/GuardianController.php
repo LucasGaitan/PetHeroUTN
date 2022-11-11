@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Controllers\ReservationController;
 use DAO\GuardianDAO;
 //use Models\Postulation;
 
@@ -29,11 +30,14 @@ class GuardianController
     public function showActionMenu($value){
 
         session_start();
-        
-        $val = 0;
 
         $val = $value;
 
+        if ($val == 2)
+        {
+            $reservationController = new ReservationController();
+            $reservations = $reservationController->getAllReservationsByGuardianId();
+        }
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 

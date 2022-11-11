@@ -1,21 +1,6 @@
-<?php
-require_once(VIEWS_PATH."forms/confirmReservationForm.php");
-use Controllers\ReservationController;
-
-$reservationController = new ReservationController();
-
-$reservations = $reservationController->getAllReservationsByGuardianId();
-?>
-
 <section class="cardsContainer">
     <?php
-
-//    var_dump($_SESSION['user']->getStartDate());
-//    var_dump($_SESSION['user']->getEndDate());
-//    echo '<pre>';
-//    var_dump($this->guardianDAO->bringStartAndEndDates($_SESSION['user']->getIdGuardian()));
-//    echo '</pre>';
-
+    require_once(VIEWS_PATH."forms/confirmReservationForm.php");
     if ($_SESSION['user']->getStartDate() !== null && $_SESSION['user']->getEndDate() !== null) {
 
         if($reservations != null)

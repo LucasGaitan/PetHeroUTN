@@ -9,30 +9,27 @@ use Exception;
 use Models\Guardian;
 use Models\Owner;
 use Models\userTemplate;
+use Controllers\OwnerController;
 
 class AuthController
 {
     private $userDAO;
-    private $user;
 
     public function __construct()
     {
         $this->guardianDAO = new guardianDAO();
         $this->ownerDAO = new ownerDAO();
         $this->userDAO = new userDAO();
-        $this->user = new userTemplate();
     }
 
-    public function index($message =""){
-        require_once(VIEWS_PATH. "index.php");
+    public function index($message = "")
+    {
+        require_once(VIEWS_PATH . "index.php");
     }
 
     public function signUp($firstName, $lastName, $username, $password, $password2, $email)
     {
-        if($password === $password2)
-        {
-            $this->user->setUsername($username);
-
+        if ($password === $password2) {
             $user = new userTemplate();
             $user->setFirstName($firstName);
             $user->setLastName($lastName);
@@ -41,16 +38,18 @@ class AuthController
             $user->setEmail($email);
             try {
                 $this->userDAO->Add($user);
+                session_start();
+                $_SESSION['user'] = $user;
+                header("location: " . FRONT_ROOT . "Auth/showTypeAccount");
             } catch (Exception $e) {
                 #MANDAR ALERT
-                echo $e->getMessage();
+                $alert = [
+                    "type" => "warning",
+                    "text" => $e->getMessage()
+                ];
+                require_once(VIEWS_PATH . "index.php");
             }
-            session_start();
-            $_SESSION['user'] = $this->user;
-            header("location: " . FRONT_ROOT . "Auth/showTypeAccount");
-        }
-        else
-        {
+        } else {
             #MANDAR ALERT
         }
     }
@@ -59,63 +58,50 @@ class AuthController
     {
         $user = $this->userDAO->findUserByUsername($username);
         session_start();
-        $_SESSION['user'] = $user;
-
         try {
-            if(isset($user) && $user->getPassword() === $password)
-            {
+            if (isset($user) && $user->getPassword() === $password) {
                 $id = $user->getId();
                 #Si es owner o guardian
                 $redirectionView = $this->userDAO->findMatchRole($id);
-                switch($redirectionView)
-                {
-                    case 1:
-                        $owner = new Owner();
-                        $owner->setIdOwner($this->ownerDAO->findOwnerIdByUserId($_SESSION['user']->getId()));
-                        $owner->setFirstName($_SESSION['user']->getFirstName());
-                        $owner->setLastName($_SESSION['user']->getLastName());
-                        $owner->setUserName($_SESSION['user']->getUsername());
-                        $owner->setEmail($_SESSION['user']->getFirstName());
-                        $_SESSION['user'] = $owner;
-                        header("location: " . FRONT_ROOT . "Auth/showOwnerView");
-                        break;
-
-                    case 2:
-                        $guardian = new Guardian();
-                        $guardian->setIdGuardian($this->guardianDAO->findGuardianIdByUserId($_SESSION['user']->getId()));
-                        $guardian->setFirstName($_SESSION['user']->getFirstName());
-                        $guardian->setLastName($_SESSION['user']->getLastName());
-                        $guardian->setUserName($_SESSION['user']->getUsername());
-                        $guardian->setEmail($_SESSION['user']->getFirstName());
-
-                        $dates = $this->guardianDAO->bringStartAndEndDates($guardian->getIdGuardian());
-
-                        $guardian->setStartDate($dates[0]['startDate']);
-                        $guardian->setEndDate($dates[0]['endDate']);
-                        $_SESSION['user'] = $guardian;
-                        header("location: " . FRONT_ROOT . "Auth/showGuardianView");
-                        break;
-
-                    case 3:
-                        header("location: " . FRONT_ROOT . "Auth/showTypeAccount");
-                        break;
+                if (!is_null($redirectionView[0]["id_owner"])) {
+                    $owner = new Owner();
+                    $owner->setIdOwner($this->ownerDAO->findOwnerIdByUserId($user->getId()));
+                    $owner->setFirstName($user->getFirstName());
+                    $owner->setLastName($user->getLastName());
+                    $owner->setUserName($user->getUsername());
+                    $owner->setEmail($user->getFirstName());
+                    $_SESSION['user'] = $owner;
+                    header("location: " . FRONT_ROOT . "Auth/showOwnerView");
+                } elseif (!is_null($redirectionView[0]["id_guardian"])) {
+                    $guardian = new Guardian();
+                    $guardian->setIdGuardian($this->guardianDAO->findGuardianIdByUserId($user->getId()));
+                    $guardian->setFirstName($user->getFirstName());
+                    $guardian->setLastName($user->getLastName());
+                    $guardian->setUserName($user->getUsername());
+                    $guardian->setEmail($user->getFirstName());
+                    $dates = $this->guardianDAO->bringStartAndEndDates($guardian->getIdGuardian());
+                    $guardian->setStartDate($dates[0]['startDate']);
+                    $guardian->setEndDate($dates[0]['endDate']);
+                    $_SESSION['user'] = $guardian;
+                    header("location: " . FRONT_ROOT . "Auth/showGuardianView");
+                } else {
+                    $_SESSION['user'] = $user;
+                    header("location: " . FRONT_ROOT . "Auth/showTypeAccount");
                 }
-            }
-            else
-            {
+            } else {
                 #Mensaje de fallo de inicio de sesion
                 #MANDAR ALERT
                 echo 'Incorrect username or password, please try again.';
             }
-        }catch(Exception $e)
-        {
+        } catch (Exception $e) {
             #MANDAR ALERT
             echo $e;
         }
     }
 
-    public function logOut(){
-            
+    public function logOut()
+    {
+
         session_destroy();
         $this->showLandPage();
     }
@@ -129,6 +115,8 @@ class AuthController
     public function showOwnerView()
     {
         session_start();
+        $ownerController = new OwnerController();
+        $petArray = $ownerController->getPetsByOwnerId();
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 
@@ -138,7 +126,8 @@ class AuthController
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 
-    public function showLandPage(){
+    public function showLandPage()
+    {
         header("location: " . FRONT_ROOT . "index.php");
     }
 }

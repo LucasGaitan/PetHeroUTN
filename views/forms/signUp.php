@@ -1,7 +1,3 @@
-<?php
-require_once(VIEWS_PATH."/forms/signIn.php");
-?>
-
 <div class="modal fade" id="signUp" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">

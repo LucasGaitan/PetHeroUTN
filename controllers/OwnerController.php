@@ -5,8 +5,8 @@ namespace Controllers;
 use DAO\OwnerDAO;
 use DAO\GuardianDAO;
 use Exception;
-use Models\Owner;
-use Models\reservation as Reservation;
+use Controllers\GuardianController;
+use DAO\AnimalDAO as AnimalDAO;
 
 class OwnerController
 {
@@ -23,8 +23,17 @@ class OwnerController
     public function showActionMenu($value){
 
         session_start();
-        $val = 0;
         $val = $value;
+
+        if ($val == 1 || $val == 2)
+        {
+            $petArray = $this->getPetsByOwnerId();
+        }elseif ($val == 3)
+        {
+            $guardianController = new GuardianController();
+
+            $listGuardian = $guardianController->getAllGuardians();
+        }
 
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }

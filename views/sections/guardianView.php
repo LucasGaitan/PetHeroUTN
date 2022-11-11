@@ -85,7 +85,7 @@
                                 break;
 
                             case 3:
-                                ?> <p style="font-size: 5rem;">Empy</p> <?php
+                                ?> <p style="font-size: 5rem;">Empty</p> <?php
                                 break;
 
                         }

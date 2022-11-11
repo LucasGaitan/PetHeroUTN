@@ -1,15 +1,3 @@
-<?php
-
-require_once(VIEWS_PATH."forms/reservationForm.php");
-
-use Controllers\GuardianController;
-
-$guardianController = new GuardianController();
-
-$listGuardian = $guardianController->getAllGuardians();
-
-?>
-
 <section class="filterForm">
 
     <form action="<?php echo FRONT_ROOT ?>Owner/FilterDates" class="row g-2 justify-content-center"
@@ -31,7 +19,7 @@ $listGuardian = $guardianController->getAllGuardians();
 
 <section class="cardsContainer">
     <?php
-
+    require_once(VIEWS_PATH."forms/reservationForm.php");
     if(isset($guardiansFiltered))
     {
         foreach ($guardiansFiltered as $value)

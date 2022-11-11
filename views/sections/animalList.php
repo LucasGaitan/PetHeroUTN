@@ -1,16 +1,3 @@
-<?php
-
-use Controllers\OwnerController;
-use DAO\OwnerDAO as OwnerDAO;
-use DAO\AnimalDAO as AnimalDAO;
-
-$ownerDAO = new OwnerDAO();
-$animalDAO = new AnimalDAO();
-$ownerController = new OwnerController();
-
-$petArray = $ownerController->getPetsByOwnerId();
-
-?>
 <section class="container__tabla">
 
     <h2 class="tabla__title">My Pets</h2>

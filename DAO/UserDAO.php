@@ -22,8 +22,7 @@ class UserDAO implements IDAO
         $query = "INSERT INTO " . $this->tableName . "(firstName, lastName, username, password, email) 
         VALUES (:firstName, :lastName, :username, :password, :email)";
 
-        try
-        {
+        try {
             $this->connection = Connection::GetInstance();
 
             $parameters['firstName'] = $user->getFirstName();
@@ -33,17 +32,14 @@ class UserDAO implements IDAO
             $parameters['email'] = $user->getEmail();
 
             $this->connection->ExecuteNonQuery($query, $parameters);
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             throw $e;
         }
     }
 
     private function mapUsers($users)
     {
-        return $resp = array_map(function($p)
-        {
+        $resp = array_map(function ($p) {
             $user = new UserTemplate();
             $user->setId($p["id_user"]);
             $user->setFirstName($p["firstName"]);
@@ -54,6 +50,15 @@ class UserDAO implements IDAO
 
             return $user;
         }, $users);
+        return count($resp) > 1 ? $resp : $resp[0];
+    }
+
+
+    private function mapMatchRole($result)
+    {
+        return $resp = array_map(function ($p) {
+            return $result = ["id_owner" => $p["id_owner"], "id_guardian" => $p["id_guardian"]];
+        }, $result);
     }
 
     public function getAll()
@@ -61,18 +66,14 @@ class UserDAO implements IDAO
         $query = "SELECT * FROM users";
         $listUser = array();
 
-        try
-        {
+        try {
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
 
-            if(!empty($result))
-            {
+            if (!empty($result)) {
                 $listUser = $this->mapUsers($result);
             }
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             throw $e;
         }
 
@@ -85,17 +86,14 @@ class UserDAO implements IDAO
 
         $parameters['username'] = $username;
 
-        try
-        {
+        try {
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query, $parameters);
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             throw $e;
         }
 
-        if(!empty($result))
+        if (!empty($result))
             return $this->mapUsers($result);
         else
             return null;
@@ -103,31 +101,25 @@ class UserDAO implements IDAO
 
     public function findMatchRole($id)
     {
-        try
-        {
+        try {
             $this->connection = Connection::GetInstance(); #Abrimos la conexion
-            $query = "SELECT O.id_user, O.id_owner FROM owners O WHERE O.id_user = :id"; #Buscamos en owner
+            $query = "SELECT o.id_owner, g.id_guardian FROM users u
+                        LEFT JOIN guardians g ON u.id_user = g.id_user
+                        LEFT JOIN owners o ON u.id_user = o.id_user
+                      WHERE u.id_user = :id";
             $parameters['id'] = $id;
-            $resultOwner = $this->connection->Execute($query, $parameters);
+            $result = $this->connection->Execute($query, $parameters);
 
-            if(isset($resultOwner[0]['id_owner']))
-                return 1; #Si el owner existe, retornamos 1
-            else #Si no existe...
-            {
-                $query = "SELECT G.id_user, G.id_guardian FROM guardians G WHERE G.id_user = :id"; #Buscamos Guardian
-                $parameters['id'] = $id;
-                $resultGuardian = $this->connection->Execute($query, $parameters);
-                if(isset($resultGuardian[0]['id_guardian']))
-                    return 2; #Si el guardian existe, retornamos 2
-                else
-                    return 3; #Si no es ninguno de ambos, retornamos 3
-            }
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             throw $e;
         }
+
+        if (!empty($result))
+            return $this->mapMatchRole($result);
+        else
+            return null;
     }
+
 
     public function findIdByUsername($username)
     {
@@ -140,9 +132,7 @@ class UserDAO implements IDAO
             $result = $this->connection->Execute($query, $parameters);
 
             return $result[0]['id_user'];
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             throw $e;
         }
     }

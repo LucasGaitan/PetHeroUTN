@@ -1,15 +1,3 @@
-<?php
-use Controllers\OwnerController;
-use DAO\OwnerDAO as OwnerDAO;
-use DAO\AnimalDAO as AnimalDAO;
-
-$ownerDAO = new OwnerDAO();
-$animalDAO = new AnimalDAO();
-$ownerController = new OwnerController();
-
-$petArray = $ownerController->getPetsByOwnerId();
-
-?>
 <section class="profile">
 
     <section class="profile__header">
