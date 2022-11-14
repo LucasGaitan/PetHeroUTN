@@ -2,7 +2,7 @@
     <?php
     require_once(VIEWS_PATH."forms/makepayment.php");
 
-    if(isset($listConfirmedReservations) && !is_null($listConfirmedReservations))
+    if(isset($listConfirmedReservations))
     {
         foreach ($listConfirmedReservations as $value)
         {

@@ -68,7 +68,12 @@
         <section class="template__content">
         
             <?php
-                    if (isset($val)) {
+            if (isset($alert)) { ?>
+            <div class="alert alert-<?php echo $alert["type"]?>" role="alert">
+                <?php echo $alert["text"]?>
+            </div>
+            <?php }
+            if (isset($val)) {
 
                         switch ($val) {
 

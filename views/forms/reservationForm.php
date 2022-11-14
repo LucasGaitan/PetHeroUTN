@@ -1,10 +1,3 @@
-<?php
-use Controllers\OwnerController as OwnerController;
-
-$ownerController = new OwnerController();
-
-$myPets = $ownerController->getPetsByOwnerId();
-?>
 
 <div class="modal fade" id="reservationForm" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
     <div class="modal-dialog modal-md modal-dialog-centered">

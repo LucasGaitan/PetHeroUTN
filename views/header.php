@@ -31,8 +31,15 @@
 <body>
 
   <header class="header">
+      <?php  if (isset($alert)) {
+          ?>
+          <div class="alert alert-<?php echo $alert["type"]?>" role="alert">
+              <?php echo $alert["text"]?>
+          </div>
+      <?php } ?>
 
-    <nav class="header__nav">
+
+      <nav class="header__nav">
 
       <a href="#"><img class="header__icon" src="<?php echo ASSETS_PATH?>/dogHero.png" alt=""></a>
 

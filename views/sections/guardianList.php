@@ -20,7 +20,12 @@
 <section class="cardsContainer">
     <?php
     require_once(VIEWS_PATH."forms/reservationForm.php");
-    if(isset($guardiansFiltered))
+    if (isset($alert)) {
+        ?>
+        <div class="alert alert-<?php echo $alert["type"]?>" role="alert">
+            <?php echo $alert["text"]?>
+        </div>
+    <?php }elseif(isset($guardiansFiltered))
     {
         foreach ($guardiansFiltered as $value)
         {

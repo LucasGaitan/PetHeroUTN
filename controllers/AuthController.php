@@ -9,11 +9,12 @@ use Exception;
 use Models\Guardian;
 use Models\Owner;
 use Models\userTemplate;
-use Controllers\OwnerController;
 
 class AuthController
 {
     private $userDAO;
+    private $guardianDAO;
+    private $ownerDAO;
 
     public function __construct()
     {
@@ -42,28 +43,31 @@ class AuthController
                 $_SESSION['user'] = $user;
                 header("location: " . FRONT_ROOT . "Auth/showTypeAccount");
             } catch (Exception $e) {
-                #MANDAR ALERT
                 $alert = [
-                    "type" => "warning",
+                    "type" => "danger",
                     "text" => $e->getMessage()
                 ];
                 require_once(VIEWS_PATH . "index.php");
             }
         } else {
-            #MANDAR ALERT
+            $alert = [
+                "type" => "warning",
+                "text" => "Passwords don't match."
+            ];
+            require_once(VIEWS_PATH . "index.php");
         }
     }
 
     public function signIn($username, $password)
     {
-        $user = $this->userDAO->findUserByUsername($username);
-        session_start();
         try {
+            session_start();
+            $user = $this->userDAO->findUserByUsername($username);
             if (isset($user) && $user->getPassword() === $password) {
                 $id = $user->getId();
                 #Si es owner o guardian
                 $redirectionView = $this->userDAO->findMatchRole($id);
-                if (!is_null($redirectionView[0]["id_owner"])) {
+                if (!is_null($redirectionView[0]["id_owner"])) { # Si es Owner
                     $owner = new Owner();
                     $owner->setIdOwner($this->ownerDAO->findOwnerIdByUserId($user->getId()));
                     $owner->setFirstName($user->getFirstName());
@@ -72,7 +76,7 @@ class AuthController
                     $owner->setEmail($user->getFirstName());
                     $_SESSION['user'] = $owner;
                     header("location: " . FRONT_ROOT . "Auth/showOwnerView");
-                } elseif (!is_null($redirectionView[0]["id_guardian"])) {
+                } elseif (!is_null($redirectionView[0]["id_guardian"])) { # Si es Guardian
                     $guardian = new Guardian();
                     $guardian->setIdGuardian($this->guardianDAO->findGuardianIdByUserId($user->getId()));
                     $guardian->setFirstName($user->getFirstName());
@@ -84,24 +88,24 @@ class AuthController
                     $guardian->setEndDate($dates[0]['endDate']);
                     $_SESSION['user'] = $guardian;
                     header("location: " . FRONT_ROOT . "Auth/showGuardianView");
-                } else {
+                } else { # Si no es ni owner ni guardian
                     $_SESSION['user'] = $user;
                     header("location: " . FRONT_ROOT . "Auth/showTypeAccount");
                 }
             } else {
-                #Mensaje de fallo de inicio de sesion
-                #MANDAR ALERT
-                echo 'Incorrect username or password, please try again.';
+                throw new Exception("Incorrect username or password, please try again.");
             }
         } catch (Exception $e) {
-            #MANDAR ALERT
-            echo $e;
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
+            require_once(VIEWS_PATH . "index.php");
         }
     }
 
     public function logOut()
     {
-
         session_destroy();
         $this->showLandPage();
     }
@@ -116,7 +120,14 @@ class AuthController
     {
         session_start();
         $ownerController = new OwnerController();
-        $petArray = $ownerController->getPetsByOwnerId();
+        try {
+            $petArray = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
+        } catch (Exception $e) {
+            $alertAuth = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
+        }
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 

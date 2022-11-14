@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Controllers\GuardianController as GuardianController;
 use DAO\GuardianDAO as GuardianDAO;
+use DAO\OwnerDAO;
 use Exception;
 use Models\reservation as Reservation;
 use DAO\ReservationDAO as ReservationDAO;
@@ -11,12 +12,19 @@ use DAO\ReservationDAO as ReservationDAO;
 class ReservationController
 {
     private $reservationDAO;
+    private $ownerController;
+    private $guardianController;
     private $guardianDAO;
+    private $ownerDAO;
 
     public function __construct()
     {
         $this->reservationDAO = new ReservationDAO();
+        $this->ownerController = new OwnerController();
+        $this->guardianController = new GuardianController();
         $this->guardianDAO = new GuardianDAO();
+        $this->ownerDAO = new OwnerDAO();
+
     }
 
     public function ReservationForm($startDate, $endDate, $id_animal, $idGuardian)
@@ -38,11 +46,19 @@ class ReservationController
                 $this->reservationDAO->add($reservation_animals);
                 header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=1");
             } catch (Exception $e) {
-                echo $e->getMessage();
+                $alert = [
+                    "type" => "danger",
+                    "text" => $e->getMessage()
+                ];
+                #QUEDA PENDIENTE VER A DONDE MANDAR
             }
         }
         else {
-            //Mostrar alerta de que no puede tener la fecha de inicio despues de la fecha de final.
+            $alert = [
+                "type" => "danger",
+                "text" => "The end date cannot exceed the start date."
+            ];
+            #QUEDA PENDIENTE VER A DONDE MANDAR
             session_start();
             header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=3");
         }
@@ -77,8 +93,13 @@ class ReservationController
             header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
 
         } catch (Exception $e) {
-            #MANDAR ALERT
-            echo $e->getMessage();
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
+
+            #QUEDA PENDIENTE VER A DONDE MANDAR
+            require_once(VIEWS_PATH . "/sections/guardianView.php");
         }
     }
 
@@ -86,10 +107,15 @@ class ReservationController
     {
         session_start();
         $val = 3;
-
-        $guardianController = new GuardianController();
-        $listGuardian = $guardianController->getAllGuardians();
-
+        try {
+            $listGuardian = $this->guardianDAO->getAll();
+            $myPets = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
+        } catch (Exception $e) {
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
+        }
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 
@@ -101,7 +127,10 @@ class ReservationController
         try {
             $reservations = $this->reservationDAO->getReservationsByGuardianId($_SESSION["user"]->getIdGuardian());
         } catch (Exception $e) {
-            #ALERT
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
         }
 
         require_once(VIEWS_PATH . "/sections/guardianView.php");
@@ -115,6 +144,10 @@ class ReservationController
         try {
             $listConfirmedReservations = $this->reservationDAO->getConfirmedReservationsByGuardian($_SESSION["user"]->getIdOwner());
         } catch (Exception $e) {
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
         }
 
         if(!is_null($listConfirmedReservations))

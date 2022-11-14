@@ -20,22 +20,29 @@ class OwnerController
         $this->reservationDAO = new ReservationDAO();
     }
 
-    public function showActionMenu($value){
 
+    public function showActionMenu($value)
+    {
         session_start();
         $val = $value;
 
-        if ($val == 1 || $val == 2)
-        {
-            $petArray = $this->getPetsByOwnerId();
-        }elseif ($val == 3)
-        {
-            $listGuardian = $this->guardianDAO->getAll();
-        }elseif ($val == 4)
-        {
-            $listConfirmedReservations = $this->reservationDAO->getConfirmedReservationsByGuardian($_SESSION["user"]->getIdOwner());
+        try {
+            if ($val == 1 || $val == 2) {
+                $petArray = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
+            } elseif ($val == 3) {
+                $listGuardian = $this->guardianDAO->getAll();
+                $myPets = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
+            } elseif ($val == 4) {
+                $listConfirmedReservations = $this->reservationDAO->getConfirmedReservationsByGuardian($_SESSION["user"]->getIdOwner());
+                var_dump($listConfirmedReservations);
+            }
+        } catch
+        (Exception $e) {
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
 
-//            var_dump($listConfirmedReservations);
         }
 
         require_once(VIEWS_PATH . "/sections/ownerView.php");
@@ -43,18 +50,18 @@ class OwnerController
 
     public function FilterDates($startDate, $endDate)
     {
-        $guardiansFiltered = $this->guardianDAO->getGuardiansFilterByDates($startDate, $endDate);
+        try {
+            $guardiansFiltered = $this->guardianDAO->getGuardiansFilterByDates($startDate, $endDate);
+        } catch (Exception $e) {
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
+        }
         $val = 3;
 
         require_once(VIEWS_PATH . "/sections/ownerView.php");
-    }
 
-    public function getPetsByOwnerId ()
-    {
-        try {
-            return $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
+        // $this->showActionMenu(3);
     }
 }

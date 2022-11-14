@@ -2,6 +2,7 @@
     namespace DAO;
 
     use DAO\IDAO as IDAO;
+    use Exception;
     use Models\Guardian as Guardian;
 
     class GuardianDAO implements IDAO

@@ -14,66 +14,82 @@ class UserController
     private $guardianDAO;
     private $ownerDAO;
     private $userDAO;
-    private $user;
 
     public function __construct()
     {
         $this->guardianDAO = new guardianDAO();
         $this->ownerDAO = new ownerDAO();
         $this->userDAO = new userDAO();
-        $this->user = array();
     }
 
     public function guardianForm($dogTypeExpected, $salaryExpected)
     {
-        session_start();
-        $this->user = $_SESSION['user'];
+        try {
+            session_start();
+            $user = $_SESSION['user'];
+            $id_user = $this->userDAO->findIdByUsername($user->getUsername());
 
-        $id_user = $this->userDAO->findIdByUsername($this->user->getUsername());
-        $guardian = new Guardian();
-        $guardian->setId($id_user);
-        $guardian->setId_animal_size_expected($dogTypeExpected);
-        $guardian->setSalaryExpected($salaryExpected);
-        $this->guardianDAO->Add($guardian);
+            $guardian = new Guardian();
+            $guardian->setId($id_user);
+            $guardian->setId_animal_size_expected($dogTypeExpected);
+            $guardian->setSalaryExpected($salaryExpected);
+            $this->guardianDAO->Add($guardian);
 
-        $id_guardian = $this->guardianDAO->findGuardianIdByUserId($id_user);
-        $user_temp = $this->userDAO->findUserByUsername($this->user->getUsername());
+            $id_guardian = $this->guardianDAO->findGuardianIdByUserId($id_user);
+            $user_temp = $this->userDAO->findUserByUsername($user->getUsername());
 
-        $guardian_temp = new Guardian();
-        $guardian_temp->setId($id_user);
-        $guardian_temp->setFirstName($user_temp->getFirstName());
-        $guardian_temp->setLastName($user_temp->getLastName());
-        $guardian_temp->setUsername($user_temp->getUsername());
-        $guardian_temp->setEmail($user_temp->getEmail());
-        $guardian_temp->setIdGuardian($id_guardian);
-        $guardian_temp->setId_animal_size_expected($dogTypeExpected);
-        $guardian_temp->setSalaryExpected($salaryExpected);
+            $guardian_temp = new Guardian();
+            $guardian_temp->setId($id_user);
+            $guardian_temp->setFirstName($user_temp->getFirstName());
+            $guardian_temp->setLastName($user_temp->getLastName());
+            $guardian_temp->setUsername($user_temp->getUsername());
+            $guardian_temp->setEmail($user_temp->getEmail());
+            $guardian_temp->setIdGuardian($id_guardian);
+            $guardian_temp->setId_animal_size_expected($dogTypeExpected);
+            $guardian_temp->setSalaryExpected($salaryExpected);
 
-        $_SESSION["user"] = $guardian_temp;
+            $_SESSION["user"] = $guardian_temp;
+        } catch (Exception $e) {
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
+        }
+
+        #QUEDA PENDIENTE VER A DONDE MANDAR
 
         header("location: " . FRONT_ROOT . "Auth/showGuardianView");
     }
 
     public function ownerForm()
     {
-        session_start();
-        $this->user = $_SESSION['user'];
+        try {
+            session_start();
+            $user = $_SESSION['user'];
+            $id_user = $this->userDAO->findIdByUsername($user->getUsername());
+            $this->ownerDAO->Add($id_user);
 
-        $id_user = $this->userDAO->findIdByUsername($this->user->getUsername());
-        $this->ownerDAO->Add($id_user);
+            $id_owner = $this->ownerDAO->findOwnerIdByUserId($id_user);
+            $user_temp = $this->userDAO->findUserByUsername($user->getUsername());
 
-        $id_owner = $this->ownerDAO->findOwnerIdByUserId($id_user);
-        $user_temp = $this->userDAO->findUserByUsername($this->user->getUsername());
+            $owner_temp = new Owner();
+            $owner_temp->setId($id_user);
+            $owner_temp->setFirstName($user_temp->getFirstName());
+            $owner_temp->setLastName($user_temp->getLastName());
+            $owner_temp->setUsername($user_temp->getUsername());
+            $owner_temp->setEmail($user_temp->getEmail());
+            $owner_temp->setIdOwner($id_owner);
 
-        $owner_temp = new Owner();
-        $owner_temp->setId($id_user);
-        $owner_temp->setFirstName($user_temp->getFirstName());
-        $owner_temp->setLastName($user_temp->getLastName());
-        $owner_temp->setUsername($user_temp->getUsername());
-        $owner_temp->setEmail($user_temp->getEmail());
-        $owner_temp->setIdOwner($id_owner);
+            $_SESSION["user"] = $owner_temp;
 
-        $_SESSION["user"] = $owner_temp;
+        } catch (Exception $e) {
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
+        }
+
+        #QUEDA PENDIENTE VER A DONDE MANDAR
 
         header("location: " . FRONT_ROOT . "Auth/showOwnerView");
     }
