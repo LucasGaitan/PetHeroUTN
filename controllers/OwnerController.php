@@ -5,20 +5,20 @@ namespace Controllers;
 use DAO\OwnerDAO;
 use DAO\GuardianDAO;
 use Exception;
-use Controllers\GuardianController;
-use DAO\AnimalDAO as AnimalDAO;
+use DAO\ReservationDAO as ReservationDAO;
 
 class OwnerController
 {
     private $ownerDAO;
     private $guardianDAO;
+    private $reservationDAO;
 
     public function __construct()
     {
         $this->ownerDAO = new OwnerDAO();
         $this->guardianDAO = new GuardianDAO();
+        $this->reservationDAO = new ReservationDAO();
     }
-
 
     public function showActionMenu($value){
 
@@ -30,9 +30,12 @@ class OwnerController
             $petArray = $this->getPetsByOwnerId();
         }elseif ($val == 3)
         {
-            $guardianController = new GuardianController();
+            $listGuardian = $this->guardianDAO->getAll();
+        }elseif ($val == 4)
+        {
+            $listConfirmedReservations = $this->reservationDAO->getConfirmedReservationsByGuardian($_SESSION["user"]->getIdOwner());
 
-            $listGuardian = $guardianController->getAllGuardians();
+//            var_dump($listConfirmedReservations);
         }
 
         require_once(VIEWS_PATH . "/sections/ownerView.php");
@@ -54,6 +57,4 @@ class OwnerController
             return $e->getMessage();
         }
     }
-
-
 }

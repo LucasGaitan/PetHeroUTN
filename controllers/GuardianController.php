@@ -2,18 +2,22 @@
 
 namespace Controllers;
 
-use Controllers\ReservationController;
+use Controllers\ReservationController as ReservationController;
 use DAO\GuardianDAO;
+use DAO\ReservationDAO;
+
 //use Models\Postulation;
 
 class GuardianController
 {
     private $guardianDAO;
+    private $reservation;
 //    private $postulation;
 
     public function __construct()
     {
         $this->guardianDAO = new GuardianDAO();
+        $this->reservation = new ReservationDAO();
 //        $this->postulation = new Postulation();
     }
 //
@@ -30,13 +34,12 @@ class GuardianController
     public function showActionMenu($value){
 
         session_start();
-
         $val = $value;
 
         if ($val == 2)
         {
             $reservationController = new ReservationController();
-            $reservations = $reservationController->getAllReservationsByGuardianId();
+            $reservations = $this->reservation->getReservationsByGuardianId($_SESSION["user"]->getIdGuardian());
         }
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }

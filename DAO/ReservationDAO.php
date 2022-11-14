@@ -3,6 +3,7 @@
 namespace DAO;
 
 use Exception;
+use Models\Guardian as Guardian;
 
 class ReservationDAO implements IDAO
 {
@@ -44,8 +45,23 @@ where r.id_reservation = (:id)";
 
         try {
             $this->connection = Connection::GetInstance();
-            $parameters['id'] = $idReservation;
-            $this->connection->ExecuteNonQuery($query, $parameters);
+            $parameters['id'] = (int)$idReservation;
+            return $this->connection->ExecuteNonQuery($query, $parameters);
+
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function createCoupon($idReservation, $salaryExpected)
+    {
+        $query = "INSERT INTO paymentcoupons(id_reservation, payment) VALUES (:id_reservation, :halfpayment)";
+
+        try {
+            $this->connection = Connection::GetInstance();
+            $parameters['id_reservation'] = (int)$idReservation;
+            $parameters['halfpayment'] = ($salaryExpected/2);
+            return $this->connection->ExecuteNonQuery($query, $parameters);
 
         } catch (Exception $e) {
             throw $e;
@@ -93,5 +109,72 @@ where g.id_guardian = (:id_guardian)";
                 "reservationState" => $p["state"]
             ];
         }, $result);
+    }
+
+    public function getConfirmedReservationsByGuardian($id_owner)
+    {
+        $query = "SELECT *
+                    FROM reservations r
+                        INNER JOIN reservations_x_animals rxa on r.id_reservation = rxa.id_reservation
+                        INNER JOIN animals a on rxa.id_animal = a.id_animal
+                        INNER JOIN owners o on a.id_owner = o.id_owner
+                        INNER JOIN guardians g on r.id_guardian = g.id_guardian
+                        INNER JOIN users u on g.id_user = u.id_user
+                        INNER JOIN paymentcoupons PC on PC.id_reservation = r.id_reservation
+                    WHERE a.id_owner = (:id_owner) AND r.state = 1";
+
+        try {
+            $this->connection = Connection::GetInstance();
+            $parameters['id_owner'] = $id_owner;
+            $result = $this->connection->Execute($query, $parameters);
+
+        } catch (Exception $e) {
+            throw $e;
+        }
+        if (!empty($result))
+            return $this->mapConfirmedReservationsQuery($result);
+        else
+            return null;
+    }
+
+//    public function mapConfirmedReservationsQuery($result)
+//    {
+//        $resp = array_map(function($p)
+//        {
+//            $guardian = new Guardian();
+//            $guardian->setId($p["id_user"]);
+//            $guardian->setIdGuardian($p["id_guardian"]);
+//            $guardian->setUsername($p["username"]);
+//            $guardian->setFirstName($p["firstName"]);
+//            $guardian->setLastName($p["lastName"]);
+//            $guardian->setSalaryExpected($p["salaryExpected"]);
+//            $guardian->setReputation($p["reputation"]);
+//            $guardian->setStartDate($p["startDate"]);
+//            $guardian->setEndDate($p["endDate"]);
+//            $guardian->setEmail($p["email"]);
+//            $guardian->setId_animal_size_expected($p['id_animal_size_expected']);
+//
+//            return $guardian;
+//        }, $result);
+//
+//        return $resp;
+//    }
+
+    public function mapConfirmedReservationsQuery($result)
+    {
+        $resp = array_map(function($p)
+        {
+            $infoCoupon = [
+                "id_guardian"=>$p["id_guardian"],
+                "firstName"=>$p["firstName"],
+                "lastName"=>$p["lastName"],
+                "startDate"=>$p["startDate"],
+                "endDate"=>$p["endDate"],
+                "payment"=>$p["payment"]];
+
+            return $infoCoupon;
+        }, $result);
+
+        return $resp;
     }
 }

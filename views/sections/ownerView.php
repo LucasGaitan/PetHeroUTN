@@ -1,13 +1,9 @@
-<?php
-    require_once(VIEWS_PATH."forms/animalForm.php");
-
-?>
-
 <!DOCTYPE html>
 
 <html lang="en" xmlns:html="http://www.w3.org/1999/html">
 
 <head>
+
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,6 +30,10 @@
 
 <body>
 
+    <?php
+    require_once(VIEWS_PATH."forms/animalForm.php");
+    ?>
+
     <main class="template">
 
         <section class="section__templateNav">
@@ -58,6 +58,11 @@
                 <section class="templateNav__button">
                     <img class="templateNav__icon" src="<?php echo ASSETS_PATH?>/guardianWhite.png" alt="">
                     <a class="templateNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=3">View Guardians</a>
+                </section>
+
+                <section class="templateNav__button">
+                    <img class="templateNav__icon" src="<?php echo ASSETS_PATH?>/guardianWhite.png" alt="">
+                    <a class="templateNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=4">View confirmed reservations</a>
                 </section>
         
                 <section class="templateNav__button templateNav__button--close">
@@ -90,7 +95,11 @@
         
                     case 3:
                         require_once(VIEWS_PATH . "sections/guardianList.php");
-                        break;                                                                  
+                        break;
+
+                    case 4:
+                        require_once(VIEWS_PATH . "sections/confirmedReservations.php");
+                        break;
                     }
                 }else{
                     require_once(VIEWS_PATH . "sections/ownerProfile.php");

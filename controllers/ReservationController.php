@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use Controllers\GuardianController as GuardianController;
+use DAO\GuardianDAO as GuardianDAO;
 use Exception;
 use Models\reservation as Reservation;
 use DAO\ReservationDAO as ReservationDAO;
@@ -9,10 +11,12 @@ use DAO\ReservationDAO as ReservationDAO;
 class ReservationController
 {
     private $reservationDAO;
+    private $guardianDAO;
 
     public function __construct()
     {
         $this->reservationDAO = new ReservationDAO();
+        $this->guardianDAO = new GuardianDAO();
     }
 
     public function ReservationForm($startDate, $endDate, $id_animal, $idGuardian)
@@ -45,11 +49,33 @@ class ReservationController
 
 //        require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
+
     public function ConfirmReservation($idReservation)
     {
+        session_start();
+
         try {
-            $this->reservationDAO->updateState($idReservation);
+            $confirmed = $this->reservationDAO->updateState($idReservation);
+
+            if($confirmed == 1)
+            {
+                $infoCoupon = $this->guardianDAO->bringSalaryExpected($_SESSION["user"]->getIdGuardian(), $idReservation);
+
+                $salaryExpected = $infoCoupon["salaryExpected"];
+                $startDate = strtotime($infoCoupon["startDate"]);
+                $endDate = strtotime($infoCoupon["endDate"]);
+
+                $secondsPerDay = 86400;
+                $numberOfSecondsRangeDate = ($endDate - $startDate);
+                $numberOfDaysWorked = ($numberOfSecondsRangeDate / $secondsPerDay);
+
+                $total = ($numberOfDaysWorked * $salaryExpected);
+
+                $this->reservationDAO->createCoupon($idReservation, $total);
+            }
+
             header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
+
         } catch (Exception $e) {
             #MANDAR ALERT
             echo $e->getMessage();
@@ -61,6 +87,9 @@ class ReservationController
         session_start();
         $val = 3;
 
+        $guardianController = new GuardianController();
+        $listGuardian = $guardianController->getAllGuardians();
+
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 
@@ -69,18 +98,28 @@ class ReservationController
         session_start();
         $val = 2;
 
+        try {
+            $reservations = $this->reservationDAO->getReservationsByGuardianId($_SESSION["user"]->getIdGuardian());
+        } catch (Exception $e) {
+            #ALERT
+        }
+
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 
-
-    public function getAllReservationsByGuardianId ()
+    public function confirmedReservationSelected($idGuardian)
     {
-        try {
-            return $this->reservationDAO->getReservationsByGuardianId($_SESSION["user"]->getIdGuardian());
-        } catch (Exception $e) {
-            #MANDAR ALERT
-            echo $e->getMessage();
-        }
-    }
+        session_start();
+        $val = 4;
 
+        try {
+            $listConfirmedReservations = $this->reservationDAO->getConfirmedReservationsByGuardian($_SESSION["user"]->getIdOwner());
+        } catch (Exception $e) {
+        }
+
+        if(!is_null($listConfirmedReservations))
+            $selectConfirmed = true;
+
+        require_once(VIEWS_PATH . "/sections/ownerView.php");
+    }
 }

@@ -113,9 +113,7 @@
             try
             {
                 $this->connection = Connection::GetInstance();
-
                 $parameters['id_guardian'] = $id_guardian;
-
                 $result = $this->connection->Execute($query, $parameters);
 
                 if(!empty($result))
@@ -128,9 +126,9 @@
                 throw $e;
             }
             return null;
-
-
         }
+
+
 
 
         private function mapGuardians($guardians)
@@ -177,5 +175,44 @@
             } catch (Exception $e) {
                 throw $e;
             }
+        }
+
+        public function bringSalaryExpected($id_guardian, $id_reservation)
+        {
+
+            $query = "SELECT G.salaryExpected, R.startDate, R.endDate
+                    FROM guardians G
+                    INNER JOIN reservations R on G.id_guardian = R.id_guardian
+                    WHERE G.id_guardian = (:id_guardian) AND R.id_reservation = (:id_reservation)";
+
+            try
+            {
+                $this->connection = Connection::GetInstance();
+                $parameters['id_guardian'] = $id_guardian;
+                $parameters['id_reservation'] = $id_reservation;
+                $result = $this->connection->Execute($query, $parameters);
+
+                if(!empty($result))
+                {
+                    return $reservationData = $this->mapReservationData($result);
+                }
+            }
+            catch(Exception $e)
+            {
+                throw $e;
+            }
+            return null;
+        }
+
+        public function mapReservationData($result)
+        {
+            $resp = array_map(function($p)
+            {
+                $infoCoupon = ["salaryExpected"=>$p["salaryExpected"], "startDate"=>$p["startDate"], "endDate"=>$p["endDate"]];
+
+                return $infoCoupon;
+            }, $result);
+
+            return count($resp) > 1 ? $resp : $resp[0];
         }
     }

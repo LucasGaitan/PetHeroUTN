@@ -1,7 +1,3 @@
-<?php
-
-?>
-
 <!DOCTYPE html>
 
 <html lang="en" xmlns:html="http://www.w3.org/1999/html">

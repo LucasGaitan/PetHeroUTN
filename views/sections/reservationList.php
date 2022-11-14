@@ -1,6 +1,7 @@
 <section class="cardsContainer">
     <?php
     require_once(VIEWS_PATH."forms/confirmReservationForm.php");
+
     if ($_SESSION['user']->getStartDate() !== null && $_SESSION['user']->getEndDate() !== null) {
 
         if($reservations != null)
@@ -27,7 +28,7 @@
                 </a>
 
                     <div class="reservationCard__button">
-                        <a class="reservationCard__button__link" data-bs-toggle="modal" data-bs-target="#confirmReservation"><img class="reservationCard__button__img" src="<?php echo ASSETS_PATH?>/accept.png" alt=""></a>
+                        <a class="reservationCard__button__link" data-bs-toggle="modal" data-bs-target="#confirmReservationForm"><img class="reservationCard__button__img" src="<?php echo ASSETS_PATH?>/accept.png" alt=""></a>
                         <a href="" class="reservationCard__button__link"><img class="reservationCard__button__img" src="<?php echo ASSETS_PATH?>/trash.png" alt=""></a>
                     </div>
                
