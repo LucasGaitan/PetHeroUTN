@@ -18,7 +18,7 @@
                            
                         <p class="reservationCard__title"><?php echo $value["ownerName"] ?></p>
                         <p class="reservationCard__animal"><?php echo $value["animalType"] ?> / <?php echo $value["animalBreed"] ?> / <?php echo $value["animalSize"] ?></p>
-                        <p class="reservationCard__date"><?php echo $value["startDate"] ?> / <?php echo $value["startDate"] ?></p>
+                        <p class="reservationCard__date"><?php echo $value["startDate"] ?> / <?php echo $value["endDate"] ?></p>
 
                         <p class="reservationCard__state"><?php if ($value["reservationState"] == 1) {
                              echo "Confirmed";

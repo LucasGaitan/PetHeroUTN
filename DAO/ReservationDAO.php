@@ -95,9 +95,36 @@ where g.id_guardian = (:id_guardian)";
             return null;
     }
 
+    public function getReservationById($id_reservation)
+    {
+        $query = "SELECT r.id_reservation, concat(u.firstName, ' ', u.lastName) as owner, t.type, ab.breed, s.size, r.startDate, r.endDate, r.concluded, r.state from reservations r
+inner join guardians g on r.id_guardian = g.id_guardian
+inner join reservations_X_animals rXa on r.id_reservation = rXa.id_reservation
+inner join animals a on rXa.id_animal = a.id_animal
+inner join owners o on a.id_owner = o.id_owner
+inner join users u on o.id_user = u.id_user
+inner join animal_breeds ab on a.id_animal_breed = ab.id_animal_breed
+inner join animal_sizes s on a.id_animal_size = s.id_animal_size
+inner join animal_types t on ab.id_animal_type = t.id_animal_type
+where r.id_reservation = (:id_reservation)";
+
+        try {
+            $this->connection = Connection::GetInstance();
+            $parameters['id_reservation'] = $id_reservation;
+            $result = $this->connection->Execute($query, $parameters);
+
+        } catch (Exception $e) {
+            throw $e;
+        }
+        if (!empty($result))
+            return $this->mapReservationsQuery($result);
+        else
+            return null;
+    }
+
     public function mapReservationsQuery($result)
     {
-        return array_map(function ($p) {
+        $resp = array_map(function ($p) {
             return ["id_reservation" => $p["id_reservation"],
                 "ownerName" => $p["owner"],
                 "animalType" => $p["type"],
@@ -109,6 +136,7 @@ where g.id_guardian = (:id_guardian)";
                 "reservationState" => $p["state"]
             ];
         }, $result);
+        return count($resp) > 1 ? $resp : $resp[0];
     }
 
     public function getConfirmedReservationsByGuardian($id_owner)

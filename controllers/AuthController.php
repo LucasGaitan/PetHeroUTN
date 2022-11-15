@@ -81,6 +81,7 @@ class AuthController
                     $guardian = new Guardian();
                     $guardian->setIdGuardian($this->guardianDAO->findGuardianIdByUserId($user->getId()));
                     $guardian->setFirstName($user->getFirstName());
+                    $guardian->setId_animal_size_expected($this->guardianDAO->getAnimalSizeExpectedById($guardian->getIdGuardian()));
                     $guardian->setLastName($user->getLastName());
                     $guardian->setUserName($user->getUsername());
                     $guardian->setEmail($user->getFirstName());

@@ -1,6 +1,8 @@
 <?php
 
 namespace Controllers;
+
+use DAO\AnimalDAO;
 use DAO\GuardianDAO;
 use DAO\OwnerDAO;
 use Exception;
@@ -12,19 +14,21 @@ class ReservationController
     private $reservationDAO;
     private $guardianDAO;
     private $ownerDAO;
+    private $animalDAO;
 
     public function __construct()
     {
         $this->reservationDAO = new ReservationDAO();
         $this->guardianDAO = new GuardianDAO();
         $this->ownerDAO = new OwnerDAO();
+        $this->animalDAO = new AnimalDAO();
     }
 
     // SHOWS FOR ALERTS
     public function showGuardianListAlert($alert)
     {
         try {
-        $listGuardian = $this->guardianDAO->getAll();
+            $listGuardian = $this->guardianDAO->getAll();
             $myPets = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
         } catch (Exception $e) {
             $alert = [
@@ -48,7 +52,7 @@ class ReservationController
                 "text" => $e->getMessage()
             ];
         }
-        $val=2;
+        $val = 2;
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 
@@ -62,7 +66,7 @@ class ReservationController
                 "text" => $e->getMessage()
             ];
         }
-        $val=4;
+        $val = 4;
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 
@@ -167,6 +171,21 @@ class ReservationController
         session_start();
 
         try {
+            $reservationSelected = $this->reservationDAO->getReservationById($idReservation);
+            if ($reservationSelected["animalSize"] != $this->animalDAO->getSizeById($_SESSION["user"]->getId_animal_size_expected())) {
+                throw new Exception("The size of the animal does not match the size chosen at the time of creating the profile.");
+            }
+            $reservationList = $this->reservationDAO->getReservationsByGuardianId($_SESSION["user"]->getIdGuardian());
+            foreach ($reservationList as $value) {
+                if($reservationSelected["id_reservation"] != $value["id_reservation"] && $value["reservationState"] == 1)
+                {
+                    if ($reservationSelected["animalType"] != $value["animalType"] && $reservationSelected["startDate"] >= $value["startDate"] && $reservationSelected["endDate"] <= $value["endDate"]) {
+                        throw new Exception("Different types of animals are not allowed in the same date range.");
+                    } elseif ($reservationSelected["animalBreed"] != $value["animalBreed"] && $reservationSelected["startDate"] >= $value["startDate"] && $reservationSelected["endDate"] <= $value["endDate"]) {
+                        throw new Exception("Different breeds are not allowed in the same date range.");
+                    }
+                }
+            }
             $confirmed = $this->reservationDAO->updateState($idReservation);
 
             if ($confirmed == 1) {

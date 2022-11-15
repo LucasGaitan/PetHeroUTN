@@ -107,6 +107,23 @@
             }
         }
 
+        public function getAnimalSizeExpectedById($id){
+            $query = "select g.id_animal_size_expected from users u
+                  inner join guardians g on u.id_user = g.id_user
+                  where g.id_guardian = (:id)";
+            try {
+                $this->connection = Connection::GetInstance();
+                $parameters['id'] = $id;
+                $result = $this->connection->Execute($query, $parameters);
+
+                return $result[0]['id_animal_size_expected'];
+            }
+            catch(Exception $e)
+            {
+                throw $e;
+            }
+        }
+
         public function bringStartAndEndDates($id_guardian)
         {
             $query = "SELECT g.startDate, g.endDate from guardians G WHERE G.id_guardian = (:id_guardian)";
