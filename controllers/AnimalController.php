@@ -12,10 +12,12 @@ use Models\Dog;
 class AnimalController
 {
     private $animalDAO;
+    private $ownerController;
 
     public function __construct()
     {
         $this->animalDAO = new AnimalDAO();
+        $this->ownerController = new OwnerController();
     }
 
     public function animalForm($animalName, $age, $breed, $photo, $vaccinationPlan, $video, $observations, $size)
@@ -66,7 +68,9 @@ class AnimalController
 
             #QUEDA PENDIENTE VER A DONDE MANDAR
 
-            //header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=2");
+            //require_once(VIEWS_PATH . "/sections/ownerView.php");
+            //$this->ownerController->showActionMenu(1);
+            //header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=1");
         }
     }
 

@@ -16,16 +16,17 @@
     </form>
 
 </section>
-
+<!--if (isset($alert)) {-->
+<!--        ?>-->
+<!--        <div class="alert alert---><?php //echo $alert["type"]?><!--" role="alert">-->
+<!--            --><?php //echo $alert["text"]?>
+<!--        </div>-->
+<!--   //}-->
+<!--//    else-->
 <section class="cardsContainer">
     <?php
     require_once(VIEWS_PATH."forms/reservationForm.php");
-    if (isset($alert)) {
-        ?>
-        <div class="alert alert-<?php echo $alert["type"]?>" role="alert">
-            <?php echo $alert["text"]?>
-        </div>
-    <?php }elseif(isset($guardiansFiltered))
+    if(isset($guardiansFiltered))
     {
         foreach ($guardiansFiltered as $value)
         {

@@ -31,6 +31,12 @@ require_once(VIEWS_PATH."forms/ownerForm.php");
     <main class="secMain">
 
         <section class="secMain__container">
+            <?php
+        if (isset($alert)) { ?>
+            <div class="alert alert-<?php echo $alert["type"] ?>" role="alert">
+                <?php echo $alert["text"] ?>
+            </div>
+        <?php } ?>
 
             <section class="secMain__owner">
 

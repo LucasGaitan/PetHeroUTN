@@ -32,13 +32,12 @@ class GuardianController
 
     public function showActionMenu($value)
     {
-
         session_start();
         $val = $value;
 
         if ($val == 2) {
-            $reservationDAO = new ReservationDAO();
             try {
+                $reservationDAO = new ReservationDAO();
                 $reservations = $reservationDAO->getReservationsByGuardianId($_SESSION["user"]->getIdGuardian());
             } catch (Exception $e) {
                 $alert = [
@@ -63,7 +62,7 @@ class GuardianController
                 "text" => $e->getMessage()
             ];
         }
-        //header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
-        $this->showActionMenu(2);
+        header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
+        //$this->showActionMenu(2); REVISAR
     }
 }

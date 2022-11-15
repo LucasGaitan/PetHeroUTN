@@ -50,7 +50,11 @@ class ReservationController
                     "type" => "danger",
                     "text" => $e->getMessage()
                 ];
+
                 #QUEDA PENDIENTE VER A DONDE MANDAR
+                //require_once(VIEWS_PATH . "/sections/ownerView.php");
+                //$this->ownerController->showActionMenu(1);
+                //header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=1");
             }
         }
         else {
@@ -59,11 +63,9 @@ class ReservationController
                 "text" => "The end date cannot exceed the start date."
             ];
             #QUEDA PENDIENTE VER A DONDE MANDAR
-            session_start();
             header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=3");
         }
 
-//        require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 
     public function ConfirmReservation($idReservation)
@@ -99,15 +101,17 @@ class ReservationController
                 "text" => $e->getMessage()
             ];
 
+
             #QUEDA PENDIENTE VER A DONDE MANDAR
-            require_once(VIEWS_PATH . "/sections/guardianView.php");
+            //header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
+            require_once(VIEWS_PATH . "/sections/guardianView.php"); //REVISAR
         }
     }
 
     public function guardianSelected($idGuardian, $userGuardian, $startDate, $endDate)
     {
         session_start();
-        $val = 3;
+
         try {
             $listGuardian = $this->guardianDAO->getAll();
             $myPets = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
@@ -117,14 +121,13 @@ class ReservationController
                 "text" => $e->getMessage()
             ];
         }
+        $val = 3;
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 
     public function reservationSelected($idReservation)
     {
         session_start();
-        $val = 2;
-
         try {
             $reservations = $this->reservationDAO->getReservationsByGuardianId($_SESSION["user"]->getIdGuardian());
         } catch (Exception $e) {
@@ -134,13 +137,13 @@ class ReservationController
             ];
         }
 
+        $val = 2;
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 
     public function confirmedReservationSelected($idGuardian)
     {
         session_start();
-        $val = 4;
 
         try {
             $listConfirmedReservations = $this->reservationDAO->getConfirmedReservationsByGuardian($_SESSION["user"]->getIdOwner());
@@ -158,18 +161,28 @@ class ReservationController
         $lastName = $listConfirmedReservations[0]["lastName"];
         $id_reservation = $listConfirmedReservations[0]["id_reservation"];
 
+        $val = 4;
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 
     public function makePayment($cardNumber, $cardOwnerName, $expirationDate, $CVC, $idReservation)
     {
-        $confirmConclude = $this->reservationDAO->concludeReserve($idReservation);
+        try {
+            $confirmConclude = $this->reservationDAO->concludeReserve($idReservation);
 
-        if($confirmConclude == 1)
-        {
-            $confirmDeletePaymentCoupon = $this->reservationDAO->deletePaymentCoupon($idReservation);
+            if($confirmConclude == 1)
+            {
+                $confirmDeletePaymentCoupon = $this->reservationDAO->deletePaymentCoupon($idReservation);
+            }
+        } catch (Exception $e) {
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
         }
 
+
+        //$this->showActionMenu(2); REVISAR
         header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=4");
     }
 }

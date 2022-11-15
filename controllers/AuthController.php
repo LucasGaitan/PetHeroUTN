@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use DAO\AnimalDAO;
 use DAO\GuardianDAO;
 use DAO\OwnerDAO;
 use DAO\UserDAO;
@@ -121,9 +122,13 @@ class AuthController
         session_start();
         $ownerController = new OwnerController();
         try {
+            $animalDAO = new AnimalDAO(); //Para animal form como es modal hay que hacerlo en owner view
+            $animalBreeds = $animalDAO->getTypesBreeds(); //Para animal form como es modal hay que hacerlo en owner view
+            $animalSizes = $animalDAO->getAllSizes(); //Para animal form como es modal hay que hacerlo en owner view
+
             $petArray = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
         } catch (Exception $e) {
-            $alertAuth = [
+            $alert = [
                 "type" => "danger",
                 "text" => $e->getMessage()
             ];

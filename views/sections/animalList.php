@@ -1,14 +1,14 @@
 <section class="container__tabla">
 
     <h2 class="tabla__title">My Pets</h2>
-    <?php
-
-    if (isset($alert)){
-    ?>
-    <div class="alert alert-<?php echo $alert["type"]?>" role="alert">
-        <?php echo $alert["text"]?>
-    </div>
-    <?php } else{?>
+<!--    --><?php
+//
+//    if (isset($alert)){
+//    ?>
+<!--    <div class="alert alert---><?php //echo $alert["type"]?><!--" role="alert">-->
+<!--        --><?php //echo $alert["text"]?>
+<!--    </div>-->
+<!--    --><?php //} else{?>
     <table class="tabla" id="animalTable">
 
         <thead class="tabla__head">
@@ -40,7 +40,7 @@
 
         <tbody class="tabla__body">
 
-        <?php }if (isset($petArray)){
+        <?php if (isset($petArray)){
         foreach ($petArray as $value) { ?>
         <tr class="tabla__body__row">
             <td class="tabla__body__row__d"><?php echo $value->getName() ?> </td>

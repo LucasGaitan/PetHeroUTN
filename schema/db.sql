@@ -82,6 +82,7 @@ CREATE TABLE animals(
 CREATE TABLE paymentCoupons(
                                id_coupon int AUTO_INCREMENT,
                                payment decimal(10,2) NOT NULL,
+
                                CONSTRAINT pk_paymentCoupon PRIMARY KEY (id_coupon)
 );
 
@@ -126,17 +127,7 @@ INSERT INTO animal_breeds(id_animal_breed, breed, id_animal_type)VALUES (4, 'Sia
 
 insert into animals (name, age, photo, vaccinationPlan, video, observations, id_animal_size, id_animal_breed, id_owner);
 
-select a.*, t.id_animal_type, t.type, b.breed, s.size from animals a
-                                                               inner  join animal_breeds b on a.id_animal_breed = b.id_animal_breed
-                                                               inner join animal_types t on b.id_animal_type = t.id_animal_type
-                                                               inner join animal_sizes s on a.id_animal_size = s.id_animal_size
-where id_owner = 1;
-
-select o.id_owner from users u
-                           inner join owners o on u.id_user = o.id_user
-where u.id_user = :id
-
-    insert into  reservations_X_animals (id_reservation, id_animal);
+insert into  reservations_X_animals (id_reservation, id_animal);
 
 
 CREATE PROCEDURE createReservation (
@@ -155,37 +146,20 @@ insert into reservations_X_animals (id_reservation, id_animal) VALUES (last_rese
 end;
 
 
+CREATE PROCEDURE createCoupon(IN pId_reservation INTEGER, IN pPayment DECIMAL(10, 2))
+BEGIN
+    DECLARE id_coupon INTEGER DEFAULT 0;
+INSERT INTO paymentcoupons(payment) VALUES (pPayment);
+SET id_coupon = LAST_INSERT_ID();
+UPDATE reservations R SET R.id_coupon = id_coupon WHERE R.id_reservation = pId_reservation;
+END;
 
-CALL createReservation(1,0,'2022-11-04','2022-11-07',0,1);
-
-
-
-SELECT r.id_reservation,concat(u.firstName, ' ', u.lastName) as owner, t.type, ab.breed, s.size, r.startDate, r.endDate, r.concluded, r.state from reservations r
-inner join guardians g on r.id_guardian = g.id_guardian
-inner join reservations_X_animals rXa on r.id_reservation = rXa.id_reservation
-inner join animals a on rXa.id_animal = a.id_animal
-inner join owners o on a.id_owner = o.id_owner
-inner join users u on o.id_user = u.id_user
-inner join animal_breeds ab on a.id_animal_breed = ab.id_animal_breed
-inner join animal_sizes s on a.id_animal_size = s.id_animal_size
-inner join animal_types t on ab.id_animal_type = t.id_animal_type
-where g.id_guardian = 1;
-
-
-update reservations r
-set r.state = 1
-where r.id_reservation = 1
-
-update guardians g
-set g.startDate = :startDate,
-    g.endDate = :endDate
-where g.id_guardian = :id_guardian;
-
-
-update guardians g
-set g.id_animal_size_expected = :sizeExpected
-where g.id_guardian = :idGuardian;
-
-
+CREATE PROCEDURE searchReservationAndDeleteCoupon(IN pId_reservation INTEGER)
+BEGIN
+    DECLARE id_coupun INTEGER DEFAULT 0;
+    SET id_coupun = (SELECT R.id_coupon FROM reservations R WHERE R.id_reservation = pId_reservation);
+DELETE FROM paymentcoupons PC WHERE PC.id_coupon = id_coupun;
+UPDATE reservations R SET R.id_coupon = NULL WHERE R.id_reservation = pId_reservation;
+END;
 
 

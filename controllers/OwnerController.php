@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use DAO\AnimalDAO;
 use DAO\OwnerDAO;
 use DAO\GuardianDAO;
 use Exception;
@@ -26,6 +27,9 @@ class OwnerController
         session_start();
         $val = $value;
         try {
+            $animalDAO = new AnimalDAO(); //Para animal form como es modal hay que hacerlo en owner view
+            $animalBreeds = $animalDAO->getTypesBreeds(); //Para animal form como es modal hay que hacerlo en owner view
+            $animalSizes = $animalDAO->getAllSizes(); //Para animal form como es modal hay que hacerlo en owner view
             if ($val == 1 || $val == 2) {
                 $petArray = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
             } elseif ($val == 3) {
@@ -33,15 +37,13 @@ class OwnerController
                 $myPets = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
             } elseif ($val == 4) {
                 $listConfirmedReservations = $this->reservationDAO->getConfirmedReservationsByGuardian($_SESSION["user"]->getIdOwner());
-                var_dump($listConfirmedReservations);
             }
-        } catch
-        (Exception $e) {
+        } catch (Exception $e) {
             $alert = [
                 "type" => "danger",
                 "text" => $e->getMessage()
             ];
-
+        }
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 

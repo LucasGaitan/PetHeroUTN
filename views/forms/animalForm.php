@@ -1,19 +1,3 @@
-<?php
-
-use DAO\AnimalDAO as AnimalDAO;
-
-$animalDAO = new AnimalDAO();
-try {
-    $animalBreeds = $animalDAO->getTypesBreeds();
-    $animalSizes = $animalDAO->getAllSizes();
-} catch (Exception $e) {
-    $message = $e->getMessage();
-    echo $message;
-}
-
-
-?>
-
 <div class="modal fade" id="animalForm" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">

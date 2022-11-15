@@ -49,16 +49,18 @@ class UserController
             $guardian_temp->setSalaryExpected($salaryExpected);
 
             $_SESSION["user"] = $guardian_temp;
+            header("location: " . FRONT_ROOT . "Auth/showGuardianView");
         } catch (Exception $e) {
             $alert = [
                 "type" => "danger",
                 "text" => $e->getMessage()
             ];
+            require_once(VIEWS_PATH . "/sections/typeAcc.php"); //REVISAR
         }
 
-        #QUEDA PENDIENTE VER A DONDE MANDAR
 
-        header("location: " . FRONT_ROOT . "Auth/showGuardianView");
+
+
     }
 
     public function ownerForm()
@@ -81,17 +83,15 @@ class UserController
             $owner_temp->setIdOwner($id_owner);
 
             $_SESSION["user"] = $owner_temp;
-
+            header("location: " . FRONT_ROOT . "Auth/showOwnerView");
         } catch (Exception $e) {
             $alert = [
                 "type" => "danger",
                 "text" => $e->getMessage()
             ];
+            require_once(VIEWS_PATH . "/sections/typeAcc.php"); //REVISAR
         }
 
-        #QUEDA PENDIENTE VER A DONDE MANDAR
-
-        header("location: " . FRONT_ROOT . "Auth/showOwnerView");
     }
 
 
