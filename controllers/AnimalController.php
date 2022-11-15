@@ -6,24 +6,39 @@ use DAO\AnimalDAO;
 use DAO\OwnerDAO;
 use Exception;
 use Models\Cat;
-use Models\Owner;
 use Models\Dog;
 
 class AnimalController
 {
     private $animalDAO;
-    private $ownerController;
+    private $ownerDAO;
 
     public function __construct()
     {
         $this->animalDAO = new AnimalDAO();
-        $this->ownerController = new OwnerController();
+        $this->ownerDAO = new OwnerDAO();
+    }
+
+    public function showAnimalListAlert($alert){
+        try {
+            $animalDAO = new AnimalDAO(); //Para animal form como es modal hay que hacerlo en owner view
+            $animalBreeds = $animalDAO->getTypesBreeds(); //Para animal form como es modal hay que hacerlo en owner view
+            $animalSizes = $animalDAO->getAllSizes(); //Para animal form como es modal hay que hacerlo en owner view
+            $petArray = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
+        } catch (Exception $e) {
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
+        }
+        $val = 2;
+        require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 
     public function animalForm($animalName, $age, $breed, $photo, $vaccinationPlan, $video, $observations, $size)
     {
-        session_start();
         try {
+            session_start();
             if ($this->animalDAO->getTypeFromBreed($breed) === 1) {
                 $dog = new Dog();
                 $dog->setName($animalName);
@@ -65,12 +80,7 @@ class AnimalController
                 "type" => "danger",
                 "text" => $e->getMessage()
             ];
-
-            #QUEDA PENDIENTE VER A DONDE MANDAR
-
-            //require_once(VIEWS_PATH . "/sections/ownerView.php");
-            //$this->ownerController->showActionMenu(1);
-            //header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=1");
+            $this->showAnimalListAlert($alert);
         }
     }
 

@@ -55,12 +55,8 @@ class UserController
                 "type" => "danger",
                 "text" => $e->getMessage()
             ];
-            require_once(VIEWS_PATH . "/sections/typeAcc.php"); //REVISAR
+            require_once(VIEWS_PATH . "/sections/typeAcc.php");
         }
-
-
-
-
     }
 
     public function ownerForm()
@@ -89,10 +85,7 @@ class UserController
                 "type" => "danger",
                 "text" => $e->getMessage()
             ];
-            require_once(VIEWS_PATH . "/sections/typeAcc.php"); //REVISAR
+            require_once(VIEWS_PATH . "/sections/typeAcc.php");
         }
-
     }
-
-
 }

@@ -6,7 +6,7 @@ use DAO\AnimalDAO;
 use DAO\OwnerDAO;
 use DAO\GuardianDAO;
 use Exception;
-use DAO\ReservationDAO as ReservationDAO;
+use DAO\ReservationDAO;
 
 class OwnerController
 {
@@ -22,7 +22,7 @@ class OwnerController
     }
 
 
-    public function showActionMenu($value)
+    public function showActionMenu($value, $alert = null)
     {
         session_start();
         $val = $value;
@@ -30,10 +30,13 @@ class OwnerController
             $animalDAO = new AnimalDAO(); //Para animal form como es modal hay que hacerlo en owner view
             $animalBreeds = $animalDAO->getTypesBreeds(); //Para animal form como es modal hay que hacerlo en owner view
             $animalSizes = $animalDAO->getAllSizes(); //Para animal form como es modal hay que hacerlo en owner view
-            if ($val == 1 || $val == 2) {
+            if ($val == 1) {
                 $petArray = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
                 $firstName = $_SESSION['user']->getFirstName();
                 $lastName = $_SESSION['user']->getLastName();
+
+            } elseif ($val == 2) {
+                $petArray = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
             } elseif ($val == 3) {
                 $listGuardian = $this->guardianDAO->getAll();
                 $myPets = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
@@ -60,9 +63,6 @@ class OwnerController
             ];
         }
         $val = 3;
-
         require_once(VIEWS_PATH . "/sections/ownerView.php");
-
-        // $this->showActionMenu(3);
     }
 }

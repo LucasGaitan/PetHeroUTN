@@ -1,32 +1,72 @@
 <?php
 
 namespace Controllers;
-
-use Controllers\GuardianController as GuardianController;
-use DAO\GuardianDAO as GuardianDAO;
+use DAO\GuardianDAO;
 use DAO\OwnerDAO;
 use Exception;
-use Models\reservation as Reservation;
-use DAO\ReservationDAO as ReservationDAO;
+use Models\reservation;
+use DAO\ReservationDAO;
 
 class ReservationController
 {
     private $reservationDAO;
-    private $ownerController;
-    private $guardianController;
     private $guardianDAO;
     private $ownerDAO;
 
     public function __construct()
     {
         $this->reservationDAO = new ReservationDAO();
-        $this->ownerController = new OwnerController();
-        $this->guardianController = new GuardianController();
         $this->guardianDAO = new GuardianDAO();
         $this->ownerDAO = new OwnerDAO();
-
     }
 
+    // SHOWS FOR ALERTS
+    public function showGuardianListAlert($alert)
+    {
+        try {
+        $listGuardian = $this->guardianDAO->getAll();
+            $myPets = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
+        } catch (Exception $e) {
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
+        }
+        $val = 3;
+        require_once(VIEWS_PATH . "/sections/ownerView.php");
+    }
+
+    public function showReservationListAlert($alert)
+    {
+        try {
+            $startDate = $_SESSION['user']->getStartDate();
+            $endDate = $_SESSION['user']->getEndDate();
+            $reservations = $this->reservationDAO->getReservationsByGuardianId($_SESSION["user"]->getIdGuardian());
+        } catch (Exception $e) {
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
+        }
+        $val=2;
+        require_once(VIEWS_PATH . "/sections/guardianView.php");
+    }
+
+    public function showConfirmedReservationsAlert($alert)
+    {
+        try {
+            $listConfirmedReservations = $this->reservationDAO->getConfirmedReservationsByGuardian($_SESSION["user"]->getIdOwner());
+        } catch (Exception $e) {
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
+        }
+        $val=4;
+        require_once(VIEWS_PATH . "/sections/ownerView.php");
+    }
+
+    //FORM
     public function ReservationForm($startDate, $endDate, $id_animal, $idGuardian)
     {
         $startDate2 = strtotime($startDate);
@@ -43,68 +83,27 @@ class ReservationController
             $reservation_animals = ["reservation" => $reservation, "id_animal" => $id_animal];
             try {
                 $this->reservationDAO->add($reservation_animals);
-                header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=1");
+                header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=3");
             } catch (Exception $e) {
                 $alert = [
                     "type" => "danger",
                     "text" => $e->getMessage()
                 ];
-
-                #QUEDA PENDIENTE VER A DONDE MANDAR
+                $this->ownerController->showActionMenu(3);
                 //require_once(VIEWS_PATH . "/sections/ownerView.php");
-                //$this->ownerController->showActionMenu(1);
-                //header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=1");
             }
         } else {
             $alert = [
                 "type" => "danger",
                 "text" => "The end date cannot exceed the start date."
             ];
-            #QUEDA PENDIENTE VER A DONDE MANDAR
-            header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=3");
+            $this->showGuardianListAlert($alert);
         }
 
     }
 
-    public function ConfirmReservation($idReservation)
-    {
-        session_start();
 
-        try {
-            $confirmed = $this->reservationDAO->updateState($idReservation);
-
-            if ($confirmed == 1) {
-                $infoCoupon = $this->guardianDAO->bringSalaryExpected($_SESSION["user"]->getIdGuardian(), $idReservation);
-
-                $salaryExpected = $infoCoupon["salaryExpected"];
-                $startDate = strtotime($infoCoupon["startDate"]);
-                $endDate = strtotime($infoCoupon["endDate"]);
-
-                $secondsPerDay = 86400;
-                $numberOfSecondsRangeDate = ($endDate - $startDate);
-                $numberOfDaysWorked = ($numberOfSecondsRangeDate / $secondsPerDay);
-
-                $total = ($numberOfDaysWorked * $salaryExpected);
-
-                $confirmCreateCoupon = $this->reservationDAO->createCoupon($idReservation, $total);
-
-            }
-
-            header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
-
-        } catch (Exception $e) {
-            $alert = [
-                "type" => "danger",
-                "text" => $e->getMessage()
-            ];
-
-
-            #QUEDA PENDIENTE VER A DONDE MANDAR
-            //header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
-            require_once(VIEWS_PATH . "/sections/guardianView.php"); //REVISAR
-        }
-    }
-
+    //FUNCTIONS FOR SELECT IN VIEW
     public function guardianSelected($idGuardian, $userGuardian, $startDate, $endDate)
     {
         session_start();
@@ -136,7 +135,6 @@ class ReservationController
             ];
         }
         $val = 2;
-
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 
@@ -146,41 +144,74 @@ class ReservationController
 
         try {
             $listConfirmedReservations = $this->reservationDAO->getConfirmedReservationsByGuardian($_SESSION["user"]->getIdOwner());
+            if (!is_null($listConfirmedReservations))
+                $selectConfirmed = true;
+
+            $name = $listConfirmedReservations[0]["firstName"];
+            $lastName = $listConfirmedReservations[0]["lastName"];
+            $id_reservation = $listConfirmedReservations[0]["id_reservation"];
         } catch (Exception $e) {
             $alert = [
                 "type" => "danger",
                 "text" => $e->getMessage()
             ];
         }
-
-        if (!is_null($listConfirmedReservations))
-            $selectConfirmed = true;
-
-        $name = $listConfirmedReservations[0]["firstName"];
-        $lastName = $listConfirmedReservations[0]["lastName"];
-        $id_reservation = $listConfirmedReservations[0]["id_reservation"];
-
         $val = 4;
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
+
+
+    //RESERVATION STATES FUNCTIONS
+    public function ConfirmReservation($idReservation)
+    {
+        session_start();
+
+        try {
+            $confirmed = $this->reservationDAO->updateState($idReservation);
+
+            if ($confirmed == 1) {
+                $infoCoupon = $this->guardianDAO->bringSalaryExpected($_SESSION["user"]->getIdGuardian(), $idReservation);
+
+                $salaryExpected = $infoCoupon["salaryExpected"];
+                $startDate = strtotime($infoCoupon["startDate"]);
+                $endDate = strtotime($infoCoupon["endDate"]);
+
+                $secondsPerDay = 86400;
+                $numberOfSecondsRangeDate = ($endDate - $startDate);
+                $numberOfDaysWorked = ($numberOfSecondsRangeDate / $secondsPerDay);
+
+                $total = ($numberOfDaysWorked * $salaryExpected);
+
+                $confirmCreateCoupon = $this->reservationDAO->createCoupon($idReservation, $total);
+
+            }
+
+            header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
+
+        } catch (Exception $e) {
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
+            $this->showReservationListAlert($alert);
+        }
+    }
+
 
     public function makePayment($cardNumber, $cardOwnerName, $expirationDate, $CVC, $idReservation)
     {
         try {
             $confirmConclude = $this->reservationDAO->concludeReserve($idReservation);
-
             if ($confirmConclude == 1) {
                 $confirmDeletePaymentCoupon = $this->reservationDAO->deletePaymentCoupon($idReservation);
             }
+            header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=4");
         } catch (Exception $e) {
             $alert = [
                 "type" => "danger",
                 "text" => $e->getMessage()
             ];
+            $this->showConfirmedReservationsAlert($alert);
         }
-
-
-        //$this->showActionMenu(2); REVISAR
-        header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=4");
     }
 }
