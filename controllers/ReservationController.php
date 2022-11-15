@@ -32,8 +32,7 @@ class ReservationController
         $startDate2 = strtotime($startDate);
         $endDate2 = strtotime($endDate);
 
-        if($startDate2 <= $endDate2)
-        {
+        if ($startDate2 <= $endDate2) {
             $reservation = new reservation();
             $reservation->setIdGuardian($idGuardian);
             $reservation->setStartDate($startDate);
@@ -41,7 +40,7 @@ class ReservationController
             $reservation->setState(0);
             $reservation->setConcluded(0);
 
-            $reservation_animals = ["reservation"=>$reservation, "id_animal"=>$id_animal];
+            $reservation_animals = ["reservation" => $reservation, "id_animal" => $id_animal];
             try {
                 $this->reservationDAO->add($reservation_animals);
                 header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=1");
@@ -56,8 +55,7 @@ class ReservationController
                 //$this->ownerController->showActionMenu(1);
                 //header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=1");
             }
-        }
-        else {
+        } else {
             $alert = [
                 "type" => "danger",
                 "text" => "The end date cannot exceed the start date."
@@ -75,8 +73,7 @@ class ReservationController
         try {
             $confirmed = $this->reservationDAO->updateState($idReservation);
 
-            if($confirmed == 1)
-            {
+            if ($confirmed == 1) {
                 $infoCoupon = $this->guardianDAO->bringSalaryExpected($_SESSION["user"]->getIdGuardian(), $idReservation);
 
                 $salaryExpected = $infoCoupon["salaryExpected"];
@@ -130,14 +127,16 @@ class ReservationController
         session_start();
         try {
             $reservations = $this->reservationDAO->getReservationsByGuardianId($_SESSION["user"]->getIdGuardian());
+            $startDate = $_SESSION['user']->getStartDate();
+            $endDate = $_SESSION['user']->getEndDate();
         } catch (Exception $e) {
             $alert = [
                 "type" => "danger",
                 "text" => $e->getMessage()
             ];
         }
-
         $val = 2;
+
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 
@@ -154,7 +153,7 @@ class ReservationController
             ];
         }
 
-        if(!is_null($listConfirmedReservations))
+        if (!is_null($listConfirmedReservations))
             $selectConfirmed = true;
 
         $name = $listConfirmedReservations[0]["firstName"];
@@ -170,8 +169,7 @@ class ReservationController
         try {
             $confirmConclude = $this->reservationDAO->concludeReserve($idReservation);
 
-            if($confirmConclude == 1)
-            {
+            if ($confirmConclude == 1) {
                 $confirmDeletePaymentCoupon = $this->reservationDAO->deletePaymentCoupon($idReservation);
             }
         } catch (Exception $e) {

@@ -1,8 +1,10 @@
 <section class="cardsContainer">
     <?php
+
     require_once(VIEWS_PATH."forms/confirmReservationForm.php");
 
-    if ($_SESSION['user']->getStartDate() !== null && $_SESSION['user']->getEndDate() !== null) {
+    if ($startDate !== null && $endDate !== null) {
+
 
         if($reservations != null)
         {

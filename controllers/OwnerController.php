@@ -32,6 +32,8 @@ class OwnerController
             $animalSizes = $animalDAO->getAllSizes(); //Para animal form como es modal hay que hacerlo en owner view
             if ($val == 1 || $val == 2) {
                 $petArray = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
+                $firstName = $_SESSION['user']->getFirstName();
+                $lastName = $_SESSION['user']->getLastName();
             } elseif ($val == 3) {
                 $listGuardian = $this->guardianDAO->getAll();
                 $myPets = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());

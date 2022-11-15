@@ -10,7 +10,7 @@
 
         <div class="profile__header__content">
 
-            <h1 class="profile__header__content__title"><?php echo $_SESSION['user']->getFirstName() . " " . $_SESSION['user']->getLastName() ?></h1>
+            <h1 class="profile__header__content__title"><?php echo $firstName . " " . $lastName ?></h1>
             <p class="profile__header__content__subtitle">Pet Owner</p>
 
         </div>

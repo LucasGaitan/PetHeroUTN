@@ -127,18 +127,26 @@ class AuthController
             $animalSizes = $animalDAO->getAllSizes(); //Para animal form como es modal hay que hacerlo en owner view
 
             $petArray = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
+            $firstName = $_SESSION['user']->getFirstName();
+            $lastName = $_SESSION['user']->getLastName();
+
         } catch (Exception $e) {
             $alert = [
                 "type" => "danger",
                 "text" => $e->getMessage()
             ];
         }
+
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 
     public function showGuardianView()
     {
         session_start();
+
+        $firstName = $_SESSION['user']->getFirstName();
+        $lastName = $_SESSION['user']->getLastName();
+
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 

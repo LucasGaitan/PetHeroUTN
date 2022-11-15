@@ -12,6 +12,7 @@ use Exception;
 class GuardianController
 {
     private $guardianDAO;
+
 //    private $postulation;
 
     public function __construct()
@@ -35,8 +36,14 @@ class GuardianController
         session_start();
         $val = $value;
 
-        if ($val == 2) {
+
+        if ($val == 1) {
+            $firstName = $_SESSION['user']->getFirstName();
+            $lastName = $_SESSION['user']->getLastName();
+        } elseif ($val == 2) {
             try {
+                $startDate = $_SESSION['user']->getStartDate();
+                $endDate = $_SESSION['user']->getEndDate();
                 $reservationDAO = new ReservationDAO();
                 $reservations = $reservationDAO->getReservationsByGuardianId($_SESSION["user"]->getIdGuardian());
             } catch (Exception $e) {
