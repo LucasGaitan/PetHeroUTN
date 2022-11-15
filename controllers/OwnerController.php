@@ -34,8 +34,6 @@ class OwnerController
         }elseif ($val == 4)
         {
             $listConfirmedReservations = $this->reservationDAO->getConfirmedReservationsByGuardian($_SESSION["user"]->getIdOwner());
-
-//            var_dump($listConfirmedReservations);
         }
 
         require_once(VIEWS_PATH . "/sections/ownerView.php");

@@ -71,7 +71,8 @@ class ReservationController
 
                 $total = ($numberOfDaysWorked * $salaryExpected);
 
-                $this->reservationDAO->createCoupon($idReservation, $total);
+                $confirmCreateCoupon = $this->reservationDAO->createCoupon($idReservation, $total);
+
             }
 
             header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
