@@ -53,14 +53,14 @@ where r.id_reservation = (:id)";
         }
     }
 
-    public function createCoupon($idReservation, $salaryExpected)
+    public function createCoupon($idReservation, $salaryExpected): int
     {
-        $query = "INSERT INTO paymentcoupons(id_reservation, payment) VALUES (:id_reservation, :halfpayment)";
+        $query = "CALL createCoupon(:id_reservation, :payment)";
 
         try {
             $this->connection = Connection::GetInstance();
             $parameters['id_reservation'] = (int)$idReservation;
-            $parameters['halfpayment'] = ($salaryExpected/2);
+            $parameters['payment'] = ($salaryExpected/2);
             return $this->connection->ExecuteNonQuery($query, $parameters);
 
         } catch (Exception $e) {
@@ -120,7 +120,7 @@ where g.id_guardian = (:id_guardian)";
                         INNER JOIN owners o on a.id_owner = o.id_owner
                         INNER JOIN guardians g on r.id_guardian = g.id_guardian
                         INNER JOIN users u on g.id_user = u.id_user
-                        INNER JOIN paymentcoupons PC on PC.id_reservation = r.id_reservation
+                        INNER JOIN paymentcoupons PC on PC.id_coupon = r.id_coupon
                     WHERE a.id_owner = (:id_owner) AND r.state = 1";
 
         try {

@@ -25,7 +25,6 @@ class OwnerController
     {
         session_start();
         $val = $value;
-
         try {
             if ($val == 1 || $val == 2) {
                 $petArray = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
@@ -42,8 +41,6 @@ class OwnerController
                 "type" => "danger",
                 "text" => $e->getMessage()
             ];
-
-        }
 
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
