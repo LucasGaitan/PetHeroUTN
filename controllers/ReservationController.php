@@ -121,6 +121,22 @@ class ReservationController
         if(!is_null($listConfirmedReservations))
             $selectConfirmed = true;
 
+        $name = $listConfirmedReservations[0]["firstName"];
+        $lastName = $listConfirmedReservations[0]["lastName"];
+        $id_reservation = $listConfirmedReservations[0]["id_reservation"];
+
         require_once(VIEWS_PATH . "/sections/ownerView.php");
+    }
+
+    public function makePayment($cardNumber, $cardOwnerName, $expirationDate, $CVC, $idReservation)
+    {
+        $confirmConclude = $this->reservationDAO->concludeReserve($idReservation);
+
+        if($confirmConclude == 1)
+        {
+            $confirmDeletePaymentCoupon = $this->reservationDAO->deletePaymentCoupon($idReservation);
+        }
+
+        header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=4");
     }
 }

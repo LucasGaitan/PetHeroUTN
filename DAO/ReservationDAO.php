@@ -137,35 +137,13 @@ where g.id_guardian = (:id_guardian)";
             return null;
     }
 
-//    public function mapConfirmedReservationsQuery($result)
-//    {
-//        $resp = array_map(function($p)
-//        {
-//            $guardian = new Guardian();
-//            $guardian->setId($p["id_user"]);
-//            $guardian->setIdGuardian($p["id_guardian"]);
-//            $guardian->setUsername($p["username"]);
-//            $guardian->setFirstName($p["firstName"]);
-//            $guardian->setLastName($p["lastName"]);
-//            $guardian->setSalaryExpected($p["salaryExpected"]);
-//            $guardian->setReputation($p["reputation"]);
-//            $guardian->setStartDate($p["startDate"]);
-//            $guardian->setEndDate($p["endDate"]);
-//            $guardian->setEmail($p["email"]);
-//            $guardian->setId_animal_size_expected($p['id_animal_size_expected']);
-//
-//            return $guardian;
-//        }, $result);
-//
-//        return $resp;
-//    }
-
     public function mapConfirmedReservationsQuery($result)
     {
         $resp = array_map(function($p)
         {
             $infoCoupon = [
                 "id_guardian"=>$p["id_guardian"],
+                "id_reservation"=>$p["id_reservation"],
                 "firstName"=>$p["firstName"],
                 "lastName"=>$p["lastName"],
                 "startDate"=>$p["startDate"],
@@ -176,5 +154,33 @@ where g.id_guardian = (:id_guardian)";
         }, $result);
 
         return $resp;
+    }
+
+    public function concludeReserve($idReservation)
+    {
+        $query = "UPDATE reservations R SET R.concluded = 1 WHERE R.id_reservation = (:id_reservation)";
+
+        try {
+            $this->connection = Connection::GetInstance();
+            $parameters['id_reservation'] = (int)$idReservation;
+            return $this->connection->ExecuteNonQuery($query, $parameters);
+
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function deletePaymentCoupon($idReservation)
+    {
+        $query = "CALL searchReservationAndDeleteCoupon(:id_reservation)";
+
+        try {
+            $this->connection = Connection::GetInstance();
+            $parameters['id_reservation'] = (int)$idReservation;
+            return $this->connection->ExecuteNonQuery($query, $parameters);
+
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 }
