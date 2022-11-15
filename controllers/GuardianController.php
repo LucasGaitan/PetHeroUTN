@@ -36,11 +36,20 @@ class GuardianController
         session_start();
         $val = $value;
 
+        if ($val == 1){
+            $firstName = $_SESSION['user']->getFirstName();
+            $lastName = $_SESSION['user']->getLastName();
+        }
+
         if ($val == 2)
         {
+            $startDate = $_SESSION['user']->getStartDate();
+            $endDate = $_SESSION['user']->getEndDate();
+
             $reservationController = new ReservationController();
             $reservations = $this->reservation->getReservationsByGuardianId($_SESSION["user"]->getIdGuardian());
         }
+
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 

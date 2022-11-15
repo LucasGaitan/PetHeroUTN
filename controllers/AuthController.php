@@ -117,12 +117,20 @@ class AuthController
         session_start();
         $ownerController = new OwnerController();
         $petArray = $ownerController->getPetsByOwnerId();
+
+        $firstName = $_SESSION['user']->getFirstName();
+        $lastName = $_SESSION['user']->getLastName();
+
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 
     public function showGuardianView()
     {
         session_start();
+
+        $firstName = $_SESSION['user']->getFirstName();
+        $lastName = $_SESSION['user']->getLastName();
+
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 

@@ -105,6 +105,9 @@ class ReservationController
             #ALERT
         }
 
+        $startDate = $_SESSION['user']->getStartDate();
+        $endDate = $_SESSION['user']->getEndDate();
+
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 

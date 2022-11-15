@@ -25,9 +25,17 @@ class OwnerController
         session_start();
         $val = $value;
 
-        if ($val == 1 || $val == 2)
+        if ($val == 1)
         {
             $petArray = $this->getPetsByOwnerId();
+
+            $firstName = $_SESSION['user']->getFirstName();
+            $lastName = $_SESSION['user']->getLastName();
+
+        }elseif ($val == 2){
+
+            $petArray = $this->getPetsByOwnerId();
+
         }elseif ($val == 3)
         {
             $listGuardian = $this->guardianDAO->getAll();
