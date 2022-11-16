@@ -67,6 +67,16 @@ require_once(VIEWS_PATH . "forms/animalForm.php");
                 <a class="templateNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=4">View confirmed reservations</a>
             </section>
 
+            <section class="templateNav__button">
+                <img class="templateNav__icon" src="<?php echo ASSETS_PATH?>/guardianWhite.png" alt="">
+                <a class="templateNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=5">Go to conclude a reservation</a>
+            </section>
+
+            <section class="templateNav__button">
+                <img class="templateNav__icon" src="<?php echo ASSETS_PATH?>/guardianWhite.png" alt="">
+                <a class="templateNav__link" href="<?php echo FRONT_ROOT?>Owner/showActionMenu?value=6">Leave your review !</a>
+            </section>
+
             <section class="templateNav__button templateNav__button--close">
                 <img class="templateNav__icon" src="<?php echo ASSETS_PATH ?>/close.png" alt="">
                 <a class="templateNav__link" href="<?php echo FRONT_ROOT ?>Auth/logOut">Log Out</a>
@@ -102,8 +112,17 @@ require_once(VIEWS_PATH . "forms/animalForm.php");
                 case 3:
                     require_once(VIEWS_PATH . "sections/guardianList.php");
                     break;
+
                 case 4:
                     require_once(VIEWS_PATH . "sections/confirmedReservations.php");
+                    break;
+
+                case 5:
+                    require_once(VIEWS_PATH . "sections/confirmedReservationsForConcluded.php");
+                    break;
+
+                case 6:
+                    require_once(VIEWS_PATH . "sections/confirmedReservationsForReview.php");
                     break;
             }
         } else {

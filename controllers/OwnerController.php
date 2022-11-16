@@ -34,7 +34,6 @@ class OwnerController
                 $petArray = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
                 $firstName = $_SESSION['user']->getFirstName();
                 $lastName = $_SESSION['user']->getLastName();
-
             } elseif ($val == 2) {
                 $petArray = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
             } elseif ($val == 3) {
@@ -42,7 +41,12 @@ class OwnerController
                 $myPets = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
             } elseif ($val == 4) {
                 $listConfirmedReservations = $this->reservationDAO->getConfirmedReservationsByGuardian($_SESSION["user"]->getIdOwner());
+            } elseif ($val == 5) {
+                $listConfirmedReservationsForConcluded = $this->reservationDAO->getConfirmedReservationsByGuardianForConcluded($_SESSION["user"]->getIdOwner());
+            } elseif ($val == 6) {
+                $listConfirmedReservationsForReview = $this->reservationDAO->getConfirmedReservationsByGuardianForReview($_SESSION["user"]->getIdOwner());
             }
+
         } catch (Exception $e) {
             $alert = [
                 "type" => "danger",

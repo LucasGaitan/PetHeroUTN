@@ -108,7 +108,6 @@ class ReservationController
 
     }
 
-
     //FUNCTIONS FOR SELECT IN VIEW
     public function guardianSelected($idGuardian, $userGuardian, $startDate, $endDate)
     {
@@ -144,18 +143,20 @@ class ReservationController
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 
-    public function confirmedReservationSelected($idGuardian)
+    public function confirmedReservationSelected($idReservation)
     {
         session_start();
 
         try {
             $listConfirmedReservations = $this->reservationDAO->getConfirmedReservationsByGuardian($_SESSION["user"]->getIdOwner());
             if (!is_null($listConfirmedReservations))
+            {
                 $selectConfirmed = true;
+                $name = $listConfirmedReservations[0]["firstName"];
+                $lastName = $listConfirmedReservations[0]["lastName"];
+                $id_reservation = $listConfirmedReservations[0]["id_reservation"];
+            }
 
-            $name = $listConfirmedReservations[0]["firstName"];
-            $lastName = $listConfirmedReservations[0]["lastName"];
-            $id_reservation = $listConfirmedReservations[0]["id_reservation"];
         } catch (Exception $e) {
             $alert = [
                 "type" => "danger",
@@ -165,7 +166,6 @@ class ReservationController
         $val = 4;
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
-
 
     //RESERVATION STATES FUNCTIONS
     public function ConfirmReservation($idReservation)
@@ -199,6 +199,7 @@ class ReservationController
 
                 $total = ($numberOfDaysWorked * $salaryExpected);
 
+
                 if ($this->reservationDAO->createCoupon($idReservation, $total) == 1) {
                     header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
                 } else {
@@ -218,10 +219,10 @@ class ReservationController
         }
     }
 
-
     public function makePayment($cardNumber, $cardOwnerName, $expirationDate, $CVC, $idReservation)
     {
         try {
+
             if ($this->reservationDAO->concludeReserve($idReservation) == 1) {
                 if($this->reservationDAO->deletePaymentCoupon($idReservation) == 1){
                 header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=4");
@@ -231,6 +232,59 @@ class ReservationController
             } else {
                 throw new Exception("The reservation could not be paid, please try again.");
             }
+
+        } catch (Exception $e) {
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
+            $this->showConfirmedReservationsAlert($alert);
+        }
+    }
+
+    /* Seleccionamos la reserva a concluir */
+    public function concludedReservationSelected($idReservation)
+    {
+        $val = 5;
+        session_start();
+
+        $listConfirmedReservationsForConcluded = $this->reservationDAO->getConfirmedReservationsByGuardianForConcluded($_SESSION["user"]->getIdOwner());
+        require_once(VIEWS_PATH . "/sections/ownerView.php");
+    }
+
+    /* Concluimos la reserva, eliminando el cupon y seteando el id_coupon de la reserva en NULL con un SP */
+    public function concludedReservation($idReservation)
+    {
+        try {
+            $confirmFinishedReserved = $this->reservationDAO->finishedReserved($idReservation);
+            header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=5");
+        } catch (Exception $e) {
+            $alert = [
+                "type" => "danger",
+                "text" => $e->getMessage()
+            ];
+            $this->showConfirmedReservationsAlert($alert);
+        }
+    }
+
+    /* Seleccionamos la reserva a dejar la review */
+    public function concludedReservationSelectedForReview($idReservation)
+    {
+        $val = 6;
+        session_start();
+        $listConfirmedReservationsForReview = $this->reservationDAO->getConfirmedReservationsByGuardianForReview($_SESSION["user"]->getIdOwner());
+
+        require_once(VIEWS_PATH . "/sections/ownerView.php");
+    }
+
+    /* Dejamos la review con el comentario y las estrelas */
+    public function concludedReservationForReview($idReservation, $stars, $comment)
+    {
+        try {
+            session_start();
+            $idGuardian = $this->reservationDAO->getGuardianIdByReservation($idReservation);
+            $confirmFinishedReserved = $this->reservationDAO->finishedReservedForReview($comment, $stars, $_SESSION["user"]->getIdOwner(), $idGuardian[0]["id_guardian"]);
+            header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=6");
         } catch (Exception $e) {
             $alert = [
                 "type" => "danger",

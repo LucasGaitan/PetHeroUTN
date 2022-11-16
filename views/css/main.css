@@ -1217,3 +1217,7 @@ body::-webkit-scrollbar-thumb {
   text-align: center;
   font-weight: bold;
 }/*# sourceMappingURL=main.css.map */
+
+.textarea {
+  resize: none;
+}

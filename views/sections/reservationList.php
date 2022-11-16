@@ -5,7 +5,6 @@
 
     if ($startDate !== null && $endDate !== null) {
 
-
         if($reservations != null)
         {
             foreach ($reservations as $value) {

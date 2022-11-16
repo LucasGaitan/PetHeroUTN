@@ -35,7 +35,7 @@
     if(isset($selectConfirmed))
     {
         ?>
-        <p class="makeReservation__title">You selected: <span class="makeReservation__title--name"> <?php echo $name; echo ' '; echo $lastName ?> </span> </p>
+        <p class="makeReservation__title">You selected: <span class="makeReservation__title--name"> <?php echo $name; echo ' '; echo $lastName; ?> </span> </p>
         <a class="makeReservation__buttom" data-bs-toggle="modal" data-bs-target="#makepayment">Start payment</a><?php
     }else{
         ?>
