@@ -18,6 +18,10 @@ class OwnerDAO implements IDAO
         $this->tableName = 'owners';
     }
 
+    /**
+     * ADD
+     */
+
     public function Add($id)
     {
         $query = "INSERT INTO " . $this->tableName . "(id_user) VALUES (:id)";
@@ -25,11 +29,15 @@ class OwnerDAO implements IDAO
         try {
             $this->connection = Connection::GetInstance();
             $parameters['id'] = $id;
-            $this->connection->ExecuteNonQuery($query, $parameters);
+            return $this->connection->ExecuteNonQuery($query, $parameters);
         } catch (Exception $e) {
             throw $e;
         }
     }
+
+    /**
+     * GETS
+     */
 
     public function getPets($id)
     {
@@ -51,6 +59,27 @@ class OwnerDAO implements IDAO
         }
         return $petArray;
     }
+
+    public function findOwnerIdByUserId($id){
+        $query = "select o.id_owner from users u
+                  inner join owners o on u.id_user = o.id_user
+                  where u.id_user = (:id)";
+        try {
+            $this->connection = Connection::GetInstance();
+            $parameters['id'] = $id;
+            $result = $this->connection->Execute($query, $parameters);
+
+            return $result[0]['id_owner'];
+        }
+        catch(Exception $e)
+        {
+            throw $e;
+        }
+    }
+
+    /**
+     * MAPS
+     */
 
     private function mapPets($pets)
     {
@@ -89,23 +118,5 @@ class OwnerDAO implements IDAO
 
         }, $pets);
     }
-
-    public function findOwnerIdByUserId($id){
-        $query = "select o.id_owner from users u
-                  inner join owners o on u.id_user = o.id_user
-                  where u.id_user = (:id)";
-        try {
-            $this->connection = Connection::GetInstance();
-            $parameters['id'] = $id;
-            $result = $this->connection->Execute($query, $parameters);
-
-            return $result[0]['id_owner'];
-        }
-        catch(Exception $e)
-        {
-            throw $e;
-        }
-    }
-
 
 }

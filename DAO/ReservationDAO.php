@@ -15,6 +15,10 @@ class ReservationDAO implements IDAO
         $this->tableName = 'reservations';
     }
 
+    /**
+     * ADD
+     */
+
     public function add($reservation_animals)
     {
 
@@ -28,45 +32,17 @@ class ReservationDAO implements IDAO
             $parameters['endDate'] = $reservation_animals["reservation"]->getEndDate();
             $parameters['concluded'] = $reservation_animals["reservation"]->getConcluded();
             $parameters['id_animal'] = $reservation_animals["id_animal"];
-            $this->connection->ExecuteNonQuery($query, $parameters);
-
-
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
-    public function updateState($idReservation)
-    {
-
-        $query = "update reservations r
-set r.state = 1
-where r.id_reservation = (:id)";
-
-        try {
-            $this->connection = Connection::GetInstance();
-            $parameters['id'] = (int)$idReservation;
             return $this->connection->ExecuteNonQuery($query, $parameters);
 
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
-    public function createCoupon($idReservation, $salaryExpected): int
-    {
-        $query = "CALL createCoupon(:id_reservation, :payment)";
-
-        try {
-            $this->connection = Connection::GetInstance();
-            $parameters['id_reservation'] = (int)$idReservation;
-            $parameters['payment'] = ($salaryExpected/2);
-            return $this->connection->ExecuteNonQuery($query, $parameters);
 
         } catch (Exception $e) {
             throw $e;
         }
     }
+
+    /**
+     * GETS
+     */
 
     public function getReservationsByGuardianId($id_guardian)
     {
@@ -122,23 +98,6 @@ where r.id_reservation = (:id_reservation)";
             return null;
     }
 
-    public function mapReservationsQuery($result)
-    {
-        $resp = array_map(function ($p) {
-            return ["id_reservation" => $p["id_reservation"],
-                "ownerName" => $p["owner"],
-                "animalType" => $p["type"],
-                "animalBreed" => $p["breed"],
-                "animalSize" => $p["size"],
-                "startDate" => $p["startDate"],
-                "endDate" => $p["endDate"],
-                "reservationConcluded" => $p["concluded"],
-                "reservationState" => $p["state"]
-            ];
-        }, $result);
-        return count($resp) > 1 ? $resp : $resp[0];
-    }
-
     public function getConfirmedReservationsByGuardian($id_owner)
     {
         $query = "SELECT *
@@ -165,6 +124,28 @@ where r.id_reservation = (:id_reservation)";
             return null;
     }
 
+    /**
+     * MAPS
+     */
+
+    public function mapReservationsQuery($result)
+    {
+        $resp = array_map(function ($p) {
+            return ["id_reservation" => $p["id_reservation"],
+                "ownerName" => $p["owner"],
+                "animalType" => $p["type"],
+                "animalBreed" => $p["breed"],
+                "animalSize" => $p["size"],
+                "startDate" => $p["startDate"],
+                "endDate" => $p["endDate"],
+                "reservationConcluded" => $p["concluded"],
+                "reservationState" => $p["state"]
+            ];
+        }, $result);
+        return count($resp) > 1 ? $resp : $resp[0];
+    }
+
+
     public function mapConfirmedReservationsQuery($result)
     {
         $resp = array_map(function($p)
@@ -182,6 +163,42 @@ where r.id_reservation = (:id_reservation)";
         }, $result);
 
         return $resp;
+    }
+
+    /**
+     * UPDATE
+     */
+
+    public function updateState($idReservation)
+    {
+
+        $query = "update reservations r
+set r.state = 1
+where r.id_reservation = (:id)";
+
+        try {
+            $this->connection = Connection::GetInstance();
+            $parameters['id'] = (int)$idReservation;
+            return $this->connection->ExecuteNonQuery($query, $parameters);
+
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function createCoupon($idReservation, $salaryExpected): int
+    {
+        $query = "CALL createCoupon(:id_reservation, :payment)";
+
+        try {
+            $this->connection = Connection::GetInstance();
+            $parameters['id_reservation'] = (int)$idReservation;
+            $parameters['payment'] = ($salaryExpected/2);
+            return $this->connection->ExecuteNonQuery($query, $parameters);
+
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 
     public function concludeReserve($idReservation)

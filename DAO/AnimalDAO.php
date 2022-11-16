@@ -36,7 +36,7 @@ class AnimalDAO implements IDAO
             $parameters['id_animal_size'] = $animal->getIdAnimalSize();
             $parameters['id_animal_breed'] = $animal->getIdAnimalBreed();
             $parameters['id_owner'] = $animal->getIdOwner();
-            $this->connection->ExecuteNonQuery($query, $parameters);
+            return $this->connection->ExecuteNonQuery($query, $parameters);
         } catch (Exception $e) {
             throw $e;
         }

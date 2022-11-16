@@ -39,10 +39,15 @@ class AuthController
             $user->setPassword($password);
             $user->setEmail($email);
             try {
-                $this->userDAO->Add($user);
-                session_start();
-                $_SESSION['user'] = $user;
-                header("location: " . FRONT_ROOT . "Auth/showTypeAccount");
+                if($this->userDAO->Add($user) == 1) {
+                    session_start();
+                    $_SESSION['user'] = $user;
+                    header("location: " . FRONT_ROOT . "Auth/showTypeAccount");
+                }
+                else {
+                    throw new Exception("The user could not be added, please try again");
+                }
+
             } catch (Exception $e) {
                 $alert = [
                     "type" => "danger",
@@ -68,7 +73,7 @@ class AuthController
                 $id = $user->getId();
                 #Si es owner o guardian
                 $redirectionView = $this->userDAO->findMatchRole($id);
-                if (!is_null($redirectionView[0]["id_owner"])) { # Si es Owner
+                if (!is_null($redirectionView["id_owner"])) { # Si es Owner
                     $owner = new Owner();
                     $owner->setIdOwner($this->ownerDAO->findOwnerIdByUserId($user->getId()));
                     $owner->setFirstName($user->getFirstName());
@@ -77,7 +82,7 @@ class AuthController
                     $owner->setEmail($user->getFirstName());
                     $_SESSION['user'] = $owner;
                     header("location: " . FRONT_ROOT . "Auth/showOwnerView");
-                } elseif (!is_null($redirectionView[0]["id_guardian"])) { # Si es Guardian
+                } elseif (!is_null($redirectionView["id_guardian"])) { # Si es Guardian
                     $guardian = new Guardian();
                     $guardian->setIdGuardian($this->guardianDAO->findGuardianIdByUserId($user->getId()));
                     $guardian->setFirstName($user->getFirstName());
@@ -86,8 +91,8 @@ class AuthController
                     $guardian->setUserName($user->getUsername());
                     $guardian->setEmail($user->getFirstName());
                     $dates = $this->guardianDAO->bringStartAndEndDates($guardian->getIdGuardian());
-                    $guardian->setStartDate($dates[0]['startDate']);
-                    $guardian->setEndDate($dates[0]['endDate']);
+                    $guardian->setStartDate($dates['startDate']);
+                    $guardian->setEndDate($dates['endDate']);
                     $_SESSION['user'] = $guardian;
                     header("location: " . FRONT_ROOT . "Auth/showGuardianView");
                 } else { # Si no es ni owner ni guardian
@@ -105,6 +110,11 @@ class AuthController
             require_once(VIEWS_PATH . "index.php");
         }
     }
+
+
+    /**
+     * SHOWS
+     */
 
     public function logOut()
     {

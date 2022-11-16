@@ -19,7 +19,9 @@ class AnimalController
         $this->ownerDAO = new OwnerDAO();
     }
 
-    public function showAnimalListAlert($alert){
+    // SHOWS FOR ALERTS
+    public function showAnimalListAlert($alert)
+    {
         try {
             $animalDAO = new AnimalDAO(); //Para animal form como es modal hay que hacerlo en owner view
             $animalBreeds = $animalDAO->getTypesBreeds(); //Para animal form como es modal hay que hacerlo en owner view
@@ -35,6 +37,7 @@ class AnimalController
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 
+    //FORM
     public function animalForm($animalName, $age, $breed, $photo, $vaccinationPlan, $video, $observations, $size)
     {
         try {
@@ -53,9 +56,10 @@ class AnimalController
                 $this->subirArch("photo", $photo, "animalPhoto/");
                 $this->subirArch("vaccinationPlan", $vaccinationPlan, "vaccinationPlan/");
 
-                $this->animalDAO->Add($dog);
-
-                header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=2");
+                if ($this->animalDAO->Add($dog) == 1)
+                    header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=2");
+                else
+                    throw new Exception("The animal could not be added, please try again");
             } else {
                 $cat = new Cat();
                 $cat->setName($animalName);
@@ -70,10 +74,10 @@ class AnimalController
                 $this->subirArch("photo", $photo, "animalPhoto/");
                 $this->subirArch("vaccinationPlan", $vaccinationPlan, "vaccinationPlan/");
 
-                $this->animalDAO->Add($cat);
-
-                header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=2");
-
+                if ($this->animalDAO->Add($cat) == 1)
+                    header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=2");
+                else
+                    throw new Exception("The animal could not be added, please try again");
             }
         } catch (Exception $e) {
             $alert = [
@@ -84,9 +88,9 @@ class AnimalController
         }
     }
 
+    //UPLOAD FILE
     public function subirArch($nombreArch, $arch, $path)
     {
-        //var_dump($arch);
         if (isset($arch)) {
             //Recogemos el archivo enviado por el formulario
             $archivo = $_FILES[$nombreArch]['name'];

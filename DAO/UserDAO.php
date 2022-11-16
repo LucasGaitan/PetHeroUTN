@@ -17,6 +17,10 @@ class UserDAO implements IDAO
         $this->tableName = 'users';
     }
 
+    /**
+     * ADD
+     */
+
     public function Add($user)
     {
         $query = "INSERT INTO " . $this->tableName . "(firstName, lastName, username, password, email) 
@@ -31,35 +35,15 @@ class UserDAO implements IDAO
             $parameters['password'] = $user->getPassword();
             $parameters['email'] = $user->getEmail();
 
-            $this->connection->ExecuteNonQuery($query, $parameters);
+            return $this->connection->ExecuteNonQuery($query, $parameters);
         } catch (Exception $e) {
             throw $e;
         }
     }
 
-    private function mapUsers($users)
-    {
-        $resp = array_map(function ($p) {
-            $user = new UserTemplate();
-            $user->setId($p["id_user"]);
-            $user->setFirstName($p["firstName"]);
-            $user->setLastName($p["lastName"]);
-            $user->setUserName($p["username"]);
-            $user->setPassword($p["password"]);
-            $user->setEmail($p["email"]);
-
-            return $user;
-        }, $users);
-        return count($resp) > 1 ? $resp : $resp[0];
-    }
-
-
-    private function mapMatchRole($result)
-    {
-        return $resp = array_map(function ($p) {
-            return $result = ["id_owner" => $p["id_owner"], "id_guardian" => $p["id_guardian"]];
-        }, $result);
-    }
+    /**
+     * GETS
+     */
 
     public function getAll()
     {
@@ -136,4 +120,34 @@ class UserDAO implements IDAO
             throw $e;
         }
     }
+
+    /**
+     * MAPS
+     */
+
+    private function mapUsers($users)
+    {
+        $resp = array_map(function ($p) {
+            $user = new UserTemplate();
+            $user->setId($p["id_user"]);
+            $user->setFirstName($p["firstName"]);
+            $user->setLastName($p["lastName"]);
+            $user->setUserName($p["username"]);
+            $user->setPassword($p["password"]);
+            $user->setEmail($p["email"]);
+
+            return $user;
+        }, $users);
+        return count($resp) > 1 ? $resp : $resp[0];
+    }
+
+
+    private function mapMatchRole($result)
+    {
+        $resp = array_map(function ($p) {
+            return $result = ["id_owner" => $p["id_owner"], "id_guardian" => $p["id_guardian"]];
+        }, $result);
+        return count($resp) > 1 ? $resp : $resp[0];
+    }
+
 }

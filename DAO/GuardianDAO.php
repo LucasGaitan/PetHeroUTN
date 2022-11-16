@@ -15,6 +15,10 @@
             $this->tableName = 'guardians';
         }
 
+        /**
+         * ADD
+         */
+
         public function Add($guardian)
         {
             $query = "INSERT INTO " . $this->tableName . "(salaryExpected, reputation, startDate, endDate, id_animal_size_expected, id_user) 
@@ -26,13 +30,17 @@
                 $parameters['id'] = $guardian->getId();
                 $parameters['salaryExpected'] = $guardian->getSalaryExpected();
                 $parameters['id_animal_size_expected'] = $guardian->getId_animal_size_expected();
-                $this->connection->ExecuteNonQuery($query, $parameters);
+                return $this->connection->ExecuteNonQuery($query, $parameters);
             }
             catch(Exception $e)
             {
                 throw $e;
             }
         }
+
+        /**
+         * GETS
+         */
 
         public function getAll()
         {
@@ -87,9 +95,6 @@
             return $listGuardians;
         }
 
-
-
-
         public function findGuardianIdByUserId($id){
             $query = "select g.id_guardian from users u
                   inner join guardians g on u.id_user = g.id_user
@@ -136,7 +141,7 @@
 
                 if(!empty($result))
                 {
-                    return $result;
+                    return $this->mapStartAndEndDates($result);
                 }
             }
             catch(Exception $e)
@@ -146,8 +151,36 @@
             return null;
         }
 
+        public function bringSalaryExpected($id_guardian, $id_reservation)
+        {
 
+            $query = "SELECT G.salaryExpected, R.startDate, R.endDate
+                    FROM guardians G
+                    INNER JOIN reservations R on G.id_guardian = R.id_guardian
+                    WHERE G.id_guardian = (:id_guardian) AND R.id_reservation = (:id_reservation)";
 
+            try
+            {
+                $this->connection = Connection::GetInstance();
+                $parameters['id_guardian'] = $id_guardian;
+                $parameters['id_reservation'] = $id_reservation;
+                $result = $this->connection->Execute($query, $parameters);
+
+                if(!empty($result))
+                {
+                    return $this->mapReservationData($result);
+                }
+            }
+            catch(Exception $e)
+            {
+                throw $e;
+            }
+            return null;
+        }
+
+        /**
+         * MAPS
+         */
 
         private function mapGuardians($guardians)
         {
@@ -171,6 +204,28 @@
 
             return $resp;
         }
+        public function mapReservationData($result)
+        {
+            $resp = array_map(function($p)
+            {
+                $infoCoupon = ["salaryExpected"=>$p["salaryExpected"], "startDate"=>$p["startDate"], "endDate"=>$p["endDate"]];
+
+                return $infoCoupon;
+            }, $result);
+
+            return count($resp) > 1 ? $resp : $resp[0];
+        }
+        public function mapStartAndEndDates($result)
+        {
+            $resp = array_map(function($p)
+            {
+                $dates = ["startDate"=>$p["startDate"], "endDate"=>$p["endDate"]];
+
+                return $dates;
+            }, $result);
+
+            return count($resp) > 1 ? $resp : $resp[0];
+        }
 
         /**
          * Update
@@ -188,49 +243,12 @@
                 $parameters['id_guardian'] = $id_guardian;
                 $parameters['startDate'] = $startDate;
                 $parameters['endDate'] = $endDate;
-                $this->connection->ExecuteNonQuery($query, $parameters);
+                return $this->connection->ExecuteNonQuery($query, $parameters);
 
             } catch (Exception $e) {
                 throw $e;
             }
         }
 
-        public function bringSalaryExpected($id_guardian, $id_reservation)
-        {
 
-            $query = "SELECT G.salaryExpected, R.startDate, R.endDate
-                    FROM guardians G
-                    INNER JOIN reservations R on G.id_guardian = R.id_guardian
-                    WHERE G.id_guardian = (:id_guardian) AND R.id_reservation = (:id_reservation)";
-
-            try
-            {
-                $this->connection = Connection::GetInstance();
-                $parameters['id_guardian'] = $id_guardian;
-                $parameters['id_reservation'] = $id_reservation;
-                $result = $this->connection->Execute($query, $parameters);
-
-                if(!empty($result))
-                {
-                    return $reservationData = $this->mapReservationData($result);
-                }
-            }
-            catch(Exception $e)
-            {
-                throw $e;
-            }
-            return null;
-        }
-
-        public function mapReservationData($result)
-        {
-            $resp = array_map(function($p)
-            {
-                $infoCoupon = ["salaryExpected"=>$p["salaryExpected"], "startDate"=>$p["startDate"], "endDate"=>$p["endDate"]];
-
-                return $infoCoupon;
-            }, $result);
-
-            return count($resp) > 1 ? $resp : $resp[0];
-        }
     }

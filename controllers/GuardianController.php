@@ -43,10 +43,13 @@ class GuardianController
     {
         session_start();
         try {
-            $this->guardianDAO->updateWorkDates($_SESSION["user"]->getIdGuardian(), $startDate, $endDate);
-            $_SESSION["user"]->setStartDate($startDate);
-            $_SESSION["user"]->setEndDate($endDate);
-            header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
+            if ($this->guardianDAO->updateWorkDates($_SESSION["user"]->getIdGuardian(), $startDate, $endDate) == 1) {
+                $_SESSION["user"]->setStartDate($startDate);
+                $_SESSION["user"]->setEndDate($endDate);
+                header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
+            } else {
+                throw new Exception("The dates could not be updated, please try again.");
+            }
         } catch (Exception $e) {
             $alert = [
                 "type" => "danger",

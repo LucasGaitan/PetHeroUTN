@@ -86,15 +86,17 @@ class ReservationController
 
             $reservation_animals = ["reservation" => $reservation, "id_animal" => $id_animal];
             try {
-                $this->reservationDAO->add($reservation_animals);
-                header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=3");
+                if ($this->reservationDAO->add($reservation_animals) == 1) {
+                    header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=3");
+                } else {
+                    throw new Exception("The reservation could not be added, please try again.");
+                }
             } catch (Exception $e) {
                 $alert = [
                     "type" => "danger",
                     "text" => $e->getMessage()
                 ];
-                $this->ownerController->showActionMenu(3);
-                //require_once(VIEWS_PATH . "/sections/ownerView.php");
+                $this->showGuardianListAlert($alert);
             }
         } else {
             $alert = [
@@ -177,8 +179,7 @@ class ReservationController
             }
             $reservationList = $this->reservationDAO->getReservationsByGuardianId($_SESSION["user"]->getIdGuardian());
             foreach ($reservationList as $value) {
-                if($reservationSelected["id_reservation"] != $value["id_reservation"] && $value["reservationState"] == 1)
-                {
+                if ($reservationSelected["id_reservation"] != $value["id_reservation"] && $value["reservationState"] == 1) {
                     if ($reservationSelected["animalType"] != $value["animalType"] && $reservationSelected["startDate"] >= $value["startDate"] && $reservationSelected["endDate"] <= $value["endDate"]) {
                         throw new Exception("Different types of animals are not allowed in the same date range.");
                     } elseif ($reservationSelected["animalBreed"] != $value["animalBreed"] && $reservationSelected["startDate"] >= $value["startDate"] && $reservationSelected["endDate"] <= $value["endDate"]) {
@@ -186,26 +187,27 @@ class ReservationController
                     }
                 }
             }
-            $confirmed = $this->reservationDAO->updateState($idReservation);
-
-            if ($confirmed == 1) {
+            if ($this->reservationDAO->updateState($idReservation) == 1) {
                 $infoCoupon = $this->guardianDAO->bringSalaryExpected($_SESSION["user"]->getIdGuardian(), $idReservation);
 
                 $salaryExpected = $infoCoupon["salaryExpected"];
                 $startDate = strtotime($infoCoupon["startDate"]);
                 $endDate = strtotime($infoCoupon["endDate"]);
-
                 $secondsPerDay = 86400;
                 $numberOfSecondsRangeDate = ($endDate - $startDate);
                 $numberOfDaysWorked = ($numberOfSecondsRangeDate / $secondsPerDay);
 
                 $total = ($numberOfDaysWorked * $salaryExpected);
 
-                $confirmCreateCoupon = $this->reservationDAO->createCoupon($idReservation, $total);
-
+                if ($this->reservationDAO->createCoupon($idReservation, $total) == 1) {
+                    header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
+                } else {
+                    throw new Exception("The reservation could not be confirmed, please try again.");
+                }
+            } else {
+                throw new Exception("The reservation could not be confirmed, please try again.");
             }
 
-            header("location: " . FRONT_ROOT . "Guardian/showActionMenu?value=2");
 
         } catch (Exception $e) {
             $alert = [
@@ -220,11 +222,15 @@ class ReservationController
     public function makePayment($cardNumber, $cardOwnerName, $expirationDate, $CVC, $idReservation)
     {
         try {
-            $confirmConclude = $this->reservationDAO->concludeReserve($idReservation);
-            if ($confirmConclude == 1) {
-                $confirmDeletePaymentCoupon = $this->reservationDAO->deletePaymentCoupon($idReservation);
+            if ($this->reservationDAO->concludeReserve($idReservation) == 1) {
+                if($this->reservationDAO->deletePaymentCoupon($idReservation) == 1){
+                header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=4");
+                }else{
+                    throw new Exception("The reservation could not be paid, please try again.");
+                }
+            } else {
+                throw new Exception("The reservation could not be paid, please try again.");
             }
-            header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=4");
         } catch (Exception $e) {
             $alert = [
                 "type" => "danger",
