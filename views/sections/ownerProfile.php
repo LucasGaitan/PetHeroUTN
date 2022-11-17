@@ -27,9 +27,7 @@
 
             <div class="profile__body__pets__content row">
                 <?php
-                if (isset($petArray)) {
-                    if (count($petArray) > 0) {
-
+                    if (isset($petArray) && count($petArray) > 0) {
                         foreach ($petArray as $value) {
                             ?>
                             <div class="profile__body__pets__card col-6 m-3">
@@ -40,9 +38,9 @@
                                 </div>
                                 <div class="profile__body__pets__card__content">
                                     <p class="profile__body__pets__card__content__name"><?php echo $value->getName() ?></p>
-                                    <p class="profile__body__pets__card__content__breed"><?php echo $animalDAO->getBreedById($value->getIdAnimalBreed()) ?></p>
+                                    <p class="profile__body__pets__card__content__breed"><?php echo $value->getBreed() ?></p>
                                     <p class="profile__body__pets__card__content__age&size"><?php echo $value->getAge() . "y/o" ?>
-                                        / <?php echo $animalDAO->getSizeById($value->getIdAnimalSize()) ?></p>
+                                        / <?php echo $value->getSize() ?></p>
                                 </div>
                             </div>
                             <?php
@@ -50,10 +48,6 @@
                     } else {
                         ?> <p class="profile__body__pets__content__fail">You dont have Pets already!</p><?php
                     }
-                }
-                else{
-                    ?> <p class="profile__body__pets__content__fail">You dont have Pets already!</p><?php
-                }
                 ?>
             </div>
 

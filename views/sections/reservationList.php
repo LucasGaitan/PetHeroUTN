@@ -19,18 +19,26 @@
                         <p class="reservationCard__animal"><?php echo $value["animalType"] ?> / <?php echo $value["animalBreed"] ?> / <?php echo $value["animalSize"] ?></p>
                         <p class="reservationCard__date"><?php echo $value["startDate"] ?> / <?php echo $value["endDate"] ?></p>
 
-                        <p class="reservationCard__state"><?php if ($value["reservationState"] == 1) {
+                        <?php if ($value["reservationConcluded"] == 0){ ?>
+                            <p class="reservationCard__state"><?php if ($value["reservationState"] == 1) {
                              echo "Confirmed";
                         } else {
                             echo "Not Confirmed";
-                        } ?></p>
+                        } ?></p><?php
+                        }else { ?>
+                            <p class="reservationCard__state"><?php if ($value["reservationConcluded"] == 1) {
+                                echo "Concluded";
+                            } else {
+                                echo "Not Concluded";
+                            } ?></p>
+                        <?php } ?>
+
                
                     </div>
                 </a>
 
                     <div class="reservationCard__button">
                         <a class="reservationCard__button__link" data-bs-toggle="modal" data-bs-target="#confirmReservationForm"><img class="reservationCard__button__img" src="<?php echo ASSETS_PATH?>/accept.png" alt=""></a>
-                        <a href="" class="reservationCard__button__link"><img class="reservationCard__button__img" src="<?php echo ASSETS_PATH?>/trash.png" alt=""></a>
                     </div>
                
             </div>

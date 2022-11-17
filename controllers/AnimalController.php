@@ -56,10 +56,11 @@ class AnimalController
                 $this->subirArch("photo", $photo, "animalPhoto/");
                 $this->subirArch("vaccinationPlan", $vaccinationPlan, "vaccinationPlan/");
 
-                if ($this->animalDAO->Add($dog) == 1)
+                if ($this->animalDAO->Add($dog) == 1) {
                     header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=2");
-                else
+                } else {
                     throw new Exception("The animal could not be added, please try again");
+                }
             } else {
                 $cat = new Cat();
                 $cat->setName($animalName);
@@ -74,10 +75,11 @@ class AnimalController
                 $this->subirArch("photo", $photo, "animalPhoto/");
                 $this->subirArch("vaccinationPlan", $vaccinationPlan, "vaccinationPlan/");
 
-                if ($this->animalDAO->Add($cat) == 1)
+                if ($this->animalDAO->Add($cat) == 1) {
                     header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=2");
-                else
+                } else {
                     throw new Exception("The animal could not be added, please try again");
+                }
             }
         } catch (Exception $e) {
             $alert = [

@@ -46,16 +46,6 @@
                     <a class="templateNav__link" href="<?php echo FRONT_ROOT ?>Guardian/showActionMenu?value=2">View Reservations</a>
                 </section>
 
-                <section class="templateNav__button">
-                    <img class="templateNav__icon" src="<?php echo ASSETS_PATH ?>/guardianWhite.png" alt="">
-                    <a class="templateNav__link" data-bs-toggle="modal" data-bs-target="#animalForm">Action 2</a>
-                </section>
-
-                <section class="templateNav__button">
-                    <img class="templateNav__icon" src="<?php echo ASSETS_PATH ?>/guardianWhite.png" alt="">
-                    <a class="templateNav__link" href="<?php echo FRONT_ROOT ?>Guardian/showActionMenu?value=3">Action 3</a>
-                </section>
-
                 <section class="templateNav__button templateNav__button--close">
                     <img class="templateNav__icon" src="<?php echo ASSETS_PATH ?>/close.png" alt="">
                     <a class="templateNav__link" href="<?php echo FRONT_ROOT ?>Auth/logOut">Log Out</a>
@@ -83,10 +73,6 @@
 
                             case 2:
                                 require_once(VIEWS_PATH . "sections/reservationList.php");
-                                break;
-
-                            case 3:
-                                ?> <p style="font-size: 5rem;">Empty</p> <?php
                                 break;
 
                         }

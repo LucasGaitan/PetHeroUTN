@@ -41,11 +41,12 @@ class OwnerDAO implements IDAO
 
     public function getPets($id)
     {
-        $query = "select a.*, t.id_animal_type from animals a
-        inner  join animal_breeds b on a.id_animal_breed = b.id_animal_breed
+        $query = "select a.*, t.id_animal_type, t.type, b.breed, s.size from animals a
+        inner join animal_breeds b on a.id_animal_breed = b.id_animal_breed
         inner join animal_types t on b.id_animal_type = t.id_animal_type
+        inner join animal_sizes s on a.id_animal_size = s.id_animal_size
         where id_owner = (:id)";
-        $petArray = array();
+
         try {
             $this->connection = Connection::GetInstance();
             $parameters['id'] = $id;
@@ -98,6 +99,9 @@ class OwnerDAO implements IDAO
                 $dog->setVideo($p["video"]);
                 $dog->setObservations($p["observations"]);
                 $dog->setIdOwner($p["id_owner"]);
+                $dog->setType($p["type"]);
+                $dog->setSize($p["size"]);
+                $dog->setBreed($p["breed"]);
                 return $dog;
 
             } else {
@@ -112,6 +116,9 @@ class OwnerDAO implements IDAO
                 $cat->setVideo($p["video"]);
                 $cat->setObservations($p["observations"]);
                 $cat->setIdOwner($p["id_owner"]);
+                $cat->setType($p["type"]);
+                $cat->setSize($p["size"]);
+                $cat->setBreed($p["breed"]);
                 return $cat;
             }
 

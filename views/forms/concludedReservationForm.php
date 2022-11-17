@@ -8,7 +8,6 @@
             <div class="modal-body">
                 <form action="<?php echo FRONT_ROOT ?>Reservation/concludedReservation" method="POST" class="row g-3">
 
-
                     <center>
                         <img src="<?php echo ASSETS_PATH ?>/undraw_confirmation_re_b6q5.svg" alt="" style="width: 350px">
                     <label for="stars">Make your Review</label>

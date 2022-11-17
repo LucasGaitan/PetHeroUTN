@@ -34,7 +34,7 @@ class UserController
             $guardian->setId_animal_size_expected($dogTypeExpected);
             $guardian->setSalaryExpected($salaryExpected);
 
-            if ($this->guardianDAO->Add($guardian)){
+            if ($this->guardianDAO->Add($guardian) == 1){
                 $id_guardian = $this->guardianDAO->findGuardianIdByUserId($id_user);
                 $user_temp = $this->userDAO->findUserByUsername($user->getUsername());
 
@@ -47,9 +47,6 @@ class UserController
                 $guardian_temp->setIdGuardian($id_guardian);
                 $guardian_temp->setId_animal_size_expected($dogTypeExpected);
                 $guardian_temp->setSalaryExpected($salaryExpected);
-                $dates = $this->guardianDAO->bringStartAndEndDates($guardian_temp->getIdGuardian());
-                $guardian_temp->setStartDate($dates['startDate']);
-                $guardian_temp->setEndDate($dates['endDate']);
 
                 $_SESSION["user"] = $guardian_temp;
                 header("location: " . FRONT_ROOT . "Auth/showGuardianView");

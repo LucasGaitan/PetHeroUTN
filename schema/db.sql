@@ -1,4 +1,4 @@
-CREATE DATABASE petHero;
+
 USE petHero;
 
 CREATE TABLE users(
@@ -39,7 +39,6 @@ CREATE TABLE guardians(
 );
 
 CREATE TABLE reviewServices(
-                               comment varchar(100),
                                stars int NOT NULL,
                                id_owner int NOT NULL,
                                id_guardian int NOT NULL,
@@ -108,9 +107,7 @@ CREATE TABLE reservations_X_animals(
 );
 
 #=======================================================================================================================
-INSERT INTO users(firstName, lastName, username, password, email) VALUES('Ezequiel', 'Morales', 'eze', '123', 'ezemorales@gmail.com');
-INSERT INTO users(firstName, lastName, username, password, email) VALUES('Lucas', 'Gaitan', 'lucas', '321', 'lucasgatian@gmail.com');
-INSERT INTO users(firstName, lastName, username, password, email) VALUES('Santiago', 'Dadan', 'santi', '1234', 'santiagodadan@gmail.com');
+
 
 INSERT INTO animal_sizes(id_animal_size, size) VALUES (1, 'Small');
 INSERT INTO animal_sizes(id_animal_size, size) VALUES (2, 'Medium');
@@ -123,12 +120,6 @@ INSERT INTO animal_breeds(id_animal_breed, breed, id_animal_type) VALUES (1, 'Be
 INSERT INTO animal_breeds(id_animal_breed, breed, id_animal_type)VALUES (2, 'Cocker', 1);
 INSERT INTO animal_breeds(id_animal_breed, breed, id_animal_type)VALUES (3, 'Egyptian', 2);
 INSERT INTO animal_breeds(id_animal_breed, breed, id_animal_type)VALUES (4, 'Siamese', 2);
-
-
-insert into animals (name, age, photo, vaccinationPlan, video, observations, id_animal_size, id_animal_breed, id_owner);
-
-insert into  reservations_X_animals (id_reservation, id_animal);
-
 
 CREATE PROCEDURE createReservation (
     pid_guardian int,
@@ -154,12 +145,11 @@ SET id_coupon = LAST_INSERT_ID();
 UPDATE reservations R SET R.id_coupon = id_coupon WHERE R.id_reservation = pId_reservation;
 END;
 
-CREATE PROCEDURE searchReservationAndDeleteCoupon(IN pId_reservation INTEGER)
+CREATE PROCEDURE finishedReservationAndDeleteACoupon(IN pId_reservation INTEGER)
 BEGIN
-    DECLARE id_coupun INTEGER DEFAULT 0;
-    SET id_coupun = (SELECT R.id_coupon FROM reservations R WHERE R.id_reservation = pId_reservation);
-DELETE FROM paymentcoupons PC WHERE PC.id_coupon = id_coupun;
-UPDATE reservations R SET R.id_coupon = NULL WHERE R.id_reservation = pId_reservation;
+    DECLARE vId_coupon INTEGER DEFAULT 0;
+    SET vId_coupon = (SELECT R.id_coupon FROM reservations R WHERE R.id_reservation = pId_reservation);
+UPDATE reservations R SET R.id_coupon = NULL WHERE R.id_reservation = pId_reservation AND R.concluded = 1;
+DELETE FROM paymentcoupons PC WHERE PC.id_coupon = vId_coupon;
 END;
-
 

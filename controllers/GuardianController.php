@@ -41,8 +41,8 @@ class GuardianController
 
     public function setWorkDates($startDate, $endDate)
     {
-        session_start();
         try {
+            session_start();
             if ($this->guardianDAO->updateWorkDates($_SESSION["user"]->getIdGuardian(), $startDate, $endDate) == 1) {
                 $_SESSION["user"]->setStartDate($startDate);
                 $_SESSION["user"]->setEndDate($endDate);

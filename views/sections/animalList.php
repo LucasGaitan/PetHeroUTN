@@ -1,14 +1,7 @@
 <section class="container__tabla">
 
     <h2 class="tabla__title">My Pets</h2>
-<!--    --><?php
-//
-//    if (isset($alert)){
-//    ?>
-<!--    <div class="alert alert---><?php //echo $alert["type"]?><!--" role="alert">-->
-<!--        --><?php //echo $alert["text"]?>
-<!--    </div>-->
-<!--    --><?php //} else{?>
+
     <table class="tabla" id="animalTable">
 
         <thead class="tabla__head">
@@ -45,9 +38,9 @@
         <tr class="tabla__body__row">
             <td class="tabla__body__row__d"><?php echo $value->getName() ?> </td>
             <td class="tabla__body__row__d"><?php echo $value->getAge() ?> </td>
-            <td class="tabla__body__row__d"><?php echo $animalDAO->getTypeById($value->getIdAnimalBreed()) ?> </td>
-            <td class="tabla__body__row__d"><?php echo $animalDAO->getBreedById($value->getIdAnimalBreed()) ?> </td>
-            <td class="tabla__body__row__d"><?php echo $animalDAO->getSizeById($value->getIdAnimalSize()) ?> </td>
+            <td class="tabla__body__row__d"><?php echo $value->getType() ?> </td>
+            <td class="tabla__body__row__d"><?php echo $value->getBreed() ?> </td>
+            <td class="tabla__body__row__d"><?php echo $value->getSize() ?> </td>
             <td class="tabla__body__row__d"><?php echo $value->getObservations() ?> </td>
         </tr>
         <?php

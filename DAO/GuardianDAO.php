@@ -44,7 +44,6 @@ class GuardianDAO implements IDAO
     {
         $query = "SELECT * FROM guardians G INNER JOIN users U ON U.id_user = G.id_user 
                     WHERE G.startDate IS NOT NULL AND G.endDate IS NOT NULL";
-        $listGuardians = array();
 
         try {
             $this->connection = Connection::GetInstance();
@@ -64,7 +63,6 @@ class GuardianDAO implements IDAO
     {
         $query = "SELECT * FROM guardians G INNER JOIN users U ON U.id_user = G.id_user 
                     WHERE G.startDate >= (:startDate) AND G.endDate <= (:endDate)";
-        $listGuardians = array();
 
         try {
             $this->connection = Connection::GetInstance();

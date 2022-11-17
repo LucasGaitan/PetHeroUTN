@@ -8,7 +8,7 @@
         {
             ?>
             <div class="guardianCard__container">
-                <a href="<?php echo FRONT_ROOT?>Reservation/concludedReservationSelected?idReservation=<?php echo $value["id_reservation"] ?>" class="guardianCard">
+                <a href="<?php echo FRONT_ROOT?>Reservation/selectForConcludeReservation?idReservation=<?php echo $value["id_reservation"] ?>" class="guardianCard">
                     <div class="guardianCard__content">
                         <p class="guardianCard__title"><?php echo $value["firstName"]?> <?php echo $value["lastName"] ?></p>
                         <p class="guardianCard__date"><?php echo $value["startDate"]?> / <?php echo $value["endDate"] ?></p>

@@ -47,78 +47,16 @@ class AnimalDAO implements IDAO
      * GETS
      */
 
-
-    public function getAllTypes()
-    {
-        $query = "SELECT * FROM animal_types";
-        $listAnimalTypes = array();
-
-        try {
-            $this->connection = Connection::GetInstance();
-            $result = $this->connection->Execute($query);
-
-            if (!empty($result)) {
-                return $this->mapAnimalTypes($result);
-            }
-
-        } catch (Exception $e) {
-            throw $e;
-        }
-
-         return null;
-    }
-
-    public function getTypeById($id)
-    {
-        $query = "SELECT t.type FROM animal_breeds b
-                    inner join animal_types t on t.id_animal_type = b.id_animal_type
-                    WHERE b.id_animal_breed = (:id)";
-
-        try {
-            $this->connection = Connection::GetInstance();
-            $parameters["id"] = $id;
-            $result = $this->connection->Execute($query, $parameters);
-            if (!empty($result)) {
-                return $result[0]["type"];
-            }
-        } catch (Exception $e) {
-            throw $e;
-        }
-
-        return null;
-    }
-
     public function getTypesBreeds()
     {
         $query = "SELECT CONCAT(t.TYPE, ' - ' , B.BREED) AS animalBreeds, b.id_animal_breed from animal_breeds b
 inner join animal_types t on b.id_animal_type = t.id_animal_type";
-        $listAnimalTypes = array();
-
 
         try {
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
             if (!empty($result)) {
                 return $this->mapAnimalTypesBreeds($result);
-            }
-        } catch (Exception $e) {
-            throw $e;
-        }
-
-        return null;
-    }
-
-    public function getBreedById($id)
-    {
-        $query = "SELECT b.breed FROM animal_breeds b
-                    WHERE b.id_animal_breed = (:id)";
-
-        try {
-            $this->connection = Connection::GetInstance();
-            $parameters["id"] = $id;
-            $result = $this->connection->Execute($query, $parameters);
-            if (!empty($result)) {
-                return $result[0]["breed"];
             }
         } catch (Exception $e) {
             throw $e;
@@ -190,13 +128,6 @@ where id_animal_breed = (:id);";
     /**
      * MAPS
      */
-
-    private function mapAnimalTypes($animalType): array
-    {
-        return array_map(function ($p) {
-            return ["id_animal_type" => $p["id_animal_type"], "type" => $p["type"]];
-        }, $animalType);
-    }
 
     private function mapAnimalSizes($animalSize): array
     {

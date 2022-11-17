@@ -19,7 +19,7 @@ class ReservationDAO implements IDAO
      * ADD
      */
 
-    public function add($reservation_animals)
+    public function Add($reservation_animals)
     {
 
         $query = "CALL createReservation(:id_guardian, :state, :startDate, :endDate, :concluded, :id_animal)";
@@ -33,8 +33,6 @@ class ReservationDAO implements IDAO
             $parameters['concluded'] = $reservation_animals["reservation"]->getConcluded();
             $parameters['id_animal'] = $reservation_animals["id_animal"];
             return $this->connection->ExecuteNonQuery($query, $parameters);
-
-
         } catch (Exception $e) {
             throw $e;
         }
@@ -47,15 +45,15 @@ class ReservationDAO implements IDAO
     public function getReservationsByGuardianId($id_guardian)
     {
         $query = "SELECT r.id_reservation, concat(u.firstName, ' ', u.lastName) as owner, t.type, ab.breed, s.size, r.startDate, r.endDate, r.concluded, r.state from reservations r
-inner join guardians g on r.id_guardian = g.id_guardian
-inner join reservations_X_animals rXa on r.id_reservation = rXa.id_reservation
-inner join animals a on rXa.id_animal = a.id_animal
-inner join owners o on a.id_owner = o.id_owner
-inner join users u on o.id_user = u.id_user
-inner join animal_breeds ab on a.id_animal_breed = ab.id_animal_breed
-inner join animal_sizes s on a.id_animal_size = s.id_animal_size
-inner join animal_types t on ab.id_animal_type = t.id_animal_type
-where g.id_guardian = (:id_guardian)";
+                inner join guardians g on r.id_guardian = g.id_guardian
+                inner join reservations_X_animals rXa on r.id_reservation = rXa.id_reservation
+                inner join animals a on rXa.id_animal = a.id_animal
+                inner join owners o on a.id_owner = o.id_owner
+                inner join users u on o.id_user = u.id_user
+                inner join animal_breeds ab on a.id_animal_breed = ab.id_animal_breed
+                inner join animal_sizes s on a.id_animal_size = s.id_animal_size
+                inner join animal_types t on ab.id_animal_type = t.id_animal_type
+                where g.id_guardian = (:id_guardian)";
 
         try {
             $this->connection = Connection::GetInstance();
@@ -178,7 +176,7 @@ where r.id_reservation = (:id_reservation)";
 
     public function mapReservationsQuery($result)
     {
-        return $resp = array_map(function ($p) {
+        return array_map(function ($p) {
             return ["id_reservation" => $p["id_reservation"],
                 "ownerName" => $p["owner"],
                 "animalType" => $p["type"],
@@ -190,7 +188,6 @@ where r.id_reservation = (:id_reservation)";
                 "reservationState" => $p["state"]
             ];
         }, $result);
-        //return count($resp) > 1 ? $resp : $resp[0];
     }
 
 
@@ -211,7 +208,7 @@ where r.id_reservation = (:id_reservation)";
 
     public function mapConfirmedReservationsForConcluded($result)
     {
-        $resp = array_map(function ($p) {
+        return array_map(function ($p) {
             return [
                 "id_guardian" => $p["id_guardian"],
                 "id_reservation" => $p["id_reservation"],
@@ -221,8 +218,6 @@ where r.id_reservation = (:id_reservation)";
                 "endDate" => $p["endDate"]];
 
         }, $result);
-
-        return count($resp) > 1 ? $resp : $resp[0];
     }
 
 
@@ -234,8 +229,8 @@ where r.id_reservation = (:id_reservation)";
     {
 
         $query = "update reservations r
-set r.state = 1
-where r.id_reservation = (:id)";
+                set r.state = 1
+                where r.id_reservation = (:id)";
 
         try {
             $this->connection = Connection::GetInstance();

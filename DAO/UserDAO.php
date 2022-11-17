@@ -3,8 +3,6 @@
 namespace DAO;
 
 use Exception;
-use http\Message;
-use Models\User as User;
 use Models\userTemplate as UserTemplate;
 
 class UserDAO implements IDAO
@@ -45,24 +43,6 @@ class UserDAO implements IDAO
      * GETS
      */
 
-    public function getAll()
-    {
-        $query = "SELECT * FROM users";
-
-        try {
-            $this->connection = Connection::GetInstance();
-            $result = $this->connection->Execute($query);
-
-            if (!empty($result)) {
-                return $this->mapUsers($result);
-            }
-        } catch (Exception $e) {
-            throw $e;
-        }
-
-        return null;
-    }
-
     public function findUserByUsername($username)
     {
         $query = "SELECT * FROM users U WHERE U.username = :username";
@@ -87,7 +67,7 @@ class UserDAO implements IDAO
     public function findMatchRole($id)
     {
         try {
-            $this->connection = Connection::GetInstance(); #Abrimos la conexion
+            $this->connection = Connection::GetInstance();
             $query = "SELECT o.id_owner, g.id_guardian FROM users u
                         LEFT JOIN guardians g ON u.id_user = g.id_user
                         LEFT JOIN owners o ON u.id_user = o.id_user
@@ -150,7 +130,7 @@ class UserDAO implements IDAO
     private function mapMatchRole($result)
     {
         $resp = array_map(function ($p) {
-            return $result = ["id_owner" => $p["id_owner"], "id_guardian" => $p["id_guardian"]];
+            return ["id_owner" => $p["id_owner"], "id_guardian" => $p["id_guardian"]];
         }, $result);
         return count($resp) > 1 ? $resp : $resp[0];
     }

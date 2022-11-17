@@ -1,7 +1,3 @@
-<?php
-    require_once(VIEWS_PATH."forms/signUp.php");
-    require_once(VIEWS_PATH."forms/signIn.php");
-?>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -29,6 +25,11 @@
 </head>
 
 <body>
+
+<?php
+require_once(VIEWS_PATH."forms/signUp.php");
+require_once(VIEWS_PATH."forms/signIn.php");
+?>
 
   <header class="header">
       <?php  if (isset($alert)) {

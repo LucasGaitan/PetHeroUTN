@@ -81,6 +81,7 @@ class AuthController
                     $owner->setUserName($user->getUsername());
                     $owner->setEmail($user->getFirstName());
                     $_SESSION['user'] = $owner;
+
                     header("location: " . FRONT_ROOT . "Auth/showOwnerView");
                 } elseif (!is_null($redirectionView["id_guardian"])) { # Si es Guardian
                     $guardian = new Guardian();
@@ -94,9 +95,11 @@ class AuthController
                     $guardian->setStartDate($dates['startDate']);
                     $guardian->setEndDate($dates['endDate']);
                     $_SESSION['user'] = $guardian;
+
                     header("location: " . FRONT_ROOT . "Auth/showGuardianView");
                 } else { # Si no es ni owner ni guardian
                     $_SESSION['user'] = $user;
+
                     header("location: " . FRONT_ROOT . "Auth/showTypeAccount");
                 }
             } else {
@@ -119,7 +122,7 @@ class AuthController
     public function logOut()
     {
         session_destroy();
-        $this->showLandPage();
+        header("location: " . FRONT_ROOT . "index.php");
     }
 
     public function showTypeAccount()
@@ -160,8 +163,4 @@ class AuthController
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 
-    public function showLandPage()
-    {
-        header("location: " . FRONT_ROOT . "index.php");
-    }
 }
