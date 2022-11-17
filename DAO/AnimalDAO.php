@@ -48,7 +48,7 @@ class AnimalDAO implements IDAO
      */
 
 
-    public function getAllTypes(): array
+    public function getAllTypes()
     {
         $query = "SELECT * FROM animal_types";
         $listAnimalTypes = array();
@@ -58,13 +58,14 @@ class AnimalDAO implements IDAO
             $result = $this->connection->Execute($query);
 
             if (!empty($result)) {
-                $listAnimalTypes = $this->mapAnimalTypes($result);
+                return $this->mapAnimalTypes($result);
             }
+
         } catch (Exception $e) {
             throw $e;
         }
 
-        return $listAnimalTypes;
+         return null;
     }
 
     public function getTypeById($id)
@@ -77,12 +78,14 @@ class AnimalDAO implements IDAO
             $this->connection = Connection::GetInstance();
             $parameters["id"] = $id;
             $result = $this->connection->Execute($query, $parameters);
-            $result = $result[0]["type"];
+            if (!empty($result)) {
+                return $result[0]["type"];
+            }
         } catch (Exception $e) {
             throw $e;
         }
 
-        return $result;
+        return null;
     }
 
     public function getTypesBreeds()
@@ -96,13 +99,13 @@ inner join animal_types t on b.id_animal_type = t.id_animal_type";
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
             if (!empty($result)) {
-                $listAnimalTypes = $this->mapAnimalTypesBreeds($result);
+                return $this->mapAnimalTypesBreeds($result);
             }
         } catch (Exception $e) {
             throw $e;
         }
 
-        return $listAnimalTypes;
+        return null;
     }
 
     public function getBreedById($id)
@@ -114,16 +117,17 @@ inner join animal_types t on b.id_animal_type = t.id_animal_type";
             $this->connection = Connection::GetInstance();
             $parameters["id"] = $id;
             $result = $this->connection->Execute($query, $parameters);
-
-            $result = $result[0]["breed"];
+            if (!empty($result)) {
+                return $result[0]["breed"];
+            }
         } catch (Exception $e) {
             throw $e;
         }
 
-        return $result;
+        return null;
     }
 
-    public function getAllSizes(): array
+    public function getAllSizes()
     {
         $query = "SELECT * FROM animal_sizes";
         $listAnimalSizes = array();
@@ -133,13 +137,13 @@ inner join animal_types t on b.id_animal_type = t.id_animal_type";
             $result = $this->connection->Execute($query);
 
             if (!empty($result)) {
-                $listAnimalSizes = $this->mapAnimalSizes($result);
+                return $this->mapAnimalSizes($result);
             }
         } catch (Exception $e) {
             throw $e;
         }
 
-        return $listAnimalSizes;
+        return null;
     }
 
     public function getSizeById($id)
@@ -152,12 +156,14 @@ inner join animal_types t on b.id_animal_type = t.id_animal_type";
             $parameters["id"] = $id;
             $result = $this->connection->Execute($query, $parameters);
 
-            $result = $result[0]["size"];
+            if (!empty($result)) {
+                return $result[0]["size"];
+            }
         } catch (Exception $e) {
             throw $e;
         }
 
-        return $result;
+        return null;
     }
 
     public function getTypeFromBreed($id)
@@ -171,11 +177,13 @@ where id_animal_breed = (:id);";
             $parameters['id'] = $id;
             $result = $this->connection->Execute($query, $parameters);
 
-            $result = $result[0]["id_animal_type"];
+            if (!empty($result)) {
+                return $result[0]["id_animal_type"];
+            }
         } catch (Exception $e) {
             throw $e;
         }
-        return $result;
+        return null;
     }
 
 
@@ -186,24 +194,21 @@ where id_animal_breed = (:id);";
     private function mapAnimalTypes($animalType): array
     {
         return array_map(function ($p) {
-            $animalTypes = ["id_animal_type" => $p["id_animal_type"], "type" => $p["type"]];
-            return $animalTypes;
+            return ["id_animal_type" => $p["id_animal_type"], "type" => $p["type"]];
         }, $animalType);
     }
 
     private function mapAnimalSizes($animalSize): array
     {
         return array_map(function ($p) {
-            $animalSizes = ["id_animal_size" => $p["id_animal_size"], "size" => $p["size"]];
-            return $animalSizes;
+            return ["id_animal_size" => $p["id_animal_size"], "size" => $p["size"]];
         }, $animalSize);
     }
 
     private function mapAnimalTypesBreeds($animalBreeds): array
     {
         return array_map(function ($p) {
-            $animalBreeds = ["animalBreeds" => $p["animalBreeds"], "id_animal_breed" => $p["id_animal_breed"]];
-            return $animalBreeds;
+            return ["animalBreeds" => $p["animalBreeds"], "id_animal_breed" => $p["id_animal_breed"]];
         }, $animalBreeds);
     }
 

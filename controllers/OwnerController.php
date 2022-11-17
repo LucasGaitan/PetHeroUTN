@@ -22,7 +22,7 @@ class OwnerController
     }
 
 
-    public function showActionMenu($value, $alert = null)
+    public function showActionMenu($value)
     {
         session_start();
         $val = $value;

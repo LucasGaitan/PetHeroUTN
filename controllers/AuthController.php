@@ -131,7 +131,6 @@ class AuthController
     public function showOwnerView()
     {
         session_start();
-        $ownerController = new OwnerController();
         try {
             $animalDAO = new AnimalDAO(); //Para animal form como es modal hay que hacerlo en owner view
             $animalBreeds = $animalDAO->getTypesBreeds(); //Para animal form como es modal hay que hacerlo en owner view

@@ -27,6 +27,7 @@ class ReservationController
     // SHOWS FOR ALERTS
     public function showGuardianListAlert($alert)
     {
+        session_start();
         try {
             $listGuardian = $this->guardianDAO->getAll();
             $myPets = $this->ownerDAO->getPets($_SESSION["user"]->getIdOwner());
@@ -152,9 +153,9 @@ class ReservationController
             if (!is_null($listConfirmedReservations))
             {
                 $selectConfirmed = true;
-                $name = $listConfirmedReservations[0]["firstName"];
-                $lastName = $listConfirmedReservations[0]["lastName"];
-                $id_reservation = $listConfirmedReservations[0]["id_reservation"];
+                $name = $listConfirmedReservations["firstName"];
+                $lastName = $listConfirmedReservations["lastName"];
+                $id_reservation = $listConfirmedReservations["id_reservation"];
             }
 
         } catch (Exception $e) {
@@ -174,6 +175,7 @@ class ReservationController
 
         try {
             $reservationSelected = $this->reservationDAO->getReservationById($idReservation);
+            $reservationSelected = $reservationSelected[0];
             if ($reservationSelected["animalSize"] != $this->animalDAO->getSizeById($_SESSION["user"]->getId_animal_size_expected())) {
                 throw new Exception("The size of the animal does not match the size chosen at the time of creating the profile.");
             }
@@ -224,7 +226,7 @@ class ReservationController
         try {
 
             if ($this->reservationDAO->concludeReserve($idReservation) == 1) {
-                if($this->reservationDAO->deletePaymentCoupon($idReservation) == 1){
+                if($this->reservationDAO->finishedReserved($idReservation) == 1){
                 header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=4");
                 }else{
                     throw new Exception("The reservation could not be paid, please try again.");
@@ -256,8 +258,11 @@ class ReservationController
     public function concludedReservation($idReservation)
     {
         try {
-            $confirmFinishedReserved = $this->reservationDAO->finishedReserved($idReservation);
+            if($this->reservationDAO->finishedReserved($idReservation) == 1){
             header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=5");
+            }else{
+                throw new Exception("The reservation could not be completed, please try again.");
+            }
         } catch (Exception $e) {
             $alert = [
                 "type" => "danger",
@@ -277,14 +282,19 @@ class ReservationController
         require_once(VIEWS_PATH . "/sections/ownerView.php");
     }
 
-    /* Dejamos la review con el comentario y las estrelas */
+    /* Dejamos la review con el comentario y las estrellas */
     public function concludedReservationForReview($idReservation, $stars, $comment)
     {
         try {
             session_start();
             $idGuardian = $this->reservationDAO->getGuardianIdByReservation($idReservation);
-            $confirmFinishedReserved = $this->reservationDAO->finishedReservedForReview($comment, $stars, $_SESSION["user"]->getIdOwner(), $idGuardian[0]["id_guardian"]);
-            header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=6");
+            if($this->reservationDAO->finishedReservedForReview($comment, $stars, $_SESSION["user"]->getIdOwner(), $idGuardian))
+            {
+                header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=6");
+            }else{
+                throw new Exception("The review could not be added, please try again.");
+            }
+
         } catch (Exception $e) {
             $alert = [
                 "type" => "danger",

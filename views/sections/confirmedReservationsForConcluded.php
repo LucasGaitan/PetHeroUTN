@@ -27,7 +27,7 @@
     else
     {
         ?>
-        <p class="makeReservation__title">You have no reserves to conclude</p>
+        <p class="makeReservation__title">No reserves to conclude</p>
         <?php
     }
     ?>

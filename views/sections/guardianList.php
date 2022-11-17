@@ -16,13 +16,7 @@
     </form>
 
 </section>
-<!--if (isset($alert)) {-->
-<!--        ?>-->
-<!--        <div class="alert alert---><?php //echo $alert["type"]?><!--" role="alert">-->
-<!--            --><?php //echo $alert["text"]?>
-<!--        </div>-->
-<!--   //}-->
-<!--//    else-->
+
 <section class="cardsContainer">
     <?php
     require_once(VIEWS_PATH."forms/reservationForm.php");
@@ -45,20 +39,27 @@
     }
     else
     {
-        foreach ($listGuardian as $value)
+        if(isset($listGuardian))
         {
-            ?>
-            <div class="guardianCard__container">
-                <a href="<?php echo FRONT_ROOT?>Reservation/guardianSelected?idGuardian=<?php echo $value->getIdGuardian() ?>&userGuardian=<?php echo $value->getUsername() ?>&startDate=<?php echo $value->getStartDate()?>&endDate=<?php echo $value->getEndDate()?>" class="guardianCard">
-                    <div class="guardianCard__content">
-                        <p class="guardianCard__title"><?php echo $value->getFirstName()?> <?php echo $value->getLastName()?></p>
-                        <p class="guardianCard__date"><?php echo $value->getStartDate()?> / <?php echo $value->getEndDate()?></p>
-                        <p class="guardianCard__salary"><?php echo "$" . $value->getSalaryExpected()?></p>
-                    </div>
-                </a>
-            </div>
-            <?php
+            foreach ($listGuardian as $value)
+            {
+                ?>
+                <div class="guardianCard__container">
+                    <a href="<?php echo FRONT_ROOT?>Reservation/guardianSelected?idGuardian=<?php echo $value->getIdGuardian() ?>&userGuardian=<?php echo $value->getUsername() ?>&startDate=<?php echo $value->getStartDate()?>&endDate=<?php echo $value->getEndDate()?>" class="guardianCard">
+                        <div class="guardianCard__content">
+                            <p class="guardianCard__title"><?php echo $value->getFirstName()?> <?php echo $value->getLastName()?></p>
+                            <p class="guardianCard__date"><?php echo $value->getStartDate()?> / <?php echo $value->getEndDate()?></p>
+                            <p class="guardianCard__salary"><?php echo "$" . $value->getSalaryExpected()?></p>
+                        </div>
+                    </a>
+                </div>
+                <?php
+            }
         }
+        else{
+            ?> <p class="makeReservation__title">No guardians exist yet</p><?php
+        }
+
     }
     ?>
 

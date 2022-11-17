@@ -48,20 +48,19 @@ class UserDAO implements IDAO
     public function getAll()
     {
         $query = "SELECT * FROM users";
-        $listUser = array();
 
         try {
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
 
             if (!empty($result)) {
-                $listUser = $this->mapUsers($result);
+                return $this->mapUsers($result);
             }
         } catch (Exception $e) {
             throw $e;
         }
 
-        return $listUser;
+        return null;
     }
 
     public function findUserByUsername($username)
@@ -73,14 +72,16 @@ class UserDAO implements IDAO
         try {
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query, $parameters);
+
+            if (!empty($result)) {
+                return $this->mapUsers($result);
+            }
+
         } catch (Exception $e) {
             throw $e;
         }
 
-        if (!empty($result))
-            return $this->mapUsers($result);
-        else
-            return null;
+        return null;
     }
 
     public function findMatchRole($id)
@@ -94,14 +95,14 @@ class UserDAO implements IDAO
             $parameters['id'] = $id;
             $result = $this->connection->Execute($query, $parameters);
 
+            if (!empty($result)) {
+                return $this->mapMatchRole($result);
+            }
         } catch (Exception $e) {
             throw $e;
         }
 
-        if (!empty($result))
-            return $this->mapMatchRole($result);
-        else
-            return null;
+        return null;
     }
 
 
@@ -115,10 +116,14 @@ class UserDAO implements IDAO
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query, $parameters);
 
-            return $result[0]['id_user'];
+            if (!empty($result)) {
+                return $result[0]['id_user'];
+            }
+
         } catch (Exception $e) {
             throw $e;
         }
+        return null;
     }
 
     /**

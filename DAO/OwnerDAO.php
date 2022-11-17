@@ -52,15 +52,16 @@ class OwnerDAO implements IDAO
             $result = $this->connection->Execute($query, $parameters);
 
             if (!empty($result)) {
-                $petArray = $this->mapPets($result);
-                }
+                return $this->mapPets($result);
+            }
         } catch (Exception $e) {
             throw $e;
         }
-        return $petArray;
+        return null;
     }
 
-    public function findOwnerIdByUserId($id){
+    public function findOwnerIdByUserId($id)
+    {
         $query = "select o.id_owner from users u
                   inner join owners o on u.id_user = o.id_user
                   where u.id_user = (:id)";
@@ -69,12 +70,13 @@ class OwnerDAO implements IDAO
             $parameters['id'] = $id;
             $result = $this->connection->Execute($query, $parameters);
 
-            return $result[0]['id_owner'];
-        }
-        catch(Exception $e)
-        {
+            if (!empty($result)) {
+                return $result[0]['id_owner'];
+            }
+        } catch (Exception $e) {
             throw $e;
         }
+        return null;
     }
 
     /**
@@ -84,8 +86,7 @@ class OwnerDAO implements IDAO
     private function mapPets($pets)
     {
         return array_map(function ($p) {
-            if ($p["id_animal_type"] == 1)
-            {
+            if ($p["id_animal_type"] == 1) {
                 $dog = new Dog();
                 $dog->setIdAnimal($p["id_animal"]);
                 $dog->setName($p["name"]);
@@ -99,9 +100,7 @@ class OwnerDAO implements IDAO
                 $dog->setIdOwner($p["id_owner"]);
                 return $dog;
 
-            }
-            else
-            {
+            } else {
                 $cat = new Cat();
                 $cat->setIdAnimal($p["id_animal"]);
                 $cat->setName($p["name"]);

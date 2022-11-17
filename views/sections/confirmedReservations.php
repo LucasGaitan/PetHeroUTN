@@ -21,7 +21,7 @@
     }
     else
     {
-        echo 'you do not have confirmedReservations';
+        ?> <p class="makeReservation__title">No confirmed reservations yet</p><?php
     }
     ?>
 
