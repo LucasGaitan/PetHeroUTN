@@ -153,9 +153,9 @@ class ReservationController
             if (!is_null($listConfirmedReservations))
             {
                 $selectConfirmed = true;
-                $name = $listConfirmedReservations["firstName"];
-                $lastName = $listConfirmedReservations["lastName"];
-                $id_reservation = $listConfirmedReservations["id_reservation"];
+                $name = $listConfirmedReservations[0]["firstName"];
+                $lastName = $listConfirmedReservations[0]["lastName"];
+                $id_reservation = $listConfirmedReservations[0]["id_reservation"];
             }
 
         } catch (Exception $e) {
@@ -221,8 +221,9 @@ class ReservationController
         }
     }
 
-    public function makePayment($cardNumber, $cardOwnerName, $expirationDate, $CVC, $idReservation)
+    public function makePayment($idReservation)
     {
+        session_start();
         try {
 
             if ($this->reservationDAO->concludeReserve($idReservation) == 1) {
@@ -255,46 +256,17 @@ class ReservationController
     }
 
     /* Concluimos la reserva, eliminando el cupon y seteando el id_coupon de la reserva en NULL con un SP */
-    public function concludedReservation($idReservation)
-    {
-        try {
-            if($this->reservationDAO->finishedReserved($idReservation) == 1){
-            header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=5");
-            }else{
-                throw new Exception("The reservation could not be completed, please try again.");
-            }
-        } catch (Exception $e) {
-            $alert = [
-                "type" => "danger",
-                "text" => $e->getMessage()
-            ];
-            $this->showConfirmedReservationsAlert($alert);
-        }
-    }
-
-    /* Seleccionamos la reserva a dejar la review */
-    public function concludedReservationSelectedForReview($idReservation)
-    {
-        $val = 6;
-        session_start();
-        $listConfirmedReservationsForReview = $this->reservationDAO->getConfirmedReservationsByGuardianForReview($_SESSION["user"]->getIdOwner());
-
-        require_once(VIEWS_PATH . "/sections/ownerView.php");
-    }
-
-    /* Dejamos la review con el comentario y las estrellas */
-    public function concludedReservationForReview($idReservation, $stars, $comment)
+    public function concludedReservation($stars, $idReservation)
     {
         try {
             session_start();
-            $idGuardian = $this->reservationDAO->getGuardianIdByReservation($idReservation);
-            if($this->reservationDAO->finishedReservedForReview($comment, $stars, $_SESSION["user"]->getIdOwner(), $idGuardian))
-            {
-                header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=6");
-            }else{
-                throw new Exception("The review could not be added, please try again.");
-            }
 
+            $idGuardian = $this->reservationDAO->getGuardianIdByReservation($idReservation);
+            if($this->reservationDAO->finishedReservedForReview($stars, $_SESSION["user"]->getIdOwner(), $idGuardian) == 1){
+                header("location: " . FRONT_ROOT . "Owner/showActionMenu?value=5");
+            }else{
+                throw new Exception("The reservation could not be completed, please try again.");
+            }
         } catch (Exception $e) {
             $alert = [
                 "type" => "danger",

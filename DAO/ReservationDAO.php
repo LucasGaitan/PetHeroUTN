@@ -136,7 +136,6 @@ where r.id_reservation = (:id_reservation)";
                         INNER JOIN owners o on a.id_owner = o.id_owner
                         INNER JOIN guardians g on r.id_guardian = g.id_guardian
                         INNER JOIN users u on g.id_user = u.id_user
-                        INNER JOIN paymentcoupons PC on PC.id_coupon = r.id_coupon
                     WHERE a.id_owner = (:id_owner) AND r.state = 1 AND r.concluded = 1";
         try {
             $this->connection = Connection::GetInstance();
@@ -144,7 +143,7 @@ where r.id_reservation = (:id_reservation)";
             $result = $this->connection->Execute($query, $parameters);
 
             if (!empty($result)) {
-                return $this->mapConfirmedReservationsQuery($result);
+                return $this->mapConfirmedReservationsForConcluded($result);
 
             }
         } catch (Exception $e) {
@@ -166,30 +165,6 @@ where r.id_reservation = (:id_reservation)";
                 return $result[0]["id_guardian"];
             }
 
-        } catch (Exception $e) {
-            throw $e;
-        }
-
-        return null;
-    }
-
-    public function getConfirmedReservationsByGuardianForReview($id_owner)
-    {
-        $query = "SELECT *
-                    FROM reservations r
-                        INNER JOIN reservations_x_animals rxa on r.id_reservation = rxa.id_reservation
-                        INNER JOIN animals a on rxa.id_animal = a.id_animal
-                        INNER JOIN owners o on a.id_owner = o.id_owner
-                        INNER JOIN guardians g on r.id_guardian = g.id_guardian
-                        INNER JOIN users u on g.id_user = u.id_user
-                    WHERE a.id_owner = (:id_owner) AND r.state = 1 AND r.concluded = 1 AND r.id_coupon IS NULL";
-        try {
-            $this->connection = Connection::GetInstance();
-            $parameters['id_owner'] = $id_owner;
-            $result = $this->connection->Execute($query, $parameters);
-
-            if (!empty($result))
-                return $this->mapConfirmedReservationsForReviewQuery($result);
         } catch (Exception $e) {
             throw $e;
         }
@@ -221,7 +196,7 @@ where r.id_reservation = (:id_reservation)";
 
     public function mapConfirmedReservationsQuery($result)
     {
-        $resp = array_map(function ($p) {
+        return array_map(function ($p) {
             return [
                 "id_guardian" => $p["id_guardian"],
                 "id_reservation" => $p["id_reservation"],
@@ -232,12 +207,9 @@ where r.id_reservation = (:id_reservation)";
                 "payment" => $p["payment"]];
 
         }, $result);
-
-        return count($resp) > 1 ? $resp : $resp[0];
     }
 
-
-    public function mapConfirmedReservationsForReviewQuery($result)
+    public function mapConfirmedReservationsForConcluded($result)
     {
         $resp = array_map(function ($p) {
             return [
@@ -317,14 +289,12 @@ where r.id_reservation = (:id)";
         }
     }
 
-
-    public function finishedReservedForReview($comment, $stars, $id_owner, $id_guardian)
+    public function finishedReservedForReview($stars, $id_owner, $id_guardian)
     {
-        $query = "INSERT INTO reviewservices(comment, stars, id_owner, id_guardian) VALUES (:comment, :stars, :id_owner, :id_guardian)";
+        $query = "INSERT INTO reviewservices(stars, id_owner, id_guardian) VALUES (:stars, :id_owner, :id_guardian)";
 
         try {
             $this->connection = Connection::GetInstance();
-            $parameters['comment'] = $comment;
             $parameters['stars'] = (int)$stars;
             $parameters['id_owner'] = (int)$id_owner;
             $parameters['id_guardian'] = (int)$id_guardian;

@@ -43,8 +43,6 @@ class OwnerController
                 $listConfirmedReservations = $this->reservationDAO->getConfirmedReservationsByGuardian($_SESSION["user"]->getIdOwner());
             } elseif ($val == 5) {
                 $listConfirmedReservationsForConcluded = $this->reservationDAO->getConfirmedReservationsByGuardianForConcluded($_SESSION["user"]->getIdOwner());
-            } elseif ($val == 6) {
-                $listConfirmedReservationsForReview = $this->reservationDAO->getConfirmedReservationsByGuardianForReview($_SESSION["user"]->getIdOwner());
             }
 
         } catch (Exception $e) {

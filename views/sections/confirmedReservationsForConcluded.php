@@ -12,11 +12,10 @@
                     <div class="guardianCard__content">
                         <p class="guardianCard__title"><?php echo $value["firstName"]?> <?php echo $value["lastName"] ?></p>
                         <p class="guardianCard__date"><?php echo $value["startDate"]?> / <?php echo $value["endDate"] ?></p>
-                        <p class="guardianCard__salary"><?php echo "$" . $value["payment"] ?></p>
                     </div>
                 </a>
 
-                <div class="reservationCard__button" style="<?php if(isset($idReservation)){ ?>display: block<?php }else{ ?>display: none<?php } ?>">
+                <div class="reservationCard__button" style="<?php if(isset($idReservation) && $value["id_reservation"] == $idReservation){ ?>display: block<?php }else{ ?>display: none<?php } ?>">
                     <a class="reservationCard__button__link" data-bs-toggle="modal" data-bs-target="#concludedReservationForm"><img class="reservationCard__button__img" src="<?php echo ASSETS_PATH?>/accept.png" alt=""></a>
                 </div>
 

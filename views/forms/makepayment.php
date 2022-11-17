@@ -12,28 +12,28 @@
                     </div>
                     <div class="col-md-6">
                         <label for="validationServer01" class="form-label">Card number</label>
-                        <input type="number" name="cardNumber" class="form-control" id="validationServer01" value="" required>
+                        <input type="number"  class="form-control" id="validationServer01" value="" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="validationServer01" class="form-label">Card owner name</label>
-                        <input type="text" name="cardOwnerName" class="form-control" id="validationServer01" value="" required>
+                        <input type="text"  class="form-control" id="validationServer01" value="" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="validationServer02" class="form-label">Expiration date</label>
-                        <input type="date" name="expirationDate" class="form-control " id="validationServer02" value="" required>
+                        <input type="date"  class="form-control " id="validationServer02" value="" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="validationServer01" class="form-label">CVC</label>
-                        <input type="number" name="CVC" class="form-control" id="validationServer01" value="" min="100" max="9999" required>
+                        <input type="number"  class="form-control" id="validationServer01" value="" min="100" max="9999" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>

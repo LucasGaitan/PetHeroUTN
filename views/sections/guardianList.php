@@ -29,7 +29,7 @@
                 <a href="<?php echo FRONT_ROOT?>Reservation/guardianSelected?idGuardian=<?php echo $value->getIdGuardian() ?>&userGuardian=<?php echo $value->getUsername() ?>" class="guardianCard">
                     <div class="guardianCard__content">
                         <p class="guardianCard__content__title"><?php echo $value->getFirstName()?> <?php echo $value->getLastName()?></p>
-                        <p class="guardianCard__content__date"><?php echo $value->getStarDate()?> / <?php echo $value->getEndDate()?></p>
+                        <p class="guardianCard__content__date"><?php echo $value->getStartDate()?> / <?php echo $value->getEndDate()?></p>
                         <p class="guardianCard__content__salary"><?php echo "$" . $value->getSalaryExpected()?></p>
                     </div>
                 </a>
