@@ -39,12 +39,11 @@ class AuthController
             $user->setPassword($password);
             $user->setEmail($email);
             try {
-                if($this->userDAO->Add($user) == 1) {
+                if ($this->userDAO->Add($user) == 1) {
                     session_start();
                     $_SESSION['user'] = $user;
                     header("location: " . FRONT_ROOT . "Auth/showTypeAccount");
-                }
-                else {
+                } else {
                     throw new Exception("The user could not be added, please try again");
                 }
 
@@ -163,4 +162,55 @@ class AuthController
         require_once(VIEWS_PATH . "/sections/guardianView.php");
     }
 
+    /*public function signUp($firstName, $lastName, $username, $password, $password2) PARA JSON
+    {
+        if($password === $password2)
+        {
+            $this->user = ["firstName"=>$firstName, "lastName"=>$lastName, "username"=>$username, "password"=>$password];
+            $_SESSION['user'] = $this->user;
+        }
+       $this->showTypeAccount();
+        }
+
+    public function signIn($username, $password) PARA JSON
+    {
+        session_destroy();
+        session_start();
+        $listGuardian = $this->guardianDAO->GetAll();
+        $listOwner = $this->ownerDAO->GetAll();
+        $flag = false;
+        foreach ($listGuardian as $value)
+        {
+            if ($value->getUsername() === $username && $value->getPassword() === $password)
+            {
+                $loggedUser = $value;
+                $_SESSION['loggedUser'] = $loggedUser;
+                $flag = true;
+                break;
+            }
+        }
+        if (!$flag)
+        {
+            foreach ($listOwner as $value)
+            {
+                if ($value->getUsername() === $username && $value->getPassword() === $password)
+                {
+                    $loggedUser = $value;
+                    $_SESSION['loggedUser'] = $loggedUser;
+
+                    break;
+                }
+            }
+        }
+
+        if(isset($_SESSION))
+        {
+            if($flag){
+                $this->showGuardianView();
+            }
+            else{
+                $this->showOwnerView();
+            }
+        }
+    }*/
 }

@@ -12,6 +12,7 @@ class Guardian extends User{
     private $reputation;
     private $startDate;
     private $endDate;
+    //private $postulation; PARA JSON
 
     function __construct()
     {
@@ -83,12 +84,12 @@ class Guardian extends User{
         return $this;
     }
 
-//    public function getPostulation()
+//    public function getPostulation()  PARA JSON
 //    {
 //        return $this->postulation;
 //    }
 //
-//    public function setPostulation($postulation)
+//    public function setPostulation($postulation) PARA JSON
 //    {
 //        if(empty($this->postulation[0]))
 //        {
@@ -100,7 +101,7 @@ class Guardian extends User{
 //        }
 //    }
 
-//    public function setAllPostulations(array $postulationArray)
+//    public function setAllPostulations(array $postulationArray) PARA JSON
 //    {
 //        $this->postulation = [];
 //

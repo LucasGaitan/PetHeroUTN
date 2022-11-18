@@ -2,7 +2,7 @@
 
 namespace Models;
 
-class reservation {
+class reservation { //Anteriormente postulation PARA JSON
 
     private $id_reservation;
     private $id_guardian;
@@ -11,6 +11,9 @@ class reservation {
     private $startDate;
     private $endDate;
     private $concluded;
+
+//    private $hoursPerDay; Anteriormente postulation PARA JSON
+//    private $description; Anteriormente postulation PARA JSON
 
     function __construct()
     {
@@ -76,4 +79,30 @@ class reservation {
     {
         $this->concluded = $concluded;
     }
+
+
+    /*
+    public function getHoursPerDay() Para postulation JSON
+    {
+        return $this->hoursPerDay;
+    }
+
+    public function setHoursPerDay($hoursPerDay) Para postulation JSON
+    {
+        $this->hoursPerDay = $hoursPerDay;
+
+        return $this;
+    }
+
+    public function getDescription() Para postulation JSON
+    {
+        return $this->description;
+    }
+
+    public function setDescription($description) Para postulation JSON
+    {
+        $this->description = $description;
+
+        return $this;
+    }*/
 }

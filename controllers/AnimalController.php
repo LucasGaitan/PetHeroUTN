@@ -8,15 +8,18 @@ use Exception;
 use Models\Cat;
 use Models\Dog;
 
-class AnimalController
+class AnimalController //ANTERIORMENTE DOGCONTROLLER PARA JSON
 {
     private $animalDAO;
     private $ownerDAO;
+    //private $dog; PARA JSON
+
 
     public function __construct()
     {
         $this->animalDAO = new AnimalDAO();
         $this->ownerDAO = new OwnerDAO();
+        //$this->dog = new Dog();  PARA JSON
     }
 
     // SHOWS FOR ALERTS
@@ -120,4 +123,14 @@ class AnimalController
             }
         }
     }
+
+    /*public function dogForm($dogName, $age, $size) PARA JSON cuando era DogController
+    {
+        $this->dog->setName($dogName);
+        $this->dog->setAge($age);
+        $this->dog->setSize($size);
+
+        $_SESSION['loggedUser']->setDogs($this->dog);
+        $this->ownerDAO->Add($_SESSION['loggedUser']);
+    }*/
 }

@@ -99,4 +99,33 @@ class UserController
             require_once(VIEWS_PATH . "/sections/typeAcc.php");
         }
     }
+
+
+    /*
+    public function guardianForm($dogTypeExpected, $salaryExpected)  PARA JSON
+    {
+        $this->user = $_SESSION['user'];
+        $this->user["dogTypeExpected"] = $dogTypeExpected;
+        $this->user["salaryExpected"] = $salaryExpected;
+        $guardian = new Guardian();
+        $guardian->setFirstName($this->user['firstName']);
+        $guardian->setLastName($this->user['lastName']);
+        $guardian->setUsername($this->user['username']);
+        $guardian->setPassword($this->user['password']);
+        $guardian->setDogTypeExpected($this->user['dogTypeExpected']);
+        $guardian->setSalaryExpected($this->user['salaryExpected']);
+        $this->guardianDAO->Add($guardian);
+
+    }
+    public function ownerForm() PARA JSON
+    {
+        $this->user = $_SESSION['user'];
+        $owner = new Owner();
+        $owner->setFirstName($this->user['firstName']);
+        $owner->setLastName($this->user['lastName']);
+        $owner->setUsername($this->user['username']);
+        $owner->setPassword($this->user['password']);
+        $this->ownerDAO->Add($owner);
+    }
+*/
 }
